@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 src_file=$1
 usbdev_mode=$2

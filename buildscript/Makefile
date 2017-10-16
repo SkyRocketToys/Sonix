@@ -7,6 +7,7 @@
 # Do not:
 # o  print "Entering directory ...";
 MAKEFLAGS += --no-print-directory
+SHELL=/bin/bash
 
 # Avoid funny character set dependencies
 unexport LC_ALL

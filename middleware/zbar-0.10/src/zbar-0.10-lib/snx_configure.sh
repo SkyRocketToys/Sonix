@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export CFLAGS+='-nostdlib'
 export CPPFLAGS+=-I$KERNEL_INC_DIR
 export LDFLAGS+=-L$KERNEL_LIB_DIR

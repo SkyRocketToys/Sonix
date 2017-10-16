@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #find .git file
 function find_project_dir()
