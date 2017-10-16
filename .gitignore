@@ -1,1 +1,16 @@
 generated/
+*.d
+embedded.c
+*.old
+*.cmd
+*.o
+*.log
+*.lo
+*.deps
+*.dirstamp
+*.pc
+*.la
+*.bin
+*.elf
+*.dis
+*.a
