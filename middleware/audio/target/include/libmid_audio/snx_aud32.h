@@ -1,0 +1,111 @@
+#ifndef _SNX_AUD32_H_
+#define _SNX_AUD32_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+enum SNX_AUD32_FORMAT {
+	SNX_AUD32_FMT8_8KBPS,		// old interface
+	SNX_AUD32_FMT8_9p6KBPS,		// old interface
+	SNX_AUD32_FMT8_11p2KBPS,	// old interface
+	SNX_AUD32_FMT8_12p8KBPS,	// old interface
+	SNX_AUD32_FMT8_14p4KBPS,	// old interface
+	SNX_AUD32_FMT8_16KBPS,		// old interface
+	SNX_AUD32_FMT16_8K_4p8KBPS,
+	SNX_AUD32_FMT16_8K_6p4KBPS,
+	SNX_AUD32_FMT16_8K_8KBPS,
+	SNX_AUD32_FMT16_8K_9p6KBPS,
+	SNX_AUD32_FMT16_8K_11p2KBPS,
+	SNX_AUD32_FMT16_8K_12p8KBPS,
+	SNX_AUD32_FMT16_8K_14p4KBPS,
+	SNX_AUD32_FMT16_8K_16KBPS,
+	SNX_AUD32_FMT16_8K_17p6KBPS,
+	SNX_AUD32_FMT16_8K_19p2KBPS,
+	SNX_AUD32_FMT16_8K_20p8KBPS,
+	SNX_AUD32_FMT16_8K_22p4KBPS,
+	SNX_AUD32_FMT16_8K_24KBPS,
+	SNX_AUD32_FMT16_16K_8KBPS,
+	SNX_AUD32_FMT16_16K_8p8KBPS,
+	SNX_AUD32_FMT16_16K_9p6KBPS,
+	SNX_AUD32_FMT16_16K_10p4KBPS,
+	SNX_AUD32_FMT16_16K_11p2KBPS,
+	SNX_AUD32_FMT16_16K_12KBPS,
+	SNX_AUD32_FMT16_16K_12p8KBPS,
+	SNX_AUD32_FMT16_16K_13p6KBPS,
+	SNX_AUD32_FMT16_16K_14p4KBPS,
+	SNX_AUD32_FMT16_16K_15p2KBPS,
+	SNX_AUD32_FMT16_16K_16KBPS,
+	SNX_AUD32_FMT16_16K_16p8KBPS,
+	SNX_AUD32_FMT16_16K_17p6KBPS,
+	SNX_AUD32_FMT16_16K_18p4KBPS,
+	SNX_AUD32_FMT16_16K_19p2KBPS,
+	SNX_AUD32_FMT16_16K_20KBPS,
+	SNX_AUD32_FMT16_16K_20p8KBPS,
+	SNX_AUD32_FMT16_16K_21p6KBPS,
+	SNX_AUD32_FMT16_16K_22p4KBPS,
+	SNX_AUD32_FMT16_16K_23p2KBPS,
+	SNX_AUD32_FMT16_16K_24KBPS,
+	SNX_AUD32_FMT16_16K_24p8KBPS,
+	SNX_AUD32_FMT16_16K_25p6KBPS,
+	SNX_AUD32_FMT16_16K_26p4KBPS,
+	SNX_AUD32_FMT16_16K_27p2KBPS,
+	SNX_AUD32_FMT16_16K_28KBPS,
+	SNX_AUD32_FMT16_16K_28p8KBPS,
+	SNX_AUD32_FMT16_16K_29p6KBPS,
+	SNX_AUD32_FMT16_16K_30p4KBPS,
+	SNX_AUD32_FMT16_16K_31p2KBPS,
+	SNX_AUD32_FMT16_16K_32KBPS,
+	SNX_AUD32_FMT16_32K_16KBPS,
+	SNX_AUD32_FMT16_32K_19p2KBPS,
+	SNX_AUD32_FMT16_32K_22p4KBPS,
+	SNX_AUD32_FMT16_32K_25p6KBPS,
+	SNX_AUD32_FMT16_32K_28p8KBPS,
+	SNX_AUD32_FMT16_32K_32KBPS,
+	SNX_AUD32_FMT16_32K_35p2KBPS,
+	SNX_AUD32_FMT16_32K_38p4KBPS,
+	SNX_AUD32_FMT16_32K_41p6KBPS,
+	SNX_AUD32_FMT16_32K_44p8KBPS,
+	SNX_AUD32_FMT16_32K_48KBPS,
+	SNX_AUD32_FMT16_32K_51p2KBPS,
+	SNX_AUD32_FMT16_32K_54p4KBPS,
+	SNX_AUD32_FMT16_32K_57p6KBPS,
+	SNX_AUD32_FMT16_32K_60p8KBPS,
+	SNX_AUD32_FMT16_32K_64KBPS
+};
+
+//RBK start here
+struct snx_aud32_info_st{
+	int32_t  type;
+	uint32_t samplerate;
+	uint32_t bitrate;
+	uint32_t bytes_per_frame;
+	uint32_t pcm_bytes_per_frame;
+	uint32_t samples_per_frame;
+	void *encode_st;
+	void *decode_st;
+};
+
+struct snx_aud32_params_st{
+	int32_t  type;
+    uint32_t samplerate;
+    uint32_t bitrate;
+};
+
+struct snx_aud32_st;
+
+#define IN
+#define OUT
+#define INOUT
+
+int32_t snx_aud32_open     (IN struct snx_aud32_params_st *aud32_params, OUT struct snx_aud32_st **aud32_ctl );
+int32_t snx_aud32_close    (IN struct snx_aud32_st *aud32_ctl);
+int32_t snx_aud32_encode   (IN struct snx_aud32_st *aud32_ctl, INOUT uint8_t *p_src, INOUT uint8_t *p_dst, IN  int32_t src_bytes, INOUT int32_t *p_dst_bytes);
+int32_t snx_aud32_decode   (IN struct snx_aud32_st *aud32_ctl, INOUT uint8_t *p_src, INOUT uint8_t *p_dst, IN  int32_t src_bytes, INOUT int32_t *p_dst_bytes);
+int32_t snx_aud32_get_info (IN struct snx_aud32_st *aud32_ctl, OUT   struct snx_aud32_info_st *aud32_info);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif //_SNX_AUDIO_AUD32_H_
