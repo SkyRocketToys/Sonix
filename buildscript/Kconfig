@@ -1,0 +1,562 @@
+####################################################
+#
+# The Topest Menu
+#
+####################################################
+
+mainmenu "SONiX SDK Configuration"
+
+####################################################
+#
+# System Configuration
+#
+####################################################
+choice
+	prompt "Platform"
+	default SYSTEM_PLATFORM_SN98660
+
+config SYSTEM_PLATFORM_SN98660
+	bool "SN98660"
+
+config SYSTEM_PLATFORM_SN98661
+	bool "SN98661"
+
+config SYSTEM_PLATFORM_SN98670
+	bool "SN98670"
+
+config SYSTEM_PLATFORM_SN98671
+	bool "SN98671"
+
+config SYSTEM_PLATFORM_SN98672
+	bool "SN98672"
+
+config SYSTEM_PLATFORM_ST58660FPGA
+	bool "ST58660 FPGA"
+
+config SYSTEM_PLATFORM_SN98293
+	bool "SN98293"
+
+endchoice
+
+#if SYSTEM_PLATFORM_SN98670
+#	string "DDR Size"
+#	default 16
+#endif
+
+config SYSTEM_PREVIOUS_PLATFORM
+	bool "Previous Platform"
+	depends on !SYSTEM_PLATFORM_ST58600FPGA && !SYSTEM_PLATFORM_ST58660FPGA
+	default n
+
+if SYSTEM_PREVIOUS_PLATFORM
+choice
+	prompt "Previous Platform Version"
+	default SYSTEM_E1
+
+config SYSTEM_E1
+	bool "E1"
+endchoice
+
+config SYSTEM_PREVIOUS_VERSION
+	string
+	default "e1"  if SYSTEM_E1
+endif
+
+config SYSTEM_PLATFORM
+	string
+	default "sn98660" if SYSTEM_PLATFORM_SN98660 \
+			|| SYSTEM_PLATFORM_SN98661
+	default "st58660" if SYSTEM_PLATFORM_ST58660FPGA
+	default "sn98670" if SYSTEM_PLATFORM_SN98670
+	default "sn98671" if SYSTEM_PLATFORM_SN98671
+	default "sn98672" if SYSTEM_PLATFORM_SN98672
+	default "sn98293" if SYSTEM_PLATFORM_SN98293
+
+config SYSTEM_SERIES
+	string
+	default "sn9866x" if SYSTEM_PLATFORM_ST58660FPGA \
+			|| SYSTEM_PLATFORM_SN98660 \
+			|| SYSTEM_PLATFORM_SN98661 \
+			|| SYSTEM_PLATFORM_SN98670 \
+			|| SYSTEM_PLATFORM_SN98671 \
+			|| SYSTEM_PLATFORM_SN98293 \
+			|| SYSTEM_PLATFORM_SN98672
+
+config SYSTEM_TRACE_SELECT
+	bool "Trace recorder library"
+	default n
+
+#menu "project type"
+#choice
+#	prompt "select project type"
+#	default IMAGE_SUBDIR_IPCAM
+
+#config IMAGE_SUBDIR_DASHCAM
+#	bool "dashcam"
+
+#config IMAGE_SUBDIR_IPCAM
+#	bool "ipcam"
+
+#config IMAGE_SUBDIR_MPTOOL
+#	bool "mptool"
+
+#config IMAGE_SUBDIR_INTEGRATION
+#	bool "integration"
+
+#config IMAGE_SUBDIR_INTEGRATION
+#	bool "empty"
+#endchoice
+#endmenu
+
+#config IMAGE_SUBDIR
+#	string
+#	default "dashcam" if IMAGE_SUBDIR_DASHCAM
+#	default "ipcam" if IMAGE_SUBDIR_IPCAM
+#	default "mptool" if IMAGE_SUBDIR_MPTOOL
+#	default "integration" if IMAGE_SUBDIR_INTEGRATION
+
+####################################################
+#
+# DDR
+#
+####################################################
+
+menu "DDR"
+config MAIN_SETTING
+	string "Main hw setting file string"
+	default "m14d5121632akrb1" if SYSTEM_PLATFORM_SN98660
+	default "m14d5121632akrb1" if SYSTEM_PLATFORM_SN98293
+	default "pme807416akr" if SYSTEM_PLATFORM_SN98670
+	default "pme807416akr" if SYSTEM_PLATFORM_SN98671
+	default "pme807416akr" if SYSTEM_PLATFORM_SN98672
+
+config FIRST_DDR_STRING
+	string "first hw setting file string"
+	default ""
+
+config SECOND_DDR_STRING
+	string "second hw setting file string"
+	default ""
+
+config THIRD_DDR_STRING
+	string "third hw setting file string"
+	default ""
+
+config MEM_SIZE_STRING
+	string "describe memory size"
+	default "64x16bit"
+
+if !(SYSTEM_PLATFORM_SN98670 || SYSTEM_PLATFORM_SN98671 || SYSTEM_PLATFORM_SN98672)
+config DDR_TOTAL_SIZE
+	int "Total DDR size(MB)"
+	default 64
+
+config DDR_CACHEABLE_SIZE
+	int "Cacheable DDR size(MB)"
+	default 32
+
+endif
+
+if (SYSTEM_PLATFORM_SN98670 || SYSTEM_PLATFORM_SN98671 || SYSTEM_PLATFORM_SN98672)
+config DDR_TOTAL_SIZE
+	int "Total DDR size(MB)"
+	default 32
+
+config DDR_CACHEABLE_SIZE
+	int "Cacheable DDR size(MB)"
+	default 8
+endif
+
+config DDR_PRE_NCNB_SIZE
+	int "Preallocate Non Cacheable DDR size(MB)"
+	default 18 
+
+config DDR_PRE_CB_SIZE
+	int "Preallocate Cacheable DDR size(MB)"
+	default 6
+endmenu
+
+####################################################
+#
+# System PLL
+#
+####################################################
+choice
+	prompt "DDR Freq"
+	default SYSTEM_DDR336MHZ
+
+config	SYSTEM_DDR25MHZ
+	bool "25MHz" if SYSTEM_PLATFORM_ST58660FPGA
+
+if	! SYSTEM_PLATFORM_ST58660FPGA
+
+config SYSTEM_DDR102MHZ
+	 bool "102MHz"	
+
+config SYSTEM_DDR126MHZ
+	 bool "126MHz"	
+
+config SYSTEM_DDR150MHZ
+	 bool "174MHz"	
+
+config SYSTEM_DDR198MHZ
+	 bool "198MHz"	
+
+config SYSTEM_DDR300MHZ
+	 bool "300MHz"	
+
+config SYSTEM_DDR306MHZ
+	 bool "306MHz"	
+
+config SYSTEM_DDR312MHZ
+	 bool "312MHz"	
+
+config SYSTEM_DDR324MHZ
+	 bool "324MHz"	
+
+config SYSTEM_DDR336MHZ
+	 bool "336MHz"	
+
+config SYSTEM_DDR360MHZ
+	 bool "360MHz"	 
+
+config SYSTEM_DDR372MHZ
+	 bool "372MHz"
+
+config SYSTEM_DDR384MHZ
+	 bool "384MHz"
+
+config SYSTEM_DDR396MHZ
+	 bool "396MHz"
+
+config SYSTEM_DDR402MHZ
+	 bool "402MHz"
+
+config SYSTEM_DDR408MHZ
+	 bool "408MHz"
+
+config SYSTEM_DDR414MHZ
+	 bool "414MHz"
+
+config SYSTEM_DDR420MHZ
+	 bool "420MHz"
+
+config SYSTEM_DDR426MHZ
+	 bool "426MHz"
+endif
+endchoice
+
+config DDR_FREQ
+	string
+	default "25" if SYSTEM_DDR25MHZ
+	default "33" if SYSTEM_DDR33MHZ
+	default "102" if SYSTEM_DDR102MHZ
+	default "126" if SYSTEM_DDR126MHZ
+	default "150" if SYSTEM_DDR150MHZ
+	default "174" if SYSTEM_DDR174MHZ
+	default "198" if SYSTEM_DDR198MHZ
+	default "201" if SYSTEM_DDR201MHZ
+	default "216" if SYSTEM_DDR216MHZ
+	default "228" if SYSTEM_DDR228MHZ
+	default "240" if SYSTEM_DDR240MHZ
+	default "252" if SYSTEM_DDR252MHZ
+	default "264" if SYSTEM_DDR264MHZ
+	default "272" if SYSTEM_DDR272MHZ
+	default "288" if SYSTEM_DDR288MHZ
+	default "300" if SYSTEM_DDR300MHZ
+	default "306" if SYSTEM_DDR306MHZ
+	default "312" if SYSTEM_DDR312MHZ
+	default "324" if SYSTEM_DDR324MHZ
+	default "336" if SYSTEM_DDR336MHZ
+	default "348" if SYSTEM_DDR348MHZ
+	default "360" if SYSTEM_DDR360MHZ
+	default "372" if SYSTEM_DDR372MHZ
+	default "384" if SYSTEM_DDR384MHZ
+	default "390" if SYSTEM_DDR390MHZ
+	default "396" if SYSTEM_DDR396MHZ
+	default "402" if SYSTEM_DDR402MHZ
+	default "408" if SYSTEM_DDR408MHZ
+	default "414" if SYSTEM_DDR414MHZ
+	default "420" if SYSTEM_DDR420MHZ
+	default "426" if SYSTEM_DDR426MHZ
+####################################################
+#
+# System PLL SETTING
+#
+####################################################
+if	(SYSTEM_PLATFORM_SN98660 || SYSTEM_PLATFORM_SN98661 || SYSTEM_PLATFORM_SN98670 || SYSTEM_PLATFORM_SN98671 || SYSTEM_PLATFORM_SN98672 || SYSTEM_PLATFORM_SN98293)
+config SYSTEM_PERFORMANCE_CLK
+	int	
+	default 100000000 if SYSTEM_DDR25MHZ
+	default 528000000 if SYSTEM_DDR33MHZ
+	default 612000000 if SYSTEM_DDR102MHZ
+	default 630000000 if SYSTEM_DDR126MHZ
+	default 600000000 if SYSTEM_DDR150MHZ
+	default 696000000 if SYSTEM_DDR174MHZ
+	default 594000000 if SYSTEM_DDR198MHZ
+	default 600000000 if SYSTEM_DDR300MHZ
+	default 612000000 if SYSTEM_DDR306MHZ
+	default 672000000 if SYSTEM_DDR336MHZ
+	default 720000000 if SYSTEM_DDR360MHZ
+	default 744000000 if SYSTEM_DDR372MHZ
+	default 768000000 if SYSTEM_DDR384MHZ
+	default 780000000 if SYSTEM_DDR390MHZ
+	default 792000000 if SYSTEM_DDR396MHZ
+	default 804000000 if SYSTEM_DDR402MHZ
+	default 816000000 if SYSTEM_DDR408MHZ
+	default 828000000 if SYSTEM_DDR414MHZ
+	default 840000000 if SYSTEM_DDR420MHZ
+	default 852000000 if SYSTEM_DDR426MHZ
+
+config SYSTEM_APB_CLOCK_RATIO
+	int	
+	default 4  if SYSTEM_DDR25MHZ
+	default 32 if SYSTEM_DDR33MHZ
+	default 24 if SYSTEM_DDR102MHZ
+	default 30 if SYSTEM_DDR126MHZ
+	default 24 if SYSTEM_DDR150MHZ
+	default 24 if SYSTEM_DDR174MHZ
+	default 27 if SYSTEM_DDR198MHZ
+	default 24 if SYSTEM_DDR300MHZ
+	default 24 if SYSTEM_DDR306MHZ
+	default 32 if SYSTEM_DDR336MHZ
+	default 32 if SYSTEM_DDR360MHZ
+	default 32 if SYSTEM_DDR372MHZ
+	default 32 if SYSTEM_DDR384MHZ
+	default 32 if SYSTEM_DDR390MHZ
+	default 32 if SYSTEM_DDR396MHZ
+	default 32 if SYSTEM_DDR402MHZ
+	default 32 if SYSTEM_DDR408MHZ
+	default 32 if SYSTEM_DDR414MHZ
+	default 32 if SYSTEM_DDR420MHZ
+	default 32 if SYSTEM_DDR426MHZ
+
+endif
+
+####################################################
+#
+# Flash Configuration
+#
+####################################################
+choice
+	prompt "Flash Configuration"
+	default SYSTEM_SERIAL_FLASH_SUPPORT
+
+config SYSTEM_SERIAL_FLASH_SUPPORT
+	bool "Serial Flash"
+    
+endchoice
+
+source "flash_layout_Kconfig"
+
+##FreeRTOS Setting
+
+menu "FreeRTOS Kernel Setting"
+
+choice
+	prompt "System tick Hz"
+	default FREERTOS_TICK_HZ_100
+
+	config FREERTOS_TICK_HZ_100
+		bool "100"
+
+	config FREERTOS_TICK_HZ_250
+		bool "250"
+
+	config FREERTOS_TICK_HZ_500
+		bool "500"
+endchoice
+
+config FREERTOS_TICK_HZ
+        int
+        default 100 if FREERTOS_TICK_HZ_100
+        default 250 if FREERTOS_TICK_HZ_250
+        default 500 if FREERTOS_TICK_HZ_500
+
+endmenu
+
+
+####################################################
+#
+# Source Other Kconfig
+#
+####################################################
+source "app_Kconfig"
+source "middleware_Kconfig"
+source "driver_Kconfig"
+
+menu "encrypt key setting"
+config  FW_ENCRYPT_KEY
+	hex "firmware md5 encrypt key value(hex)"
+        default 0x63245709
+        help
+        the key support 64bit value
+endmenu
+
+menu "Command line interface"
+
+config CLI_CMD_SYSTEM
+	bool "system"
+	default y
+
+config CLI_CMD_STATUS
+	bool "status"
+	default y
+
+config CLI_CMD_STATUS_MCU
+	bool "mcu"
+	depends on CLI_CMD_STATUS && APP_DASHCAM
+	default n
+
+config CLI_CMD_VIDEO
+	bool "video"
+	default y
+
+config CLI_CMD_AUDIO
+	bool "audio"
+	default y
+
+config CLI_CMD_NET
+	bool "net"
+	default y
+
+config CLI_CMD_FS
+	bool "fs"
+	default y
+
+config CLI_CMD_UART
+	bool "uart"
+	default y
+
+config CLI_CMD_GPIO
+	bool "gpio"
+	default y
+
+config CLI_CMD_I2C
+	bool "i2c"
+	default y
+
+config CLI_CMD_PWM
+	bool "pwm"
+	default y
+
+config CLI_CMD_QRSCAN
+	bool "qrscan"
+	depends on MIDDLEWARE_ZBAR=y
+
+
+config CLI_CMD_NVRAM
+	bool "nvram"
+	default y
+
+config CLI_CMD_ISP
+	bool "isp"
+	default y
+
+config CLI_CMD_SD
+	bool "sd"
+	default y
+
+config CLI_CMD_RTSP
+	bool "rtsp"
+	default y
+	
+config CLI_CMD_DEMUX_MP4
+	bool "demux mp4"
+	default y
+	
+config CLI_CMD_RECORD_MP4
+	bool "record mp4"
+	default y
+
+config CLI_CMD_CONFIG
+	bool "config"
+	default y
+
+config CLI_CMD_USBD
+	bool "USB Device"
+	default y
+
+menuconfig CLI_CMD_USBH
+	bool "USB Host"
+	default y
+	
+if CLI_CMD_USBH
+	config CLI_CMD_MSC
+		bool "MSC Test"
+		depends on CLI_CMD_USBH
+		default y
+endif
+
+
+config CLI_CMD_WIFI
+	bool "wifi"
+	default y
+
+config CLI_CMD_DASHCAM
+	bool "dashcam"
+	depends on APP_DASHCAM
+	default n
+
+config CLI_CMD_TONE
+	bool "tone"
+	depends on MIDDLEWARE_TONE_DETECTION
+	default n
+
+menuconfig CLI_CMD_VERIFY
+	bool "verify"
+	default y
+
+if CLI_CMD_VERIFY
+	config CLI_CMD_VERIFY_MEMTEST
+		bool "memtest"
+		depends on CLI_CMD_VERIFY
+		default y
+	
+	config CLI_CMD_VERIFY_TDTEST
+		bool "tdtest"
+		depends on CLI_CMD_VERIFY
+		depends on MIDDLEWARE_ES_TONE_DETECTION
+		default y
+	
+	config CLI_CMD_VERIFY_AUDIO
+		bool "audio"
+		depends on CLI_CMD_VERIFY
+		default y
+
+	config CLI_CMD_VERIFY_FS
+		bool "fs"
+		depends on CLI_CMD_VERIFY
+		default y
+
+	config CLI_CMD_VERIFY_I2C
+		bool "i2c"
+		depends on CLI_CMD_VERIFY
+		default y
+
+	config CLI_CMD_VERIFY_SF
+		bool "sf"
+		depends on CLI_CMD_VERIFY
+		default y
+
+	config CLI_CMD_VERIFY_SD
+		bool "sd"
+		depends on CLI_CMD_VERIFY
+		default y
+
+	config CLI_CMD_VERIFY_VIDEO
+		bool "video"
+		depends on CLI_CMD_VERIFY
+		default y
+	config CLI_CMD_VERIFY_EASYSETUP
+		bool "easysetup"
+		depends on MIDDLEWARE_EASYSETUP
+		depends on CLI_CMD_VERIFY
+		default y
+endif
+config CLI_CMD_DEBUG
+	bool "debug"
+	default y
+endmenu
+
+

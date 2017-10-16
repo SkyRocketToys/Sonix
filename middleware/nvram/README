@@ -1,0 +1,19 @@
+/**
+
+\page MID_NVRAM nvram middleware Library
+
+\section Scope
+NVRAM(=non-volatile memory) means the memory that keep the data will not disappear after power off. \n
+Now the SN986 series provide some space(64~128KBytes) on serial flash for NVRAM use. \n
+
+\section Support Specification
+nvram middleware library provide the following functions: \n
+1.init,close \n
+2.get information \n
+3.set or get data value \n
+4.commit and sync data to flash \n
+5.reset nvram data from flash to RAM \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

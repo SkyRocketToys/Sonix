@@ -1,0 +1,14 @@
+/**
+
+\page AUTO_MOUNT Auto Mount Library
+
+\section Scope
+Provide SD card hotplug automatically mount/umount function
+
+\section Support Specification
+1.SD card automatically mount  when the user plug the SD card into the SD card slot \n
+2.SD card automatically umount when the user take the SD card off  the SD card slot \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

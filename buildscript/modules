@@ -1,0 +1,312 @@
+##############################
+### MIDDLE release level #####
+##############################
+
+[common]
+crosstool=crosstool-4.5.2
+
+[crosstool-4.5.2]
+path=tool/crosstool-4.5.2
+type=tool
+
+[image-tool]
+path=tool/image-tool
+type=tool
+
+[board-info]
+path=board-info
+type=tool
+
+[platform]
+path=kernel/platform
+depend_module=null
+type=kernel|source
+
+[kernel]
+path=kernel/freertos-8.2.0
+depend_module=platform
+type=kernel|source|compile_rescue
+
+[cli]
+path=system/cli
+depend_module=lib_nonstd_c, middleware_video, middleware_fatfs, middleware_sd, middleware_sf, middleware_record, middleware_rtsp, pwm, middleware_cyassl, gpio, usb_host, usb_device, middleware_usbd, middleware_snx-ez, middleware_file_manager
+type=kernel|source|compile_rescue
+
+[trace]
+path=system/trace
+depend_module=kernel, lib_nonstd_c, timer
+type=kernel|source|compile_rescue
+
+##############################
+###those are middleware modules###
+##############################
+
+[lib_nonstd_c]
+path=middleware/lib_nonstd_c
+depend_module=uart
+type=middleware|source|compile_rescue
+
+[middleware_video]
+path=middleware/video
+depend_module=kernel, lib_nonstd_c, video-codec, isp, timer, wifi
+type=middleware|compile_rescue
+
+[middleware_audio]
+path=middleware/audio
+depend_module=kernel, lib_nonstd_c, audio,  middleware_fatfs
+type=middleware|compile_rescue
+
+[middleware_sd]
+path=middleware/sd
+depend_module=sd
+type=middleware|compile_rescue
+
+[middleware_sf]
+path=middleware/sf
+depend_module=sf
+type=middleware|compile_rescue
+
+[middleware_fatfs]
+path=middleware/fatfs
+depend_module=middleware_sd
+type=middleware|source|compile_rescue
+
+[middleware_record]
+path=middleware/record
+depend_module=middleware_fatfs, middleware_audio, middleware_file_manager
+type=middleware|compile_rescue
+
+[middleware_nvram]
+path=middleware/nvram
+depend_module=kernel, lib_nonstd_c, middleware_sf, middleware_zlib, middleware_gzip
+type=middleware|compile_rescue
+
+[middleware_lwip]
+path=middleware/lwip
+depend_module=kernel
+type=middleware|source|compile_rescue
+
+[middleware_snx-ez]
+path=middleware/snx-ez
+depend_module=kernel, middleware_lwip, middleware_nvram, middleware_cyassl, middleware_td, middleware_zbar-0.10
+type=middleware|compile_rescue
+
+[middleware_rtsp]
+path=middleware/rtsp
+depend_module=kernel, middleware_lwip, middleware_nvram
+type=middleware|compile_rescue
+
+[middleware_cyassl]
+path=middleware/cyassl
+depend_module=middleware_lwip
+type=middleware|source|compile_rescue
+
+[middleware_lib_cloud]
+path=middleware/lib_cloud
+depend_module=kernel, lib_nonstd_c, middleware_json, middleware_lwip, middleware_cyassl, middleware_libwebsockets
+type=middleware|compile_rescue
+
+[middleware_json]
+path=middleware/json
+depend_module=kernel, lib_nonstd_c
+type=middleware|source|compile_rescue
+
+[middleware_td]
+path=middleware/tone_detection
+depend_module=kernel, lib_nonstd_c
+type=middleware|compile_rescue
+
+[middleware_libwebsockets]
+path=middleware/libwebsockets
+depend_module=kernel, middleware_lwip
+type=middleware|source|compile_rescue
+
+[middleware_usbd]
+path=middleware/usbd
+depend_module=kernel, lib_nonstd_c, usb_device, middleware_sd, middleware_fwupgrade, middleware_audio, wifi
+type=middleware|compile_rescue
+
+[middleware_usbh]
+path=middleware/usbh
+depend_module=kernel, lib_nonstd_c, usb_host, usb_host_class
+type=middleware|compile_rescue
+
+[middleware_zbar-0.10]
+path=middleware/zbar-0.10
+depend_module=lib_nonstd_c
+type=middleware|source|compile_rescue
+
+[middleware_fwupgrade]
+path=middleware/fwupgrade
+depend_module=lib_nonstd_c, watch_dog
+type=middleware|compile_rescue
+
+[middleware_automount]
+path=middleware/automount
+depend_module=middleware_sd, middleware_fatfs
+type=middleware|compile_rescue
+
+[middleware_file_manager]
+path=middleware/file_manager
+depend_module=middleware_automount
+type=middleware|compile_rescue
+
+[middleware_zlib]
+path=middleware/lib_zlib
+depend_module=lib_nonstd_c
+type=middleware|source|compile_rescue
+
+[middleware_gzip]
+path=middleware/lib_gzip
+depend_module=lib_nonstd_c
+type=middleware|source|compile_rescue
+
+[middleware_mcu_ctrl]
+path=middleware/mcu_ctrl
+depend_module=lib_nonstd_c, uart
+type=middleware|compile_rescue
+
+##############################
+###those are driver modules###
+##############################
+
+[mac]
+path=driver/sn986xx/mac
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[video-codec]
+path=driver/sn986xx/video-codec
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[uart]
+path=driver/sn986xx/uart
+depend_module=kernel
+type=driver|compile_rescue
+
+[i2c]
+path=driver/sn986xx/i2c
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[sensor]
+path=driver/sn986xx/sensor
+depend_module=kernel, lib_nonstd_c, i2c
+type=driver|compile_rescue
+
+[isp]
+path=driver/sn986xx/isp
+depend_module=kernel, lib_nonstd_c, i2c, sensor, middleware_nvram
+type=driver|compile_rescue
+
+[audio]
+path=driver/sn986xx/audio
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[sf]
+path=driver/sn986xx/sf
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[sd]
+path=driver/sn986xx/sd
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[sdio]
+path=driver/sn986xx/sdio
+depend_module=kernel, lib_nonstd_c, sd
+type=driver|compile_rescue
+
+[gpio]
+path=driver/sn986xx/gpio
+depend_module=kernel, spi, pwm, sf
+type=driver|source|compile_rescue
+
+[pwm]
+path=driver/sn986xx/pwm
+depend_module=kernel
+type=driver|source|compile_rescue
+
+[rtc]
+path=driver/sn986xx/rtc
+depend_module=kernel
+type=driver|compile_rescue
+
+[spi]
+path=driver/sn986xx/spi
+depend_module=kernel
+type=driver|compile_rescue
+
+[timer]
+path=driver/sn986xx/timer
+depend_module=kernel
+type=driver|compile_rescue
+
+[watch_dog]
+path=driver/sn986xx/watch_dog
+depend_module=kernel
+type=driver|source|compile_rescue
+
+[ahb_dma]
+path=driver/sn986xx/ahb_dma
+depend_module=kernel
+type=driver|compile_rescue
+
+[usb_host]
+path=driver/sn986xx/usb_host
+depend_module=kernel, lib_nonstd_c
+type=driver|compile_rescue
+
+[usb_host_class]
+path=driver/sn986xx/usb_host_class
+depend_module=kernel, lib_nonstd_c, usb_host
+type=driver|compile_rescue
+
+[usb_device]
+path=driver/sn986xx/usb_device
+depend_module=kernel, lib_nonstd_c, middleware_video, middleware_sd, timer, gpio
+type=driver|compile_rescue
+
+[wifi]
+path=driver/sn986xx/wifi
+depend_module=kernel, middleware_lwip, usb_host
+type=driver|compile_rescue
+
+[bootinfo]
+path=driver/sn986xx/bootinfo
+depend_module=kernel
+type=driver|compile_rescue
+
+
+##############################
+###those are app modules###
+##############################
+
+[ipcam]
+path=app/ipcam
+depend_module=mac, timer, uart, kernel, cli, wifi, isp, lib_nonstd_c, middleware_lib_cloud, middleware_json, middleware_nvram, middleware_td, middleware_record, middleware_usbd
+type=project|compile_rescue
+
+[integration]
+path=app/integration
+depend_module=mac, timer, uart, kernel, cli, lib_nonstd_c
+type=project|source|compile_rescue
+
+[dashcam]
+path=app/dashcam
+depend_module=mac, timer, uart, kernel, cli, wifi, isp, lib_nonstd_c,bootinfo, middleware_json, middleware_nvram, middleware_record, middleware_fwupgrade, middleware_usbd, middleware_automount
+type=project|source|compile_rescue
+
+[qrcode]
+path=app/qrcode
+depend_module=mac, timer, uart, kernel, cli, wifi, isp, lib_nonstd_c,bootinfo, middleware_json, middleware_nvram, middleware_record, middleware_fwupgrade, middleware_usbd, middleware_automount, middleware_zbar-0.10
+type=project|source|compile_rescue
+
+[mptool]
+path=app/mptool
+depend_module=mac, timer, uart, kernel, cli, wifi, isp, lib_nonstd_c,bootinfo, middleware_json, middleware_nvram, middleware_record, middleware_fwupgrade, middleware_usbd, middleware_automount
+type=project|source|compile_rescue
+

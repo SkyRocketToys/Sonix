@@ -1,0 +1,18 @@
+/**
+
+\page LIB_CLOUD Cloud Library
+
+\section Scope
+Provide the multimedia video/audio data transmission between IPCAM device & mobile phone or PAD by SONiX cloud servers.
+
+\section Support Specification
+Provide the following cloud functions: \n
+1.start,stop \n
+2.cloud command and message callback handling \n
+3.cloud data transmit \n
+4.cloud connection user count calculation \n
+5.cloud data encryption \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

@@ -1,0 +1,156 @@
+####################################################
+#
+# SONiX Flash Layout Configurartion
+#
+####################################################
+
+menu "Flash Layout and firmware/_f setting"
+
+config ENABLE_BURNBIN_LOG
+	bool "Turn on firmware binary console log"
+	default y
+
+choice
+	prompt "Flash size select"
+	default SYSTEM_SERIAL_FLASH_16M
+config SYSTEM_SERIAL_FLASH_1M
+	bool "1M Serial Flash"
+config SYSTEM_SERIAL_FLASH_2M
+	bool "2M Serial Flash"
+
+config SYSTEM_SERIAL_FLASH_4M
+	bool "4M Serial Flash"
+
+config SYSTEM_SERIAL_FLASH_8M
+	bool "8M Serial Flash"
+
+config SYSTEM_SERIAL_FLASH_16M
+	bool "16M Serial Flash"	
+
+endchoice
+
+menu "HW-Setting Size (4KBytes)"
+config	HWSETTING_UPDATE
+	bool "Put hw-setting into FIRMWARE_F.bin"
+	default y
+endmenu
+
+config	BOOTSEL_SIZE
+	int "BOOTSE size (KB)"
+	range 1 256
+	default 4
+	help
+	The set value range is 1 to 256, the unit is KB
+
+menu "Flash Layout Size (4KBytes)"
+config	FLASH_LAYOUT_UPDATE
+	bool "Put flash-layout into FIRMWARE_F.bin"
+	default y
+endmenu
+
+menuconfig NVRAM_PART
+	bool "NVRAM Partition"
+	default y
+if NVRAM_PART
+config	USER_UPDATE
+	bool "Put user into FIRMWARE_F.bin"
+	default y
+config	NVRAM_PART_SIZE
+	int "NVRAM partition size (KB)"
+	range 1 512
+	default 256
+	help
+	The set value range is 1 to 96, the unit is 32KB
+config	FACTORY_SIZE
+	int "FACTORY size (KB)"
+	range 1 1024
+	default 512
+	help
+	The set value range is 1 to max 1024, the unit is KB
+config	DATA_SECTION_SIZE
+	int "DATA_SECTION size (KB)"
+	range 1 1024
+	default 512
+	help
+	The set value range is 1 to 256, the unit is KB
+config	MAX_IQ_SIZE
+	int "Single Max IQ size (KB)"
+	range 0 200
+	default 120
+	help
+	The set value range is 0 to 200, the unit is KB
+
+if MODULE_USB_DEVICE_MSC_SF
+config	STORAGE_SECTION_SIZE
+	int "STORAGE_SECTION size (KB)"
+	range 0 10240
+	default 10240
+	help
+	"The set value range is 0 to 10240, the unit is KB"
+endif
+
+endif
+
+config	RTOS_SIZE
+	int "RTOS size (KB)"
+	range 1 4096
+	default 2048
+	help
+	The set value range is 1 to max 4096, the unit is KB
+
+config	RTOS_IMAGE_ZIP
+	bool "zip rtos image"
+	default y
+	help
+	to zip rtos image
+
+config	NVRAM_FILES_ZIP
+	bool "zip nvram files"
+	default y
+	help
+	to zip files in nvram
+
+config	FIRMWARE_F_SP
+	bool "firmware_f to be as firmware"
+	default n
+	help
+	firmware_f update scetion is the same as firmware
+
+config	BYPASS_TAG
+	bool "firmware used to warm bootup,not burn into sf"
+	default n
+	help
+	firmware used to warm bootup , not burn into sf
+
+endmenu
+
+
+menuconfig RESCUE_SYSTEM_PART
+	bool "Rescue System Partition"
+	default y
+if RESCUE_SYSTEM_PART
+choice
+	prompt "Rescue upgrade support"
+	default RESCUE_USBDEV_UPGRADE
+config RESCUE_USBDEV_UPGRADE
+	bool "UDEV"
+config RESCUE_SD_UPGRADE
+	bool "SD"
+endchoice
+
+config	RESCUE_UPDATE
+	bool "Put Rescue into FIRMWARE_F.bin"
+	default y
+config	RESCUE_SYSTEM
+	bool "Rescue System Partition image Compile"
+	default y
+
+config	RESCUE_PART_SIZE
+	int "RESCUE Partiton Size (KB)"
+	range 1 128
+	default 96
+	help
+	The set value range is 1 to max 128, the unit is KB
+
+endif
+

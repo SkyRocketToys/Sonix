@@ -1,0 +1,19 @@
+/**
+
+\page NON_STD_C Non-Standard C Library
+
+\section Scope
+Provide the standard C/POSIX library.
+
+\section Support Specification
+This C library is based on the ISO C99 standard (ISO/IEC 9899-1999). \n
+Please refer to \n
+http://www.open-std.org/jtc1/sc22/wg14/
+
+\section Documentation
+Please refer to \n
+http://pubs.opengroup.org/onlinepubs/9699919799/
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

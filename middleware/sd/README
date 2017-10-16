@@ -1,0 +1,18 @@
+/**
+
+\page MID_SD SD Middleware Library
+
+\section Scope
+Provide SD card read/write capability for the access of applications \n
+
+\section Support Specification
+Provide the following functions: \n
+1.init \n
+2.read/write \n
+3.get capacity \n
+4.sync data to SD card \n
+5.detect SD card plug-in or take-off \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

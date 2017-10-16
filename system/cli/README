@@ -1,0 +1,12 @@
+/**
+
+\page CLI Sonix RTOS Command Line Interface
+
+\section Scope
+The RTOS CLI porting from http://github.com/petersho/pcli, The license refer from original source
+
+\section Support Specification
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

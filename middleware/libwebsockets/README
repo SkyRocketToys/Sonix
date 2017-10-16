@@ -1,0 +1,18 @@
+/**
+
+\page LIB_WEBSOCKET Web Sockets Library
+
+\section Scope
+The goal of cwebsocket is to provide a portable, high performance websocket client/server, \n
+especially on low power embedded systems. \n
+The websocket client is able to connect and exchange data with any RFC 6455 compliant server. \n
+
+\section Support Specification
+cwebsocket is compliant with the following standards: \n
+1.ANSI C (https://en.wikipedia.org/wiki/ANSI_C) \n
+2.POSIX (https://en.wikipedia.org/wiki/C_POSIX_library) \n
+3.RFC 6455 (http://tools.ietf.org/html/rfc6455) \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

@@ -1,0 +1,26 @@
+/**
+
+\page ZBAR zbar Library
+
+\section Scope
+ZBar is an open source software suite for reading bar codes from various sources, \n
+such as video streams, image files and raw intensity sensors. \n
+
+\section Support Specification
+It supports many popular symbologies (types of bar codes) such as: \n
+1.EAN-13/UPC-A, \n
+2.UPC-E, \n
+3.EAN-8, \n 
+4.Code 128, \n
+5.Code 39, \n
+6.Interleaved 2 of 5 \n
+7.QR Code \n
+
+
+\section Documentation
+Please refer to \n
+http://zbar.sourceforge.net/api/zbar_8h.html#c-decoder
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

@@ -1,0 +1,1001 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ALLOC	gzip.h	103;"	d
+ALLOC	gzip.h	111;"	d
+ASCII	gzip.h	173;"	d
+ASCII_FLAG	gzip.h	162;"	d
+ASMV	tailor.h	178;"	d
+ASMV	tailor.h	202;"	d
+ASMV	tailor.h	63;"	d
+Assert	gzip.h	243;"	d
+Assert	gzip.h	250;"	d
+BAD_OPTION	getopt.c	122;"	d	file:
+BINARY	gzip.h	172;"	d
+BITBUFSIZ	unlzh.c	50;"	d	file:
+BITS	lzw.h	12;"	d
+BIT_MASK	lzw.h	18;"	d
+BLOCK_MODE	lzw.h	28;"	d
+BL_CODES	trees.c	90;"	d	file:
+BMAX	inflate.c	264;"	d	file:
+BYTEORDER	unlzw.c	121;"	d	file:
+Best_Len	match.S	/^#define Best_Len	reg(d0)		\/* unsigned *\/$/;"	d
+Buf_size	bits.c	77;"	d	file:
+CBIT	unlzh.c	64;"	d	file:
+CHAR_BIT	unlzh.c	43;"	d	file:
+CLEAR	lzw.h	35;"	d
+CODE_BIT	unlzh.c	65;"	d	file:
+COMMENT	gzip.h	166;"	d
+COMPRESSED	gzip.h	55;"	d
+CONTINUATION	gzip.h	163;"	d
+CRPFLG	unzip.c	27;"	d	file:
+CRYPT	crypt.h	6;"	d
+Chain_Length	match.S	/^#define Chain_Length	reg(d6)		\/* unsigned *\/$/;"	d
+Code	trees.c	172;"	d	file:
+Cur_Match	match.S	/^#define Cur_Match	reg(d1)		\/* Ipos *\/$/;"	d
+DECLARE	gzip.h	102;"	d
+DECLARE	gzip.h	110;"	d
+DEFLATED	gzip.h	59;"	d
+DGROUP	msdos/match.asm	/^DGROUP  group _DATA$/;"	l
+DICBIT	unlzh.c	39;"	d	file:
+DICSIZ	unlzh.c	40;"	d	file:
+DIRENT	tailor.h	100;"	d
+DIRENT	tailor.h	180;"	d
+DIRENT	tailor.h	200;"	d
+DIRENT	tailor.h	39;"	d
+DIRENT	tailor.h	95;"	d
+DIR_OPT	gzip.c	100;"	d	file:
+DIR_OPT	gzip.c	105;"	d	file:
+DIR_OPT	gzip.c	108;"	d	file:
+DIR_OPT	gzip.c	89;"	d	file:
+DIR_OPT	gzip.c	95;"	d	file:
+DIST_BUFSIZE	gzip.h	94;"	d
+DIST_BUFSIZE	gzip.h	96;"	d
+DIST_BUFSIZE	trees.c	120;"	d	file:
+DUMPBITS	inflate.c	223;"	d	file:
+DYN_ALLOC	tailor.h	135;"	d
+DYN_ALLOC	tailor.h	219;"	d
+DYN_TREES	trees.c	105;"	d	file:
+D_CODES	trees.c	87;"	d	file:
+Dad	trees.c	173;"	d	file:
+ENCRYPTED	gzip.h	167;"	d
+END_BLOCK	trees.c	81;"	d	file:
+ENOENT	primos/include/errno.h	14;"	d
+EQUAL	deflate.c	244;"	d	file:
+ERROR	gzip.h	50;"	d
+EXPAND	tailor.h	106;"	d
+EXPAND	tailor.h	165;"	d
+EXPAND	tailor.h	191;"	d
+EXPAND	tailor.h	307;"	d
+EXPAND	tailor.h	96;"	d
+EXTERN	gzip.h	101;"	d
+EXTERN	gzip.h	109;"	d
+EXTFLG	unzip.c	28;"	d	file:
+EXTHDR	unzip.c	37;"	d	file:
+EXTRA_FIELD	gzip.h	164;"	d
+FAST	deflate.c	115;"	d	file:
+FIRST	lzw.h	36;"	d
+FLUSH_BLOCK	deflate.c	570;"	d	file:
+FREE	gzip.h	107;"	d
+FREE	gzip.h	112;"	d
+Freq	trees.c	171;"	d	file:
+GZIP_MAGIC	gzip.h	156;"	d
+HASH_BITS	deflate.c	87;"	d	file:
+HASH_BITS	deflate.c	90;"	d	file:
+HASH_BITS	deflate.c	93;"	d	file:
+HASH_MASK	deflate.c	108;"	d	file:
+HASH_SIZE	deflate.c	107;"	d	file:
+HAVE_SYS_UTIME_H	tailor.h	112;"	d
+HAVE_SYS_UTIME_H	tailor.h	44;"	d
+HAVE_SYS_UTIME_H	tailor.h	86;"	d
+HAVE_SYS_UTIME_H	tailor.h	93;"	d
+HAVE_UNISTD_H	tailor.h	181;"	d
+HAVE_UNISTD_H	tailor.h	199;"	d
+HEAP_SIZE	trees.c	176;"	d	file:
+H_SHIFT	deflate.c	166;"	d	file:
+INBUFSIZ	gzip.h	76;"	d
+INBUFSIZ	gzip.h	78;"	d
+INBUF_EXTRA	gzip.h	81;"	d
+INIT_BITS	lzw.h	14;"	d
+INSERT_STRING	deflate.c	278;"	d	file:
+IPos	deflate.c	/^typedef unsigned IPos;$/;"	t	file:
+LENGTH_CODES	trees.c	75;"	d	file:
+LG	gzip.h	239;"	d
+LITERALS	trees.c	78;"	d	file:
+LITERALS	unpack.c	24;"	d	file:
+LIT_BUFSIZE	trees.c	110;"	d	file:
+LIT_BUFSIZE	trees.c	113;"	d	file:
+LIT_BUFSIZE	trees.c	115;"	d	file:
+LOCCRC	unzip.c	31;"	d	file:
+LOCEXT	unzip.c	35;"	d	file:
+LOCFIL	unzip.c	34;"	d	file:
+LOCFLG	unzip.c	26;"	d	file:
+LOCHDR	unzip.c	36;"	d	file:
+LOCHOW	unzip.c	29;"	d	file:
+LOCLEN	unzip.c	33;"	d	file:
+LOCSIG	unzip.c	25;"	d	file:
+LOCSIZ	unzip.c	32;"	d	file:
+LOCTIM	unzip.c	30;"	d	file:
+LZHED	gzip.h	57;"	d
+LZH_MAGIC	gzip.h	158;"	d
+LZW	revision.h	13;"	d
+LZW_MAGIC	lzw.h	16;"	d
+LZW_RESERVED	lzw.h	33;"	d
+L_CODES	trees.c	84;"	d	file:
+L__do_scan	match.S	/^L__do_scan:$/;"	l
+L__length_ok	match.S	/^L__length_ok:$/;"	l
+L__limit_ok	match.S	/^L__limit_ok:$/;"	l
+L__long_loop	match.S	/^L__long_loop:$/;"	l
+L__return	match.S	/^L__return:$/;"	l
+L__scan_loop	match.S	/^L__scan_loop:$/;"	l
+L__short_loop	match.S	/^L__short_loop:$/;"	l
+Len	trees.c	174;"	d	file:
+Limit	match.S	/^#define Limit		reg(d5)		\/* IPos *\/$/;"	d
+Loop_Counter	match.S	/^#define Loop_Counter	reg(d2)		\/* int *\/$/;"	d
+MAGIC1	sample/add.c	11;"	d	file:
+MAGIC1	sample/sub.c	38;"	d	file:
+MAGIC2	sample/add.c	12;"	d	file:
+MAGIC2	sample/sub.c	39;"	d	file:
+MAKE_LEGAL_NAME	tailor.h	295;"	d
+MAKE_LEGAL_NAME	tailor.h	297;"	d
+MAX	trees.c	324;"	d	file:
+MAXARGS	amiga/tailor.c	24;"	d	file:
+MAXCODE	unlzw.c	34;"	d	file:
+MAXMATCH	unlzh.c	57;"	d	file:
+MAXPATH	amiga/tailor.c	23;"	d	file:
+MAXSEG_64K	tailor.h	35;"	d
+MAXSEG_64K	tailor.h	88;"	d
+MAX_BITLEN	unpack.c	18;"	d	file:
+MAX_BITS	trees.c	69;"	d	file:
+MAX_BL_BITS	trees.c	72;"	d	file:
+MAX_DIST	gzip.h	188;"	d
+MAX_DIST	match.S	/^#define MAX_DIST	WSIZE - MAX_MATCH - MIN_MATCH - 1$/;"	d
+MAX_DIST	match.S	/^#define MAX_DIST 	(WSIZE - MAX_MATCH - MIN_MATCH - 1)$/;"	d
+MAX_DIST	msdos/match.asm	/^	MAX_DIST      equ (WSIZE-MIN_LOOKAHEAD)$/;"	d
+MAX_DIST	sample/add.c	13;"	d	file:
+MAX_DIST	sample/sub.c	40;"	d	file:
+MAX_EXT_CHARS	tailor.h	125;"	d
+MAX_EXT_CHARS	tailor.h	209;"	d
+MAX_EXT_CHARS	tailor.h	52;"	d
+MAX_EXT_CHARS	tailor.h	75;"	d
+MAX_MATCH	gzip.h	180;"	d
+MAX_MATCH	match.S	/^#define MAX_MATCH	258$/;"	d
+MAX_MATCH	match.S	/^#define MAX_MATCH 	258$/;"	d
+MAX_MATCH	msdos/match.asm	/^        MAX_MATCH     equ 258$/;"	d
+MAX_MATCH2	match.S	/^#define MAX_MATCH2	$128 \/* MAX_MATCH\/2-1 *\/$/;"	d
+MAX_METHODS	gzip.h	60;"	d
+MAX_PATH_LEN	gzip.c	167;"	d	file:
+MAX_PATH_LEN	tailor.h	116;"	d
+MAX_PATH_LEN	tailor.h	207;"	d
+MAX_PATH_LEN	tailor.h	50;"	d
+MAX_PATH_LEN	tailor.h	72;"	d
+MAX_PEEK	unpack.c	27;"	d	file:
+MAX_SUFFIX	tailor.h	288;"	d
+MAX_SUFFIX	tailor.h	290;"	d
+MIN	unpack.c	15;"	d	file:
+MIN_LOOKAHEAD	gzip.h	183;"	d
+MIN_LOOKAHEAD	msdos/match.asm	/^	MIN_LOOKAHEAD equ (MAX_MATCH+MIN_MATCH+1)$/;"	d
+MIN_MATCH	gzip.h	179;"	d
+MIN_MATCH	match.S	/^#define MIN_MATCH	3$/;"	d
+MIN_MATCH	msdos/match.asm	/^	MIN_MATCH     equ 3$/;"	d
+MIN_PART	tailor.h	302;"	d
+MSDOS	tailor.h	14;"	d
+MSDOS	tailor.h	22;"	d
+Match	match.S	/^#define Match		reg(a1)		\/* *uch *\/$/;"	d
+Match_Ini	match.S	/^#define Match_Ini	reg(a4)		\/* *uch *\/$/;"	d
+NC	unlzh.c	62;"	d	file:
+NEEDBITS	inflate.c	222;"	d	file:
+NEXTBYTE	inflate.c	217;"	d	file:
+NEXTBYTE	inflate.c	220;"	d	file:
+NIL	deflate.c	112;"	d	file:
+NLENGTH	gzip.c	88;"	d	file:
+NLENGTH	gzip.c	91;"	d	file:
+NOALLIGN	unlzw.c	125;"	d	file:
+NOMEMCPY	tailor.h	253;"	d
+NO_CHOWN	tailor.h	117;"	d
+NO_CHOWN	tailor.h	186;"	d
+NO_CHOWN	tailor.h	211;"	d
+NO_CHOWN	tailor.h	222;"	d
+NO_CHOWN	tailor.h	238;"	d
+NO_CHOWN	tailor.h	54;"	d
+NO_CHOWN	tailor.h	79;"	d
+NO_DIR	gzip.c	107;"	d	file:
+NO_DIR	tailor.h	103;"	d
+NO_FCNTL_H	tailor.h	169;"	d
+NO_FCNTL_H	tailor.h	187;"	d
+NO_FILE	gzip.h	152;"	d
+NO_MEMORY_H	tailor.h	235;"	d
+NO_MULTIPLE_DOTS	tailor.h	124;"	d
+NO_MULTIPLE_DOTS	tailor.h	157;"	d
+NO_MULTIPLE_DOTS	tailor.h	208;"	d
+NO_MULTIPLE_DOTS	tailor.h	51;"	d
+NO_MULTIPLE_DOTS	tailor.h	74;"	d
+NO_OFF_T	tailor.h	37;"	d
+NO_SIZE_CHECK	tailor.h	240;"	d
+NO_SIZE_CHECK	tailor.h	57;"	d
+NO_STDIN_FSTAT	tailor.h	183;"	d
+NO_STDIN_FSTAT	tailor.h	221;"	d
+NO_STDIN_FSTAT	tailor.h	239;"	d
+NO_ST_INO	tailor.h	261;"	d
+NO_SYMLINK	tailor.h	185;"	d
+NO_SYMLINK	tailor.h	213;"	d
+NO_SYMLINK	tailor.h	241;"	d
+NO_UTIME	tailor.h	164;"	d
+NO_UTIME	tailor.h	223;"	d
+NO_UTIME	tailor.h	237;"	d
+NO_UTIME	tailor.h	41;"	d
+NO_UTIME_H	tailor.h	104;"	d
+NO_UTIME_H	tailor.h	113;"	d
+NO_UTIME_H	tailor.h	236;"	d
+NO_UTIME_H	tailor.h	45;"	d
+NO_UTIME_H	tailor.h	87;"	d
+NO_UTIME_H	tailor.h	94;"	d
+NP	unlzh.c	67;"	d	file:
+NPT	unlzh.c	72;"	d	file:
+NPT	unlzh.c	74;"	d	file:
+NT	unlzh.c	68;"	d	file:
+N_MAX	inflate.c	265;"	d	file:
+OF	gzip.h	10;"	d
+OF	gzip.h	8;"	d
+OK	gzip.h	49;"	d
+OLD_GZIP_MAGIC	gzip.h	157;"	d
+OPEN	tailor.h	225;"	d
+OPEN	tailor.h	319;"	d
+OPTIONS_VAR	tailor.h	162;"	d
+OPTIONS_VAR	tailor.h	280;"	d
+ORIG_NAME	gzip.h	165;"	d
+OS2	tailor.h	18;"	d
+OS_CODE	tailor.h	129;"	d
+OS_CODE	tailor.h	161;"	d
+OS_CODE	tailor.h	177;"	d
+OS_CODE	tailor.h	203;"	d
+OS_CODE	tailor.h	226;"	d
+OS_CODE	tailor.h	246;"	d
+OS_CODE	tailor.h	257;"	d
+OS_CODE	tailor.h	268;"	d
+OS_CODE	tailor.h	60;"	d
+OS_CODE	tailor.h	83;"	d
+OUTBUFSIZ	gzip.h	85;"	d
+OUTBUFSIZ	gzip.h	87;"	d
+OUTBUF_EXTRA	gzip.h	90;"	d
+O_BINARY	gzip.c	144;"	d	file:
+O_BINARY	primos/include/fcntl.h	16;"	d
+O_BINARY	tailor.h	192;"	d
+O_CREAT	gzip.c	151;"	d	file:
+O_CREAT	primos/include/fcntl.h	19;"	d
+O_EXCL	gzip.c	154;"	d	file:
+O_EXCL	primos/include/fcntl.h	17;"	d
+O_NDELAY	primos/include/fcntl.h	18;"	d
+O_RDONLY	primos/include/fcntl.h	12;"	d
+O_RDWR	primos/include/fcntl.h	14;"	d
+O_TRUNC	primos/include/fcntl.h	20;"	d
+O_WRONLY	primos/include/fcntl.h	13;"	d
+PACKED	gzip.h	56;"	d
+PACK_MAGIC	gzip.h	155;"	d
+PART_SEP	gzip.c	181;"	d	file:
+PART_SEP	gzip.c	183;"	d	file:
+PATCHLEVEL	revision.h	8;"	d
+PATH_SEP	tailor.h	154;"	d
+PATH_SEP	tailor.h	218;"	d
+PATH_SEP	tailor.h	233;"	d
+PATH_SEP	tailor.h	272;"	d
+PATH_SEP2	tailor.h	114;"	d
+PATH_SEP2	tailor.h	155;"	d
+PATH_SEP2	tailor.h	175;"	d
+PATH_SEP2	tailor.h	205;"	d
+PATH_SEP2	tailor.h	48;"	d
+PATH_SEP2	tailor.h	70;"	d
+PATH_SEP3	tailor.h	115;"	d
+PATH_SEP3	tailor.h	206;"	d
+PATH_SEP3	tailor.h	49;"	d
+PATH_SEP3	tailor.h	71;"	d
+PBIT	unlzh.c	69;"	d	file:
+PERMUTE	getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon5	file:
+PKZIP_MAGIC	gzip.h	159;"	d
+PROTO	tailor.h	118;"	d
+PROTO	tailor.h	220;"	d
+PROTO	tailor.h	55;"	d
+PROTO	tailor.h	80;"	d
+Pos	deflate.c	/^typedef ush Pos;$/;"	t	file:
+Prev_Address	match.S	/^#define Prev_Address	reg(a2)		\/* *Pos *\/$/;"	d
+RAND_HEAD_LEN	crypt.h	9;"	d
+RECORD_IO	tailor.h	159;"	d
+RECORD_IO	tailor.h	242;"	d
+RECORD_IO	tailor.h	311;"	d
+REG1	unlzw.c	39;"	d	file:
+REG1	unlzw.c	56;"	d	file:
+REG1	unlzw.c	57;"	d	file:
+REG10	unlzw.c	48;"	d	file:
+REG10	unlzw.c	92;"	d	file:
+REG10	unlzw.c	93;"	d	file:
+REG11	unlzw.c	49;"	d	file:
+REG11	unlzw.c	96;"	d	file:
+REG11	unlzw.c	97;"	d	file:
+REG12	unlzw.c	100;"	d	file:
+REG12	unlzw.c	101;"	d	file:
+REG12	unlzw.c	50;"	d	file:
+REG13	unlzw.c	104;"	d	file:
+REG13	unlzw.c	105;"	d	file:
+REG13	unlzw.c	51;"	d	file:
+REG14	unlzw.c	108;"	d	file:
+REG14	unlzw.c	109;"	d	file:
+REG14	unlzw.c	52;"	d	file:
+REG15	unlzw.c	112;"	d	file:
+REG15	unlzw.c	113;"	d	file:
+REG15	unlzw.c	53;"	d	file:
+REG16	unlzw.c	116;"	d	file:
+REG16	unlzw.c	117;"	d	file:
+REG16	unlzw.c	54;"	d	file:
+REG2	unlzw.c	40;"	d	file:
+REG2	unlzw.c	60;"	d	file:
+REG2	unlzw.c	61;"	d	file:
+REG3	unlzw.c	41;"	d	file:
+REG3	unlzw.c	64;"	d	file:
+REG3	unlzw.c	65;"	d	file:
+REG4	unlzw.c	42;"	d	file:
+REG4	unlzw.c	68;"	d	file:
+REG4	unlzw.c	69;"	d	file:
+REG5	unlzw.c	43;"	d	file:
+REG5	unlzw.c	72;"	d	file:
+REG5	unlzw.c	73;"	d	file:
+REG6	unlzw.c	44;"	d	file:
+REG6	unlzw.c	76;"	d	file:
+REG6	unlzw.c	77;"	d	file:
+REG7	unlzw.c	45;"	d	file:
+REG7	unlzw.c	80;"	d	file:
+REG7	unlzw.c	81;"	d	file:
+REG8	unlzw.c	46;"	d	file:
+REG8	unlzw.c	84;"	d	file:
+REG8	unlzw.c	85;"	d	file:
+REG9	unlzw.c	47;"	d	file:
+REG9	unlzw.c	88;"	d	file:
+REG9	unlzw.c	89;"	d	file:
+REGISTERS	unlzw.c	37;"	d	file:
+REPZ_11_138	trees.c	152;"	d	file:
+REPZ_3_10	trees.c	149;"	d	file:
+REP_3_6	trees.c	146;"	d	file:
+REQUIRE_ORDER	getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon5	file:
+RESERVED	gzip.h	168;"	d
+RETSIGTYPE	gzip.h	39;"	d
+RETURN_IN_ORDER	getopt.c	/^  REQUIRE_ORDER, PERMUTE, RETURN_IN_ORDER$/;"	e	enum:__anon5	file:
+REVDATE	revision.h	9;"	d
+RW_USER	gzip.c	164;"	d	file:
+SEEK_END	gzip.c	171;"	d	file:
+SEPARATOR	util.c	277;"	d	file:
+SET_BINARY_MODE	tailor.h	120;"	d
+SET_BINARY_MODE	tailor.h	315;"	d
+SET_BINARY_MODE	tailor.h	61;"	d
+SET_BINARY_MODE	tailor.h	84;"	d
+SH	gzip.h	238;"	d
+SIGTERM	tailor.h	248;"	d
+SLOW	deflate.c	116;"	d	file:
+SMALLEST	trees.c	422;"	d	file:
+STATIC_TREES	trees.c	104;"	d	file:
+STDC_HEADERS	tailor.h	119;"	d
+STDC_HEADERS	tailor.h	163;"	d
+STDC_HEADERS	tailor.h	176;"	d
+STDC_HEADERS	tailor.h	198;"	d
+STDC_HEADERS	tailor.h	234;"	d
+STDC_HEADERS	tailor.h	56;"	d
+STDC_HEADERS	tailor.h	81;"	d
+STORED	gzip.h	54;"	d
+STORED_BLOCK	trees.c	103;"	d	file:
+SUFFIX_SEP	tailor.h	156;"	d
+SYSDIR	tailor.h	184;"	d
+S_ENFMT	primos/include/sysStat.h	57;"	d
+S_IEXEC	primos/include/sysStat.h	55;"	d
+S_IFBLK	primos/include/sysStat.h	64;"	d
+S_IFCHR	primos/include/sysStat.h	63;"	d
+S_IFDIR	primos/include/sysStat.h	61;"	d
+S_IFIFO	primos/include/sysStat.h	67;"	d
+S_IFLNK	primos/include/sysStat.h	65;"	d
+S_IFMT	primos/include/sysStat.h	59;"	d
+S_IFREG	primos/include/sysStat.h	60;"	d
+S_IFSOCK	primos/include/sysStat.h	66;"	d
+S_IREAD	primos/include/sysStat.h	53;"	d
+S_IRGRP	primos/include/sysStat.h	75;"	d
+S_IROTH	primos/include/sysStat.h	79;"	d
+S_IRUSR	gzip.c	159;"	d	file:
+S_IRUSR	primos/include/sysStat.h	71;"	d
+S_IRWXG	primos/include/sysStat.h	74;"	d
+S_IRWXO	primos/include/sysStat.h	78;"	d
+S_IRWXU	primos/include/sysStat.h	70;"	d
+S_ISBLK	primos/include/sysStat.h	86;"	d
+S_ISCHR	primos/include/sysStat.h	87;"	d
+S_ISDIR	gzip.c	135;"	d	file:
+S_ISDIR	primos/include/sysStat.h	84;"	d
+S_ISFIFO	primos/include/sysStat.h	88;"	d
+S_ISGID	primos/include/sysStat.h	51;"	d
+S_ISREG	gzip.c	138;"	d	file:
+S_ISREG	primos/include/sysStat.h	83;"	d
+S_ISUID	primos/include/sysStat.h	50;"	d
+S_ISVTX	primos/include/sysStat.h	52;"	d
+S_IWGRP	primos/include/sysStat.h	76;"	d
+S_IWOTH	primos/include/sysStat.h	80;"	d
+S_IWRITE	primos/include/sysStat.h	54;"	d
+S_IWUSR	gzip.c	162;"	d	file:
+S_IWUSR	primos/include/sysStat.h	72;"	d
+S_IXGRP	primos/include/sysStat.h	77;"	d
+S_IXOTH	primos/include/sysStat.h	81;"	d
+S_IXUSR	primos/include/sysStat.h	73;"	d
+Scan	match.S	/^#define Scan		reg(a0)		\/* *uch *\/$/;"	d
+Scan_End	match.S	/^#define Scan_End	reg(d4)		\/* unsigned short *\/$/;"	d
+Scan_Ini	match.S	/^#define Scan_Ini	reg(a3)		\/* *uch *\/$/;"	d
+Scan_Start	match.S	/^#define Scan_Start	reg(d3)		\/* unsigned short *\/$/;"	d
+Scan_Test	match.S	/^#define Scan_Test	reg(d7)$/;"	d
+Stack_Pointer	match.S	/^#define Stack_Pointer	reg(sp)$/;"	d
+Str_desc	vms/vms.c	/^struct	Str_desc {$/;"	s	file:
+TBIT	unlzh.c	70;"	d	file:
+THRESHOLD	unlzh.c	58;"	d	file:
+TIME_OPT	gzip.c	117;"	d	file:
+TIME_OPT	gzip.c	121;"	d	file:
+TIME_OPT	gzip.c	127;"	d	file:
+TIME_OPT	gzip.c	131;"	d	file:
+TOO_FAR	deflate.c	120;"	d	file:
+Trace	gzip.h	244;"	d
+Trace	gzip.h	251;"	d
+Tracec	gzip.h	247;"	d
+Tracec	gzip.h	254;"	d
+Tracecv	gzip.h	248;"	d
+Tracecv	gzip.h	255;"	d
+Tracev	gzip.h	245;"	d
+Tracev	gzip.h	252;"	d
+Tracevv	gzip.h	246;"	d
+Tracevv	gzip.h	253;"	d
+UCHAR_MAX	unlzh.c	47;"	d	file:
+UNKNOWN	gzip.h	171;"	d
+UPDATE_HASH	deflate.c	268;"	d	file:
+VERSION	revision.h	7;"	d
+WARN	gzip.h	258;"	d
+WARNING	gzip.h	51;"	d
+WMASK	deflate.c	109;"	d	file:
+WSIZE	gzip.h	176;"	d
+WSIZE	match.S	/^#define    WSIZE	$32768$/;"	d
+WSIZE	match.S	/^#define WSIZE		32768$/;"	d
+WSIZE	msdos/match.asm	/^	WSIZE         equ 32768		; keep in sync with zip.h !$/;"	d
+Z_SUFFIX	tailor.h	126;"	d
+Z_SUFFIX	tailor.h	158;"	d
+Z_SUFFIX	tailor.h	210;"	d
+Z_SUFFIX	tailor.h	284;"	d
+Z_SUFFIX	tailor.h	53;"	d
+Z_SUFFIX	tailor.h	76;"	d
+_DATA	msdos/match.asm	/^_DATA    segment  word public 'DATA'$/;"	l
+_GETOPT_H	getopt.h	19;"	d
+_IFBLK	primos/include/sysStat.h	44;"	d
+_IFCHR	primos/include/sysStat.h	43;"	d
+_IFDIR	primos/include/sysStat.h	38;"	d
+_IFIFO	primos/include/sysStat.h	47;"	d
+_IFLNK	primos/include/sysStat.h	45;"	d
+_IFMT	primos/include/sysStat.h	36;"	d
+_IFREG	primos/include/sysStat.h	37;"	d
+_IFSOCK	primos/include/sysStat.h	46;"	d
+_NO_PROTO	getopt.c	35;"	d	file:
+_TEXT	msdos/match.asm	/^_TEXT   segment word public 'CODE'$/;"	l
+_UTIME_H	amiga/utime.h	2;"	d
+__ERRNO_H__	primos/include/errno.h	10;"	d
+__FCNTL_H__	primos/include/fcntl.h	10;"	d
+__STDLIB_H__	primos/include/stdlib.h	10;"	d
+__SYS_STAT_H__	primos/include/sysStat.h	10;"	d
+__SYS_TYPES_H__	primos/include/sysTypes.h	10;"	d
+_expand_args	amiga/tailor.c	/^void _expand_args (oargc, oargv)$/;"	f
+_getopt_internal	getopt.c	/^_getopt_internal (argc, argv, optstring, longopts, longind, long_only)$/;"	f
+_longest_match	match.S	/^_longest_match:	\/* int longest_match(cur_match) *\/$/;"	l
+_longest_match	match.S	/^_longest_match:$/;"	l
+_longest_match	msdos/match.asm	/^_longest_match  proc far		 ; 'proc far' for large model$/;"	l
+_longest_match	msdos/match.asm	/^_longest_match  proc near		 ; 'proc near' for compact model$/;"	l
+_match_init	match.S	/^_match_init:$/;"	l
+_match_init	msdos/match.asm	/^_match_init proc far			; 'proc far' for large model$/;"	l
+_match_init	msdos/match.asm	/^_match_init proc near			; 'proc near' for compact model$/;"	l
+a	sample/add.c	/^char a[MAX_DIST];	\/* last byte buffer for up to MAX_DIST differences *\/$/;"	v
+a	sample/sub.c	/^char a[MAX_DIST];	\/* last byte buffer for up to MAX_DIST differences *\/$/;"	v
+abort_gzip	gzip.c	/^RETSIGTYPE abort_gzip()$/;"	f
+actime	amiga/utime.h	/^  time_t actime;$/;"	m	struct:utimbuf
+actime	gzip.c	/^         time_t actime;$/;"	m	struct:utimbuf	file:
+add_envopt	util.c	/^char *add_envopt(argcp, argvp, env)$/;"	f
+addr	vms/vms.c	/^    char    *addr;$/;"	m	struct:Str_desc	file:
+args	gzip.c	/^char **args = NULL;   \/* argv pointer if GZIP env variable defined *\/$/;"	v
+ascii	gzip.c	/^int ascii = 0;        \/* convert end-of-lines to local OS conventions *\/$/;"	v
+ascii2pascii	primos/primos.c	/^int ascii2pascii(c)$/;"	f
+b	inflate.c	/^  uch b;                \/* number of bits in this code or subcode *\/$/;"	m	struct:huft	file:
+b1	unlzw.c	/^	char_type	b1;$/;"	m	struct:bytes::__anon4	file:
+b2	unlzw.c	/^	char_type	b2;$/;"	m	struct:bytes::__anon4	file:
+b3	unlzw.c	/^	char_type	b3;$/;"	m	struct:bytes::__anon4	file:
+b4	unlzw.c	/^	char_type	b4;$/;"	m	struct:bytes::__anon4	file:
+base_dist	trees.c	/^local int near base_dist[D_CODES];$/;"	v
+base_length	trees.c	/^local int near base_length[LENGTH_CODES];$/;"	v
+basename	util.c	/^char *basename(fname)$/;"	f
+bb	inflate.c	/^ulg bb;                         \/* bit buffer *\/$/;"	v
+bi_buf	bits.c	/^local unsigned short bi_buf;$/;"	v
+bi_init	bits.c	/^void bi_init (zipfile)$/;"	f
+bi_reverse	bits.c	/^unsigned bi_reverse(code, len)$/;"	f
+bi_valid	bits.c	/^local int bi_valid;$/;"	v
+bi_windup	bits.c	/^void bi_windup()$/;"	f
+bitbuf	unlzh.c	/^local ush       bitbuf;$/;"	v
+bitbuf	unpack.c	/^local ulg bitbuf;$/;"	v
+bitcount	unlzh.c	/^local int       bitcount;$/;"	v
+bits_sent	bits.c	/^  ulg bits_sent;   \/* bit length of the compressed data *\/$/;"	v
+bk	inflate.c	/^unsigned bk;                    \/* bits in bit buffer *\/$/;"	v
+bl_count	trees.c	/^local ush near bl_count[MAX_BITS+1];$/;"	v
+bl_desc	trees.c	/^local tree_desc near bl_desc =$/;"	v
+bl_order	trees.c	/^local uch near bl_order[BL_CODES]$/;"	v
+bl_tree	trees.c	/^local ct_data near bl_tree[2*BL_CODES+1];$/;"	v
+block_mode	unlzw.c	/^int block_mode = BLOCK_MODE; \/* block compress mode -C compatible with 2.0 *\/$/;"	v
+block_start	deflate.c	/^long block_start;$/;"	v
+blocksize	unlzh.c	/^local unsigned blocksize;$/;"	v
+border	inflate.c	/^static unsigned border[] = {    \/* Order of the bit length code lengths *\/$/;"	v	file:
+build_bl_tree	trees.c	/^local int build_bl_tree()$/;"	f
+build_tree	trees.c	/^local void build_tree(desc)$/;"	f
+build_tree	unpack.c	/^local void build_tree()$/;"	f
+bytes	unlzw.c	/^    } bytes;$/;"	m	union:bytes	typeref:struct:bytes::__anon4	file:
+bytes	unlzw.c	/^union	bytes {$/;"	u	file:
+bytes_in	gzip.c	/^long bytes_in;             \/* number of input bytes *\/$/;"	v
+bytes_out	gzip.c	/^long bytes_out;            \/* number of output bytes *\/$/;"	v
+c_len	unlzh.c	86;"	d	file:
+c_table	unlzh.c	96;"	d	file:
+caddr_t	primos/include/sysTypes.h	/^typedef char   *caddr_t;$/;"	t
+casemap	tailor.h	127;"	d
+casemap	tailor.h	160;"	d
+casemap	tailor.h	212;"	d
+casemap	tailor.h	243;"	d
+casemap	tailor.h	276;"	d
+casemap	tailor.h	58;"	d
+casemap	tailor.h	77;"	d
+cc	inflate.c	/^  uch cc;$/;"	v
+char_type	unlzw.c	/^typedef	unsigned char	char_type;$/;"	t	file:
+check_match	deflate.c	/^local void check_match(start, match, length)$/;"	f
+check_match	deflate.c	505;"	d	file:
+check_ofname	gzip.c	/^local int check_ofname()$/;"	f
+check_zipfile	unzip.c	/^int check_zipfile(in)$/;"	f
+chmod	primos/primos.c	/^int chmod(path, mode)$/;"	f
+chmod	tailor.h	224;"	d
+clear_bitbuf	unpack.c	84;"	d	file:
+clear_bufs	util.c	/^void clear_bufs()$/;"	f
+clear_tab_prefixof	unlzw.c	168;"	d	file:
+clear_tab_prefixof	unlzw.c	174;"	d	file:
+cmp_code_int	unlzw.c	/^typedef unsigned long 	cmp_code_int;$/;"	t	file:
+code	trees.c	/^        ush  code;       \/* bit string *\/$/;"	m	union:ct_data::__anon1	file:
+code_int	unlzw.c	/^typedef          long   code_int;$/;"	t	file:
+compr_level	deflate.c	/^local int compr_level;$/;"	v
+compress_block	trees.c	/^local void compress_block(ltree, dtree)$/;"	f
+compressed_len	trees.c	/^local ulg compressed_len; \/* total bit length of compressed file *\/$/;"	v
+config	deflate.c	/^typedef struct config {$/;"	s	file:
+config	deflate.c	/^} config;$/;"	t	typeref:struct:config	file:
+configuration_table	deflate.c	/^local config configuration_table[10] = {$/;"	v
+const	getopt.c	29;"	d	file:
+const	util.c	225;"	d	file:
+copy	util.c	/^int copy(in, out)$/;"	f
+copy_block	bits.c	/^void copy_block(buf, len, header)$/;"	f
+copy_stat	gzip.c	/^local void copy_stat(ifstat)$/;"	f
+count_int	unlzw.c	/^typedef unsigned long 	count_int;$/;"	t	file:
+count_short	unlzw.c	/^typedef unsigned short	count_short;$/;"	t	file:
+cpdext	inflate.c	/^static ush cpdext[] = {         \/* Extra bits for distance codes *\/$/;"	v	file:
+cpdist	inflate.c	/^static ush cpdist[] = {         \/* Copy offsets for distance codes 0..29 *\/$/;"	v	file:
+cplens	inflate.c	/^static ush cplens[] = {         \/* Copy lengths for literal codes 257..285 *\/$/;"	v	file:
+cplext	inflate.c	/^static ush cplext[] = {         \/* Extra bits for literal codes 257..285 *\/$/;"	v	file:
+crc	zip.c	/^local ulg crc;       \/* crc on uncompressed file data *\/$/;"	v
+crc_32_tab	util.c	/^ulg crc_32_tab[] = {$/;"	v
+create_outfile	gzip.c	/^local int create_outfile()$/;"	f
+ct_data	trees.c	/^typedef struct ct_data {$/;"	s	file:
+ct_data	trees.c	/^} ct_data;$/;"	t	typeref:struct:ct_data	file:
+ct_init	trees.c	/^void ct_init(attr, methodp)$/;"	f
+ct_tally	trees.c	/^int ct_tally (dist, lc)$/;"	f
+cur_match	match.S	/^#define cur_match   20(%esp)$/;"	d
+cur_match	msdos/match.asm	/^        cur_match    equ word ptr [bp+4] ; [bp+4] for compact model$/;"	d
+cur_match	msdos/match.asm	/^        cur_match    equ word ptr [bp+6] ; [bp+6] for large model$/;"	d
+d_code	trees.c	317;"	d	file:
+d_desc	trees.c	/^local tree_desc near d_desc =$/;"	v
+dad	trees.c	/^        ush  dad;        \/* father node in Huffman tree *\/$/;"	m	union:ct_data::__anon2	file:
+dbits	inflate.c	/^int dbits = 6;          \/* bits in base distance lookup table *\/$/;"	v
+de_stack	unlzw.c	178;"	d	file:
+decode	unlzh.c	/^local unsigned decode(count, buffer)$/;"	f
+decode_c	unlzh.c	/^local unsigned decode_c()$/;"	f
+decode_p	unlzh.c	/^local unsigned decode_p()$/;"	f
+decode_start	unlzh.c	/^local void decode_start()$/;"	f
+decompress	gzip.c	/^int decompress = 0;   \/* decompress (-d) *\/$/;"	v
+decrypt	unzip.c	/^int decrypt;        \/* flag to turn on decryption *\/$/;"	v
+deflate	deflate.c	/^ulg deflate()$/;"	f
+deflate_fast	deflate.c	/^local ulg deflate_fast()$/;"	f
+depth	trees.c	/^local uch near depth[2*L_CODES+1];$/;"	v
+dev_t	primos/include/sysTypes.h	/^typedef short	dev_t;$/;"	t
+dir_type	gzip.c	/^         typedef struct direct dir_type;$/;"	t	typeref:struct:direct	file:
+dir_type	gzip.c	/^       typedef struct direct dir_type;$/;"	t	typeref:struct:direct	file:
+dir_type	gzip.c	/^     typedef struct direct dir_type;$/;"	t	typeref:struct:direct	file:
+dir_type	gzip.c	/^   typedef struct dirent dir_type;$/;"	t	typeref:struct:dirent	file:
+direct	tailor.h	189;"	d
+display_ratio	util.c	/^void display_ratio(num, den, file)$/;"	f
+dist_code	trees.c	/^local uch dist_code[512];$/;"	v
+dl	trees.c	/^    } dl;$/;"	m	struct:ct_data	typeref:union:ct_data::__anon2	file:
+do_exit	gzip.c	/^local void do_exit(exitcode)$/;"	f
+do_list	gzip.c	/^local void do_list(ifd, method)$/;"	f
+do_lzw	gzip.c	/^int do_lzw = 0;       \/* generate output compatible with old compress (-Z) *\/$/;"	v
+do_scan	match.S	/^do_scan:$/;"	l
+do_scan	msdos/match.asm	/^do_scan:$/;"	l
+do_stat	gzip.c	/^local int do_stat(name, sbuf)$/;"	f
+done	unlzh.c	/^local int done; \/* set at end of input *\/$/;"	v
+dyn_dtree	trees.c	/^local ct_data near dyn_dtree[2*D_CODES+1]; \/* distance tree *\/$/;"	v
+dyn_ltree	trees.c	/^local ct_data near dyn_ltree[HEAP_SIZE];   \/* literal and length tree *\/$/;"	v
+dyn_tree	trees.c	/^    ct_data near *dyn_tree;      \/* the dynamic tree *\/$/;"	m	struct:tree_desc	file:
+e	inflate.c	/^  uch e;                \/* number of extra bits or operation *\/$/;"	m	struct:huft	file:
+elems	trees.c	/^    int     elems;               \/* max number of elements in the tree *\/$/;"	m	struct:tree_desc	file:
+else	msdos/match.asm	/^else$/;"	l
+endif	msdos/match.asm	/^endif$/;"	l
+env	gzip.c	/^char *env;            \/* contents of GZIP env variable *\/$/;"	v
+eofile	deflate.c	/^local int           eofile;        \/* flag set at end of input file *\/$/;"	v
+error	match.S	/^  error: DYN_ALLOC not yet supported in match.s$/;"	l
+error	match.S	/^ error: this asm version is for 386 or 680x0 only$/;"	l
+error	msdos/match.asm	/^error:  call    _exit$/;"	l
+error	util.c	/^void error(m)$/;"	f
+exchange	getopt.c	/^exchange (argv)$/;"	f	file:
+exit_code	gzip.c	/^int exit_code = OK;   \/* program exit code *\/$/;"	v
+expand_next_file	amiga/tailor.c	/^static char *expand_next_file (pattern)$/;"	f	file:
+ext_header	unzip.c	/^int ext_header = 0; \/* set if extended local header *\/$/;"	v
+extra_base	trees.c	/^    int     extra_base;          \/* base index for extra_bits *\/$/;"	m	struct:tree_desc	file:
+extra_bits	trees.c	/^    int     near *extra_bits;    \/* extra bits for each code or NULL *\/$/;"	m	struct:tree_desc	file:
+extra_blbits	trees.c	/^local int near extra_blbits[BL_CODES]\/* extra bits for each bit length code *\/$/;"	v
+extra_dbits	trees.c	/^local int near extra_dbits[D_CODES] \/* extra bits for each distance code *\/$/;"	v
+extra_lbits	trees.c	/^local int near extra_lbits[LENGTH_CODES] \/* extra bits for each length code *\/$/;"	v
+fc	trees.c	/^    } fc;$/;"	m	struct:ct_data	typeref:union:ct_data::__anon1	file:
+fcalloc	msdos/tailor.c	/^void * fcalloc(items, size)$/;"	f
+fcalloc	tailor.h	141;"	d
+fcalloc	tailor.h	146;"	d
+fcalloc	tailor.h	148;"	d
+fcfree	msdos/tailor.c	/^void fcfree(ptr)$/;"	f
+fcfree	tailor.h	142;"	d
+fcfree	tailor.h	150;"	d
+file_method	trees.c	/^int *file_method;      \/* pointer to DEFLATE or STORE *\/$/;"	v
+file_read	zip.c	/^int file_read(buf, size)$/;"	f
+file_t	gzip.h	/^typedef int file_t;     \/* Do not use stdio *\/$/;"	t
+file_type	trees.c	/^ush *file_type;        \/* pointer to UNKNOWN, BINARY or ASCII *\/$/;"	v
+fill_inbuf	util.c	/^int fill_inbuf(eof_ok)$/;"	f
+fill_window	deflate.c	/^local void fill_window()$/;"	f
+fillbuf	unlzh.c	/^local void fillbuf(n)  \/* Shift bitbuf n bits left, read n bits *\/$/;"	f
+find_file_c	vms/vms.c	/^int find_file_c(in,out,out_len,context)$/;"	f
+first_nonopt	getopt.c	/^static int first_nonopt;$/;"	v	file:
+flag	getopt.h	/^  int *flag;$/;"	m	struct:option
+flag_bit	trees.c	/^local uch flag_bit;         \/* current bit used in flags *\/$/;"	v
+flag_buf	trees.c	/^local uch near flag_buf[(LIT_BUFSIZE\/8)];$/;"	v
+flags	trees.c	/^local uch flags;            \/* current flags not yet saved in flag_buf *\/$/;"	v
+flush_block	trees.c	/^ulg flush_block(buf, stored_len, eof)$/;"	f
+flush_outbuf	util.c	/^void flush_outbuf()$/;"	f
+flush_output	inflate.c	153;"	d	file:
+flush_window	util.c	/^void flush_window()$/;"	f
+force	gzip.c	/^int force = 0;        \/* don't ask questions, compress links (-f) *\/$/;"	v
+foreground	gzip.c	/^int foreground;       \/* set if program run in foreground *\/$/;"	v
+freq	trees.c	/^        ush  freq;       \/* frequency count *\/$/;"	m	union:ct_data::__anon1	file:
+fstat	primos/primos.c	/^int fstat(fd, buf)$/;"	f
+gen_bitlen	trees.c	/^local void gen_bitlen(desc)$/;"	f
+gen_codes	trees.c	/^local void gen_codes (tree, max_code)$/;"	f
+get_byte	gzip.h	202;"	d
+get_char	tailor.h	245;"	d
+get_char	tailor.h	323;"	d
+get_istat	gzip.c	/^local int get_istat(iname, sbuf)$/;"	f
+get_method	gzip.c	/^local int get_method(in)$/;"	f
+get_suffix	gzip.c	/^local char *get_suffix(name)$/;"	f
+getbits	unlzh.c	/^local unsigned getbits(n)$/;"	f
+getenv	primos/primos.c	/^char *getenv(var)$/;"	f
+getopt	getopt.c	/^getopt (argc, argv, optstring)$/;"	f
+getopt_long	getopt.c	/^getopt_long (argc, argv, options, long_options, opt_index)$/;"	f
+gid_t	primos/include/sysTypes.h	/^typedef short	gid_t;$/;"	t
+good_length	deflate.c	/^   ush good_length; \/* reduce lazy search above this match length *\/$/;"	m	struct:config	file:
+good_match	deflate.c	/^unsigned near good_match;$/;"	v
+has_arg	getopt.h	/^  int has_arg;$/;"	m	struct:option
+head	gzip.h	122;"	d
+head	gzip.h	126;"	d
+header_bytes	zip.c	/^long header_bytes;   \/* number of bytes in gzip header *\/$/;"	v
+heap	trees.c	/^local int near heap[2*L_CODES+1]; \/* heap used to build the Huffman trees *\/$/;"	v
+heap_len	trees.c	/^local int heap_len;               \/* number of elements in the heap *\/$/;"	v
+heap_max	trees.c	/^local int heap_max;               \/* element of largest frequency *\/$/;"	v
+help	gzip.c	/^local void help()$/;"	f
+huf_decode_start	unlzh.c	/^local void huf_decode_start()$/;"	f
+huft	inflate.c	/^struct huft {$/;"	s	file:
+huft_build	inflate.c	/^int huft_build(b, n, s, d, e, t, m)$/;"	f
+huft_free	inflate.c	/^int huft_free(t)$/;"	f
+hufts	inflate.c	/^unsigned hufts;         \/* track memory usage *\/$/;"	v
+if	msdos/match.asm	/^if (WSIZE-32768)$/;"	l
+ifd	gzip.c	/^int  ifd;                  \/* input file descriptor *\/$/;"	v
+ifdef	msdos/match.asm	/^ifdef DYN_ALLOC$/;"	l
+ifdef	msdos/match.asm	/^ifdef SS_NEQ_DS$/;"	l
+ifdef	msdos/match.asm	/^ifdef __LARGE__$/;"	l
+ifile_size	gzip.c	/^long ifile_size;      \/* input file size, -1 for devices (debug only) *\/$/;"	v
+ifname	gzip.c	/^char ifname[MAX_PATH_LEN]; \/* input file name *\/$/;"	v
+ifndef	msdos/match.asm	/^ifndef DYN_ALLOC$/;"	l
+in_prev_args	amiga/tailor.c	/^static int in_prev_args (arg, argv, argc)$/;"	f	file:
+inflate	inflate.c	/^int inflate()$/;"	f
+inflate_block	inflate.c	/^int inflate_block(e)$/;"	f
+inflate_codes	inflate.c	/^int inflate_codes(tl, td, bl, bd)$/;"	f
+inflate_dynamic	inflate.c	/^int inflate_dynamic()$/;"	f
+inflate_fixed	inflate.c	/^int inflate_fixed()$/;"	f
+inflate_stored	inflate.c	/^int inflate_stored()$/;"	f
+init_block	trees.c	/^local void init_block()$/;"	f
+init_getbits	unlzh.c	/^local void init_getbits()$/;"	f
+ino_t	primos/include/sysTypes.h	/^typedef short	ino_t;$/;"	t
+inptr	gzip.c	/^unsigned inptr;            \/* index of next byte to be processed in inbuf *\/$/;"	v
+input	unlzw.c	152;"	d	file:
+input	unlzw.c	157;"	d	file:
+input_len	trees.c	/^local ulg input_len;      \/* total byte length of input file *\/$/;"	v
+ins_h	deflate.c	/^local unsigned ins_h;  \/* hash index of string to be inserted *\/$/;"	v
+insize	gzip.c	/^unsigned insize;           \/* valid bytes in inbuf *\/$/;"	v
+isatty	tailor.h	228;"	d
+isize	gzip.h	139;"	d
+istat	gzip.c	/^struct stat istat;         \/* status for input file *\/$/;"	v	typeref:struct:stat
+j	unlzh.c	/^local int j;    \/* remaining bytes to copy *\/$/;"	v
+key	unzip.c	/^char *key;          \/* not used--needed to link crypt.c *\/$/;"	v
+l_buf	trees.c	251;"	d	file:
+l_desc	trees.c	/^local tree_desc near l_desc =$/;"	v
+last_dist	trees.c	/^local unsigned last_dist;   \/* running index in d_buf *\/$/;"	v
+last_flags	trees.c	/^local unsigned last_flags;  \/* running index in flag_buf *\/$/;"	v
+last_lit	trees.c	/^local unsigned last_lit;    \/* running index in l_buf *\/$/;"	v
+last_member	gzip.c	/^int last_member;      \/* set for .zip and .Z files *\/$/;"	v
+last_nonopt	getopt.c	/^static int last_nonopt;$/;"	v	file:
+lbits	inflate.c	/^int lbits = 9;          \/* bits in base literal\/length lookup table *\/$/;"	v
+leaves	unpack.c	/^local int leaves [MAX_BITLEN+1]; \/* Number of leaves for each bit length *\/$/;"	v
+left	unlzh.c	79;"	d	file:
+len	trees.c	/^        ush  len;        \/* length of bit string *\/$/;"	m	union:ct_data::__anon2	file:
+length	vms/vms.c	/^    int     length;$/;"	m	struct:Str_desc	file:
+length_code	trees.c	/^local uch length_code[MAX_MATCH-MIN_MATCH+1];$/;"	v
+level	gzip.c	/^int level = 6;        \/* compression level *\/$/;"	v
+license	gzip.c	/^local void license()$/;"	f
+license_msg	gzip.c	/^static char  *license_msg[] = {$/;"	v	file:
+limit_ok	match.S	/^limit_ok:$/;"	l
+limit_ok	msdos/match.asm	/^limit_ok:$/;"	l
+list	gzip.c	/^int list = 0;         \/* list the file contents (-l) *\/$/;"	v
+lit_base	unpack.c	/^local int lit_base[MAX_BITLEN+1];$/;"	v
+literal	unpack.c	/^local uch literal[LITERALS];$/;"	v
+lm_init	deflate.c	/^void lm_init (pack_level, flags)$/;"	f
+local	gzip.h	42;"	d
+long_loop	match.S	/^long_loop:$/;"	l
+long_loop	msdos/match.asm	/^long_loop:$/;"	l
+longest_match	deflate.c	/^int longest_match(cur_match)$/;"	f
+longopts	gzip.c	/^struct option longopts[] =$/;"	v	typeref:struct:option
+look_bits	unpack.c	75;"	d	file:
+lookahead	deflate.c	/^local unsigned      lookahead;     \/* number of valid bytes ahead in window *\/$/;"	v
+lstat	primos/primos.c	/^int lstat(path, buf)$/;"	f
+lzw	lzw.c	/^int lzw(in, out)$/;"	f
+ma_start	msdos/match.asm	/^        ma_start equ cs:match_start	; does not work on OS\/2$/;"	d
+ma_start	msdos/match.asm	/^        ma_start equ ss:_match_start$/;"	d
+main	getopt.c	/^main (argc, argv)$/;"	f
+main	gzip.c	/^int main (argc, argv)$/;"	f
+main	sample/add.c	/^int main()$/;"	f
+main	sample/makecrc.c	/^main()$/;"	f
+main	sample/sub.c	/^int main(argc, argv)$/;"	f
+main	sample/zread.c	/^int main(argc, argv)$/;"	f
+make_ofname	gzip.c	/^local int make_ofname()$/;"	f
+make_simple_name	util.c	/^void make_simple_name(name)$/;"	f
+make_table	unlzh.c	/^local void make_table(nchar, bitlen, tablebits, table)$/;"	f
+mask_bits	inflate.c	/^ush mask_bits[] = {$/;"	v
+match_start	deflate.c	/^      unsigned near match_start;   \/* start of matching string *\/$/;"	v
+match_start	msdos/match.asm	/^    match_start dw  0			; copy of _match_start if SS != DS$/;"	d
+max_chain	deflate.c	/^   ush max_chain;$/;"	m	struct:config	file:
+max_chain_length	deflate.c	/^unsigned near max_chain_length;$/;"	v
+max_code	trees.c	/^    int     max_code;            \/* largest code with non zero frequency *\/$/;"	m	struct:tree_desc	file:
+max_files	vms/vms.c	/^static int max_files = 10000;$/;"	v	file:
+max_insert_length	deflate.c	193;"	d	file:
+max_lazy	deflate.c	/^   ush max_lazy;    \/* do not perform lazy search above this match length *\/$/;"	m	struct:config	file:
+max_lazy_match	deflate.c	/^local unsigned int max_lazy_match;$/;"	v
+max_len	unpack.c	/^local int max_len;        \/* maximum bit length of Huffman codes *\/$/;"	v
+max_length	trees.c	/^    int     max_length;          \/* max bit length for the codes *\/$/;"	m	struct:tree_desc	file:
+maxbits	gzip.c	/^int maxbits = BITS;   \/* max bits per code for LZW *\/$/;"	v
+maxmatch	match.S	/^maxmatch:$/;"	l
+maxmatch	msdos/match.asm	/^maxmatch:                               ; come here if maximum match$/;"	l
+memcmp	gzip.h	34;"	d
+memcpy	gzip.h	33;"	d
+memzero	gzip.h	28;"	d
+memzero	gzip.h	35;"	d
+method	gzip.c	/^int method = DEFLATED;\/* compression method *\/$/;"	v
+mismatch	match.S	/^mismatch:$/;"	l
+mismatch	msdos/match.asm	/^mismatch:$/;"	l
+mode_t	primos/include/sysTypes.h	/^typedef short	mode_t;$/;"	t
+modtime	amiga/utime.h	/^  time_t modtime;$/;"	m	struct:utimbuf
+modtime	gzip.c	/^         time_t modtime;$/;"	m	struct:utimbuf	file:
+msg_done	lzw.c	/^static int msg_done = 0;$/;"	v	file:
+my_index	getopt.c	/^my_index (str, chr)$/;"	f	file:
+my_index	getopt.c	165;"	d	file:
+my_strlen	getopt.c	/^my_strlen (str)$/;"	f	file:
+my_strlen	getopt.c	166;"	d	file:
+n	inflate.c	/^    ush n;              \/* literal, length base, or distance base *\/$/;"	m	union:huft::__anon3	file:
+name	getopt.h	/^  const char *name;$/;"	m	struct:option
+name_too_long	gzip.c	/^local int name_too_long(name, statb)$/;"	f
+near	tailor.h	33;"	d
+near	tailor.h	66;"	d
+near	tailor.h	89;"	d
+near	tailor.h	90;"	d
+nextchar	getopt.c	/^static char *nextchar;$/;"	v	file:
+nice	msdos/match.asm	/^        nice     equ cs:nice_match$/;"	d
+nice	msdos/match.asm	/^        nice     equ ss:_nice_match$/;"	d
+nice_length	deflate.c	/^   ush nice_length; \/* quit search above this match length *\/$/;"	m	struct:config	file:
+nice_match	deflate.c	/^  int near nice_match; \/* Stop searching when current match exceeds this *\/$/;"	v
+nice_match	deflate.c	220;"	d	file:
+nice_match	msdos/match.asm	/^    nice_match  dw  0			; copy of _nice_match  if SS != DS$/;"	d
+no_argument	getopt.h	93;"	d
+no_name	gzip.c	/^int no_name = -1;     \/* don't save or restore the original file name *\/$/;"	v
+no_time	gzip.c	/^int no_time = -1;     \/* don't save or restore the original file time *\/$/;"	v
+ofd	gzip.c	/^int  ofd;                  \/* output file descriptor *\/$/;"	v
+off_t	gzip.c	/^  typedef long off_t;$/;"	t	file:
+off_t	primos/include/sysTypes.h	/^typedef long	off_t;$/;"	t
+ofname	gzip.c	/^char ofname[MAX_PATH_LEN]; \/* output file name *\/$/;"	v
+opt_len	trees.c	/^local ulg opt_len;        \/* bit length of current block with optimal trees *\/$/;"	v
+optarg	getopt.c	/^char *optarg = 0;$/;"	v
+opterr	getopt.c	/^int opterr = 1;$/;"	v
+optind	getopt.c	/^int optind = 0;$/;"	v
+option	getopt.h	/^struct option$/;"	s
+optional_argument	getopt.h	95;"	d
+optopt	getopt.c	/^int optopt = BAD_OPTION;$/;"	v
+ordering	getopt.c	/^} ordering;$/;"	v	typeref:enum:__anon5	file:
+orig_len	unpack.c	/^local ulg orig_len;       \/* original uncompressed length *\/$/;"	v
+outcnt	gzip.c	/^unsigned outcnt;           \/* bytes in output buffer *\/$/;"	v
+parents	unpack.c	/^local int parents[MAX_BITLEN+1]; \/* Number of parents for each bit length *\/$/;"	v
+parsearg chapterzzz	texinfo.tex	/^\\outer\\def\\chapter{\\parsearg\\chapterzzz}$/;"	c
+part_nb	gzip.c	/^int part_nb;          \/* number of parts in .gz file *\/$/;"	v
+peek_bits	unpack.c	/^local int peek_bits; \/* Number of peek bits currently used *\/$/;"	v
+pkzip	unzip.c	/^int pkzip = 0;      \/* set for a pkzip file *\/$/;"	v
+pop	msdos/match.asm	/^	pop	ds$/;"	d
+pop	msdos/match.asm	/^        pop     di$/;"	d
+pqdownheap	trees.c	/^local void pqdownheap(tree, k)$/;"	f
+pqremove	trees.c	430;"	d	file:
+prefix_len	unpack.c	52;"	d	file:
+prev	msdos/match.asm	/^        prev    equ  _prev    ; offset part$/;"	d
+prev	msdos/match.asm	/^        prev    equ 0         ; offset forced to zero$/;"	d
+prev_length	deflate.c	/^unsigned int near prev_length;$/;"	v
+prev_ptr	msdos/match.asm	/^prev_ptr    dw  seg _prev		; pointer to the prev array$/;"	d
+prev_seg	msdos/match.asm	/^        prev_seg  equ cs:prev_ptr$/;"	d
+prev_seg	msdos/match.asm	/^        prev_seg  equ ss:_prev[2]	; works on OS\/2 if SS == DS$/;"	d
+primos_gid	primos/primos.c	/^gid_t  primos_gid = 42;$/;"	v
+primos_mode	primos/primos.c	/^mode_t primos_mode = 600;$/;"	v
+primos_uid	primos/primos.c	/^uid_t  primos_uid = 42;$/;"	v
+progname	gzip.c	/^char *progname;       \/* program name *\/$/;"	v
+pt_len	unlzh.c	/^local uch pt_len[NPT];$/;"	v
+pt_table	unlzh.c	/^local ush pt_table[256];$/;"	v
+ptr_offset	msdos/tailor.c	/^static ush ptr_offset = 0;$/;"	v	file:
+push	msdos/match.asm	/^	push	ds$/;"	d
+push	msdos/match.asm	/^        push    di$/;"	d
+put_byte	gzip.h	210;"	d
+put_char	tailor.h	244;"	d
+put_char	tailor.h	327;"	d
+put_long	gzip.h	227;"	d
+put_short	gzip.h	216;"	d
+put_ubyte	gzip.h	212;"	d
+quiet	gzip.c	/^int quiet = 0;        \/* be very quiet (-q) *\/$/;"	v
+rcsid	bits.c	/^static char rcsid[] = "$Id: bits.c,v 0.9 1993\/06\/11 10:16:58 jloup Exp $";$/;"	v	file:
+rcsid	crypt.c	/^static char rcsid[] = "$Id: crypt.c,v 0.6 1993\/03\/22 09:48:47 jloup Exp $";$/;"	v	file:
+rcsid	deflate.c	/^static char rcsid[] = "$Id: deflate.c,v 0.15 1993\/06\/24 10:53:53 jloup Exp $";$/;"	v	file:
+rcsid	gzip.c	/^static char rcsid[] = "$Id: gzip.c,v 0.24 1993\/06\/24 10:52:07 jloup Exp $";$/;"	v	file:
+rcsid	inflate.c	/^static char rcsid[] = "$Id: inflate.c,v 0.14 1993\/06\/10 13:27:04 jloup Exp $";$/;"	v	file:
+rcsid	lzw.c	/^static char rcsid[] = "$Id: lzw.c,v 0.9 1993\/06\/10 13:27:31 jloup Exp $";$/;"	v	file:
+rcsid	msdos/tailor.c	/^static char rcsid[] = "$Id: tailor.c,v 0.8 1993\/02\/24 18:24:54 jloup Exp $";$/;"	v	file:
+rcsid	sample/makecrc.c	/^static char rcsid[] = "$Id: makecrc.c,v 0.6 1993\/05\/28 07:42:59 jloup Exp $";$/;"	v	file:
+rcsid	trees.c	/^static char rcsid[] = "$Id: trees.c,v 0.12 1993\/06\/10 13:27:54 jloup Exp $";$/;"	v	file:
+rcsid	unlzh.c	/^static char rcsid[] = "$Id: unlzh.c,v 1.2 1993\/06\/24 10:59:01 jloup Exp $";$/;"	v	file:
+rcsid	unlzw.c	/^static char rcsid[] = "$Id: unlzw.c,v 0.15 1993\/06\/10 13:28:35 jloup Exp $";$/;"	v	file:
+rcsid	unpack.c	/^static char rcsid[] = "$Id: unpack.c,v 1.4 1993\/06\/11 19:25:36 jloup Exp $";$/;"	v	file:
+rcsid	unzip.c	/^static char rcsid[] = "$Id: unzip.c,v 0.13 1993\/06\/10 13:29:00 jloup Exp $";$/;"	v	file:
+rcsid	util.c	/^static char rcsid[] = "$Id: util.c,v 0.15 1993\/06\/15 09:04:13 jloup Exp $";$/;"	v	file:
+rcsid	zip.c	/^static char rcsid[] = "$Id: zip.c,v 0.17 1993\/06\/10 13:29:25 jloup Exp $";$/;"	v	file:
+read_buf	bits.c	/^int (*read_buf) OF((char *buf, unsigned size));$/;"	v
+read_c_len	unlzh.c	/^local void read_c_len()$/;"	f
+read_error	util.c	/^void read_error()$/;"	f
+read_pt_len	unlzh.c	/^local void read_pt_len(nn, nbit, i_special)$/;"	f
+read_tree	unpack.c	/^local void read_tree()$/;"	f
+recursive	gzip.c	/^int recursive = 0;    \/* recurse through directories (-r) *\/$/;"	v
+remove_ofname	gzip.c	/^int  remove_ofname = 0;	   \/* remove output file on error *\/$/;"	v
+required_argument	getopt.h	94;"	d
+reset_times	gzip.c	/^local void reset_times (name, statb)$/;"	f
+right	unlzh.c	80;"	d	file:
+same_file	gzip.c	/^local int same_file(stat1, stat2)$/;"	f
+save_orig_name	gzip.c	/^int save_orig_name;   \/* set if original name must be saved *\/$/;"	v
+scan_tree	trees.c	/^local void scan_tree (tree, max_code)$/;"	f
+seekable	gzip.h	232;"	d
+send_all_trees	trees.c	/^local void send_all_trees(lcodes, dcodes, blcodes)$/;"	f
+send_bits	bits.c	/^void send_bits(value, length)$/;"	f
+send_code	trees.c	308;"	d	file:
+send_code	trees.c	312;"	d	file:
+send_tree	trees.c	/^local void send_tree (tree, max_code)$/;"	f
+set_file_type	trees.c	/^local void set_file_type()$/;"	f
+short_loop	match.S	/^short_loop:$/;"	l
+short_loop	msdos/match.asm	/^short_loop:$/;"	l
+shorten_name	gzip.c	/^local void shorten_name(name)$/;"	f
+sig_type	gzip.c	/^typedef RETSIGTYPE (*sig_type) OF((int));$/;"	t	file:
+size_t	primos/include/sysTypes.h	/^typedef long	size_t;$/;"	t
+skip_bits	unpack.c	82;"	d	file:
+slide	inflate.c	112;"	d	file:
+smaller	trees.c	441;"	d	file:
+st_atime	primos/include/sysStat.h	/^	time_t	st_atime;$/;"	m	struct:stat
+st_blksize	primos/include/sysStat.h	/^	long	st_blksize;$/;"	m	struct:stat
+st_blocks	primos/include/sysStat.h	/^	long	st_blocks;$/;"	m	struct:stat
+st_ctime	primos/include/sysStat.h	/^	time_t	st_ctime;$/;"	m	struct:stat
+st_dev	primos/include/sysStat.h	/^	dev_t	st_dev;       $/;"	m	struct:stat
+st_gid	primos/include/sysStat.h	/^	gid_t	st_gid;$/;"	m	struct:stat
+st_ino	primos/include/sysStat.h	/^	ino_t	st_ino;$/;"	m	struct:stat
+st_mode	primos/include/sysStat.h	/^	mode_t	st_mode;$/;"	m	struct:stat
+st_mtime	primos/include/sysStat.h	/^	time_t	st_mtime;$/;"	m	struct:stat
+st_nlink	primos/include/sysStat.h	/^	short	st_nlink;$/;"	m	struct:stat
+st_rdev	primos/include/sysStat.h	/^	dev_t	st_rdev;$/;"	m	struct:stat
+st_rwlock	primos/include/sysStat.h	/^	short	st_rwlock;      \/* Primos read\/write lock *\/$/;"	m	struct:stat
+st_size	primos/include/sysStat.h	/^	off_t	st_size;$/;"	m	struct:stat
+st_type	primos/include/sysStat.h	/^	short	st_type;        \/* Primos file type *\/$/;"	m	struct:stat
+st_uid	primos/include/sysStat.h	/^	uid_t	st_uid;$/;"	m	struct:stat
+stat	primos/include/sysStat.h	/^struct	stat {$/;"	s
+stat	primos/primos.c	/^int stat(path, buf)$/;"	f
+static_dtree	trees.c	/^local ct_data near static_dtree[D_CODES];$/;"	v
+static_len	trees.c	/^local ulg static_len;     \/* bit length of current block with static trees *\/$/;"	v
+static_ltree	trees.c	/^local ct_data near static_ltree[L_CODES+2];$/;"	v
+static_tree	trees.c	/^    ct_data near *static_tree;   \/* corresponding static tree or NULL *\/$/;"	m	struct:tree_desc	file:
+strchr	gzip.h	31;"	d
+strcspn	util.c	/^int strcspn(s, reject)$/;"	f
+strequ	gzip.c	305;"	d	file:
+strlwr	util.c	/^char *strlwr(s)$/;"	f
+strrchr	gzip.h	32;"	d
+strspn	util.c	/^int strspn(s, accept)$/;"	f
+strstart	deflate.c	/^      unsigned near strstart;      \/* start of string to insert *\/$/;"	v
+subbitbuf	unlzh.c	/^local unsigned  subbitbuf;$/;"	v
+t	inflate.c	/^    struct huft *t;     \/* pointer to next level of table *\/$/;"	m	union:huft::__anon3	typeref:struct:huft::__anon3::huft	file:
+tab_prefix	gzip.h	121;"	d
+tab_prefix	unlzw.c	/^   ush *tab_prefix[2];$/;"	v
+tab_prefix0	gzip.h	125;"	d
+tab_prefixof	unlzw.c	167;"	d	file:
+tab_prefixof	unlzw.c	173;"	d	file:
+tab_suffix	gzip.h	119;"	d
+tab_suffixof	unlzw.c	179;"	d	file:
+test	gzip.c	/^int test = 0;         \/* test .gz file integrity *\/$/;"	v
+the_end	match.S	/^the_end:$/;"	l
+the_end	msdos/match.asm	/^the_end:$/;"	l
+time_stamp	gzip.c	/^long time_stamp;      \/* original time stamp (modification time) *\/$/;"	v
+time_t	primos/include/sysTypes.h	/^typedef long	time_t;$/;"	t
+to_stdout	gzip.c	/^int to_stdout = 0;    \/* output to stdout (-c) *\/$/;"	v
+tolow	gzip.h	235;"	d
+total_in	gzip.c	/^long total_in = 0;         \/* input bytes for all files *\/$/;"	v
+total_out	gzip.c	/^long total_out = 0;        \/* output bytes for all files *\/$/;"	v
+translate_eol	gzip.h	233;"	d
+treat_dir	gzip.c	/^local void treat_dir(dir)$/;"	f
+treat_file	gzip.c	/^local void treat_file(iname)$/;"	f
+treat_stdin	gzip.c	/^local void treat_stdin()$/;"	f
+tree_desc	trees.c	/^typedef struct tree_desc {$/;"	s	file:
+tree_desc	trees.c	/^} tree_desc;$/;"	t	typeref:struct:tree_desc	file:
+try_byte	gzip.h	203;"	d
+uch	gzip.h	/^typedef unsigned char  uch;$/;"	t
+uid_t	primos/include/sysTypes.h	/^typedef short	uid_t;$/;"	t
+ulg	gzip.h	/^typedef unsigned long  ulg;$/;"	t
+unlink	primos/primos.c	/^unlink(path)$/;"	f
+unlink	tailor.h	167;"	d
+unlzh	unlzh.c	/^int unlzh(in, out)$/;"	f
+unlzw	unlzw.c	/^int unlzw(in, out) $/;"	f
+unpack	unpack.c	/^int unpack(in, out)$/;"	f
+unzip	unzip.c	/^int unzip(in, out)$/;"	f
+updcrc	util.c	/^ulg updcrc(s, n)$/;"	f
+usage	gzip.c	/^local void usage()$/;"	f
+ush	gzip.h	/^typedef unsigned short ush;$/;"	t
+utimbuf	amiga/utime.h	/^struct utimbuf {$/;"	s
+utimbuf	gzip.c	/^       struct utimbuf {$/;"	s	file:
+utime	amiga/tailor.c	/^int utime (path, times)$/;"	f
+v	inflate.c	/^  } v;$/;"	m	struct:huft	typeref:union:huft::__anon3	file:
+val	getopt.h	/^  int val;$/;"	m	struct:option
+valid	unpack.c	/^local int valid;                  \/* number of valid bits in bitbuf *\/$/;"	v
+verbose	gzip.c	/^int verbose = 0;      \/* be verbose (-v) *\/$/;"	v
+version	gzip.c	/^local void version()$/;"	f
+vms_argv	vms/vms.c	/^static char **vms_argv = NULL;$/;"	v	file:
+vms_expand_args	vms/vms.c	/^vms_expand_args(old_argc, argv)$/;"	f
+voidp	gzip.h	/^   typedef char *voidp;$/;"	t
+voidp	gzip.h	/^   typedef void *voidp;$/;"	t
+warn	util.c	/^void warn(a, b)$/;"	f
+window	msdos/match.asm	/^        window  equ  _window$/;"	d
+window	msdos/match.asm	/^        window  equ 0$/;"	d
+window_off	msdos/match.asm	/^	window_off equ 0$/;"	d
+window_off	msdos/match.asm	/^	window_off equ offset _window$/;"	d
+window_seg	msdos/match.asm	/^        window_seg equ _window[2]$/;"	d
+window_seg	msdos/match.asm	/^        window_seg equ wseg$/;"	d
+window_size	deflate.c	/^ulg window_size = (ulg)2*WSIZE;$/;"	v
+word	unlzw.c	/^    long  word;$/;"	m	union:bytes	file:
+work	gzip.c	/^int (*work) OF((int infile, int outfile)) = zip; \/* function to call *\/$/;"	v
+wp	inflate.c	152;"	d	file:
+write_buf	util.c	/^void write_buf(fd, buf, cnt)$/;"	f
+write_error	util.c	/^void write_error()$/;"	f
+wseg	msdos/match.asm	/^	wseg    dw seg _window$/;"	d
+xmalloc	util.c	/^voidp xmalloc (size)$/;"	f
+z_len	gzip.c	/^int  z_len;           \/* strlen(z_suffix) *\/$/;"	v
+z_suffix	gzip.c	/^char z_suffix[MAX_SUFFIX+1]; \/* default suffix (can be set with --suffix) *\/$/;"	v
+zdecode	crypt.h	12;"	d
+zencode	crypt.h	11;"	d
+zfile	bits.c	/^local file_t zfile; \/* output gzip file *\/$/;"	v
+zip	zip.c	/^int zip(in, out)$/;"	f

@@ -1,0 +1,16 @@
+#define hw_setting_st	0x0
+#define hw_setting_nd	0xfff
+#define bootsel_st	0x1000
+#define bootsel_nd	0x4fff
+#define flash_layout_st	0x5000
+#define flash_layout_nd	0x5fff
+#define rtos_st	0x6000
+#define rtos_nd	0x163fff
+#define factory_st	0x1b8000
+#define factory_nd	0x1cdfff
+#define nvram_st	0x1ce000
+#define nvram_nd	0x1d3fff
+#define data_st	0x1d4000
+#define data_nd	0x1e7fff
+#define rescue_st	0x1e8000
+#define rescue_nd	0x1fffff

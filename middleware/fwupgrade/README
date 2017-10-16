@@ -1,0 +1,14 @@
+/**
+
+\page FW_UPGRADE Firmware Upgrade Library
+
+\section Scope
+Provide firmware upgrade function.
+
+\section Support Specification
+1.firmware upgrade FIRMWARE_660R.bin file. \n
+2.Automatically reboot after the firmware upgrade finish. \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

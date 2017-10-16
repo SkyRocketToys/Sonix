@@ -1,0 +1,233 @@
+menu "Sonix Middleware"
+
+config MIDDLEWARE_USBH
+	bool "usb host library"
+	default n
+
+config MIDDLEWARE_USBD
+	bool "usb device library"
+	default n
+
+config MIDDLEWARE_AUTOMOUNT
+	bool "Auto mount library"
+	default n
+
+config MIDDLEWARE_CYASSL
+	bool "Cyassl library"
+	default n
+
+config MIDDLEWARE_FWUPGRADE
+	bool "Firmware upgrade library"
+	default n
+
+config MIDDLEWARE_TONE_DETECTION
+	bool "Audio tone detection library"
+	depends on MIDDLEWARE_CYASSL
+	default n
+
+config MIDDLEWARE_ZBAR
+	bool "zbar-0.10 library"
+	default n	
+
+config FATFS_CMD_QUEUE
+	bool "FatFS command queue feature"
+	default n
+
+if FATFS_CMD_QUEUE
+config FATFS_CMD_QUEUE_DEPTH
+	int "Command queue depth"
+	default 8
+
+config FATFS_CMD_QUEUE_TASK_PRIORITY
+	int "Command queue task priority"
+	default 20
+endif
+
+
+config MIDDLEWARE_MCU_CTRL
+	bool "mcu controller library"
+	default n
+
+choice
+	bool "mcu controller version selection"
+	depends on MIDDLEWARE_MCU_CTRL=y
+
+config MIDDLEWARE_MCU_V1
+	bool "MCU V1"
+	help
+	  "Version V1"
+
+config MIDDLEWARE_MCU_V2
+	bool "MCU V2"
+	help
+	  "Version V2"
+
+endchoice
+
+choice
+	prompt "mcu message payload bytes"
+	depends on MIDDLEWARE_MCU_CTRL=y
+
+config MCU_MSG_PLD_10
+	bool "10"
+
+config MCU_MSG_PLD_12
+	bool "12"
+
+config MCU_MSG_PLD_14
+	bool "14"
+
+config MCU_MSG_PLD_16
+	bool "16"
+
+endchoice
+
+choice
+	prompt "Default UART2 Baud"
+	default BAUD_9600
+
+config UART2_BAUD_9600
+	bool "9600"
+
+config UART2_BAUD_115200
+	bool "115200"
+
+endchoice
+
+if MIDDLEWARE_MCU_CTRL
+config MIDDLEWARE_MCU_CTRL_DEBUG
+        bool "Enable mcu controller library debug message"
+        default n
+endif
+
+choice
+	bool "Deflate Library selection"
+	default MIDDLEWARE_GZIP
+
+config MIDDLEWARE_ZLIB
+	bool "zlib-1.2.8"
+
+config MIDDLEWARE_GZIP
+	bool "gzip-1.2.4"
+
+if MIDDLEWARE_GZIP
+
+config MIDDLEWARE_GZIP_LEVEL
+	int "Compression Level"
+	default 2
+	help
+	  Compression level. 1=compress fast, 9=compress best.
+
+config MIDDLEWARE_GZIP_DYN_ALLOC
+	bool "Dynamic Allocation"
+	default y
+	help
+	  Static allocation may lead caller's task stack over flow.
+
+config MIDDLEWARE_GZIP_DEBUG_VERBOSE
+	bool "Debug verbose"
+	default n
+
+endif
+
+endchoice
+
+
+menu "Audio Codec"
+
+config MIDDLEWARE_AUDIO_CODEC_ALAW
+	bool "Audio A-Law Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_MULAW
+	bool "Audio Mu-Law Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_AUD32
+	bool "Audio AUD32 Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_G726
+	bool "Audio G726 Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_AAC
+	bool "Audio AAC Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_AMRNB
+	bool "Audio AMR-NB Codec"
+	default y
+
+config MIDDLEWARE_AUDIO_CODEC_AMRWB
+	bool "Audio AMR-WB Codec"
+	default y
+
+endmenu
+
+menu "Audio Process"
+
+config MIDDLEWARE_AUDIO_PROCESS_AGC
+	bool "Audio Gain Control"
+	default y
+
+config MIDDLEWARE_AUDIO_PROCESS_AEC
+	bool "Audio Echo Cancellation"
+	default y
+
+endmenu
+menuconfig MIDDLEWARE_EASYSETUP 
+	bool "Easy Setup Support"
+	default n
+
+if MIDDLEWARE_EASYSETUP
+	config MIDDLEWARE_ES_TONE_DETECTION
+		bool "Tone detection easy setup"
+		depends on MIDDLEWARE_TONE_DETECTION 
+		default y
+	config MIDDLEWARE_ES_WIFI
+		bool "Wifi easy setup"
+		depends on MODULE_WIFI_SUPPORT  
+		default y
+	config MIDDLEWARE_ES_QR
+		bool "QR Code easy setup"
+		depends on MIDDLEWARE_ZBAR
+		default y
+	menuconfig MIDDLEWARE_EASYSETUP_DEBUG
+	    bool "Easy Setup Support Debug"
+	    depends on MIDDLEWARE_EASYSETUP
+	    default n
+	    if MIDDLEWARE_EASYSETUP_DEBUG
+	    	config MIDDLEWARE_ES_TONE_DETECTION_DEBUG
+	        	bool "Tone detection easy setup debug"
+		        depends on MIDDLEWARE_ES_TONE_DETECTION
+				default y
+	        config MIDDLEWARE_ES_WIFI_DEBUG
+	            bool "Wifi easy setup debug"
+	            depends on MIDDLEWARE_ES_WIFI
+	            default y
+	        config MIDDLEWARE_ES_QR_DEBUG
+	        	bool "QR Code easy setup debug"
+	            depends on MIDDLEWARE_ES_QR
+	            default y
+		endif
+
+endif
+
+choice
+	prompt "Default Wi-Fi Authentication Mode"
+	default WIFI_AUTH_MODE_OPEN
+
+config WIFI_AUTH_MODE_OPEN
+	bool "Open"
+
+config WIFI_AUTH_MODE_WPA2
+	bool "WPA2"
+
+endchoice
+
+config DISABLE_VIDEO_WIFI_OPEN
+	bool "Disable Video Preview With Open Wi-Fi"
+	default y
+
+endmenu

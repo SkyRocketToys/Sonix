@@ -1,0 +1,37 @@
+/**
+\mainpage  Introduction
+
+\section SCOPE Scope
+SONIX DashCam FreeRTOS SDK provide customers a fast time-to-market way to design their dashcam products.\n
+Dashcam software design engineers can find what they need in this SDK API Reference manual.\n
+This helps them to understand how to use the SN98660 FreeRTOS software functions easier and more clearly.\n
+
+\section FEATRUR Feature
+
+SONIX DashCam FreeRTOS SDK provides rich middleware librarys as follows:
+
+1.Audio Middleware Library\n
+2.Auto Mount Library\n  
+3.cyassl Middleware Library\n  
+4.fatfs Library\n  
+5.Firmware Upgrade Library\n  
+6.json Middleware Library\n  
+7.zlib Library\n  
+8.Light Weight IP Library\n  
+9.nvram middleware Library\n  
+10.Record Library\n  
+11.RTSP Library\n  
+12.SD Middleware Library\n  
+13.Serial Flash Library\n  
+14.USB Device Middleware Library\n  
+15.Video Middleware Library\n  
+16.zbar Library\n 
+
+\section SUPPORT Support Specification
+Each middleware library support specification is written in each Related Pages.\n
+Please refer to the each middleware library hyperlink in Related Pages.\n
+
+\copyright
+2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

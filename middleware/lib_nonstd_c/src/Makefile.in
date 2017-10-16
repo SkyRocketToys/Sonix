@@ -1,0 +1,14 @@
+
+#$(STDIO_OBJ_FILES) =
+STRING_OBJ_FILES = memcmp.o memcpy.o memset.o strcmp.o strcpy.o strlen.o strnlen.o \
+		memchr.o strchr.o strchrnul.o strncmp.o strncpy.o stpncpy.o strdup.o \
+		strcasecmp.o strtok.o strstr.o strcat.o index.o strcspn.o memmove.o
+TIME_OBJ_FILES = gettimeofday.o
+STDLIB_OBJ_FILES = strtol.o atoi.o atol.o atof.o malloc.o abs.o rand.o strtod.o qsort.o
+STDIO_OBJ_FILES = nonstdlib.o sscanf.o snprintf.o
+NETWORK_OBJ_FILES = htonl.o htons.o ntohs.o ntohl.o
+CTYPE_OBJ_FILES = isalnum.o isalpha.o isdigit.o tolower.o toupper.o
+UNISTD_OBJ_FILES = usleep.o
+MATH_OBJ_FILES = acos.o atan.o atan2.o ceil.o cos.o exp.o floor.o log.o sin.o sqrt.o \
+		tan.o __cos.o __rem_pio2.o __sin.o __tan.o __rem_pio2_large.o scalbn.o log2.o \
+		pow.o

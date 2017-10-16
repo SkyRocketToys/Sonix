@@ -1,0 +1,18 @@
+/**
+
+\page MID_USB_DEVICE USB Device Middleware Library
+
+\section Scope
+Provide USB device functions for MSC(Mass Storage Class),UVC(USB video class),ISP tuning tool,MP tool(Mass Production tool) \n
+
+\section Support Specification
+Support the following functions: \n
+1.USB device connect,dsiconnect,suspend,resume,reset,plug-in,plug-out \n
+2.MSC read/write,vendor related command \n
+3.UVC read/write,events processing,XU command handling \n
+4.ISP tuning related APIs : init/uninit,command processing,file upload,reset,get ASIC ID \n
+5.MP tool related APIs : get version,record and playback,SD card insert and read/write,GPIO input/output,network and WiFi \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

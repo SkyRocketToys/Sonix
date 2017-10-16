@@ -1,0 +1,186 @@
+===SNX_NVRAM,Y,N
+//version: device version.Max string length is 14 bytes.
+-version,char,14,ver_number_str
+===SD_PATH_INFO,N,N
+-SD_ROOT_DIR,char,5,sonix
+-SD_RECORD_DIR,char,6,record
+-SD_PROTECT_DIR,char,7,protect
+-SD_PICTURE_DIR,char,7,picture
+-SD_THUMBNAIL_DIR,char,9,thumbnail
+-SD_TIMELAPSE_DIR,char,9,timelapse
+===WIFI_DEV,N,N
+//=============================For AP Mode
+// AP_CHANNEL_INFO: Set AP mode channel
+-AP_CHANNEL_INFO,int,4,0
+// AP_SSID_INFO: Set AP mode SSID
+//-AP_SSID_INFO,char,7,AP_SSID
+//AP_AUTH_MODE:  Set AP mode authentication mode. 0:open mode; 1:WEP mode; 2: WPA mode; 3:WPA2 mode
+-AP_AUTH_MODE,int,4,1
+//KEY_INFO:  Set AP mode password
+-AP_KEY_INFO,char,5,12345
+//AP_SSID_PREFIX: Customerize SSID string to be added with MAC address
+//-AP_SSID_PREFIX,char,6,SONIX_
+//AP_MAC_NUM: Customerize MAC address byte count to be added with AP_SSID_PREFIX string (0-6)
+//-AP_MAC_NUM,int,4,5
+//===============================For Device Mode
+// DEV_CHANNEL_INFO: Stored target AP's channel.
+-DEV_CHANNEL_INFO,int,4,0
+// DEV_SSID_INFO: Stored target AP's SSID
+-DEV_SSID_INFO,char,7,AP_SSID
+//AP_AUTH_MODE: Stored target AP's authentication mode.
+-DEV_AUTH_MODE,int,4,0
+//AP_ENC_MODE:  Stored target AP's encryption mode.
+-DEV_ENC_MODE,int,4,0
+//KEY_INFO:  Stored target AP's password
+-DEV_KEY_INFO,char,5,12345
+//DEV_BSSID_INFO: Stored target AP's MAC Address.
+-DEV_BSSID_INFO,unsigned char,6,001122334455
+//DEV_WPA_PSK: WPA pre-shared key.
+-DEV_WPA_PSK,unsigned char,32,00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF
+// TX_RETRY: retry counts for tx ====Not WiFi driver use.
+-TX_RETRY,int,4,18
+===Vdo_IQ,Y,N
+//IQ.bin: the file which saves Image Quality parameters for ISP.
+-IQ.bin,unsigned char,0,(file),1
+===app_osd_string,N,N
+//osd_string: codec OSD string length,Max length is 10 characters. 
+-osd_string,unsigned char,1,00
+===RECORD,N,N
+//RECORDTIME0~6: weekly schedule record time ,including begin hour,minute,second,and duration
+-RECORDTIME0BEGHOUR,int,4,0
+-RECORDTIME0BEGMINUTE,int,4,0
+-RECORDTIME0BEGSECOND,int,4,0
+-RECORDTIME0DURATION,int,4,86400
+-RECORDTIME1BEGHOUR,int,4,0
+-RECORDTIME1BEGMINUTE,int,4,0
+-RECORDTIME1BEGSECOND,int,4,0
+-RECORDTIME1DURATION,int,4,86400
+-RECORDTIME2BEGHOUR,int,4,0
+-RECORDTIME2BEGMINUTE,int,4,0
+-RECORDTIME2BEGSECOND,int,4,0
+-RECORDTIME2DURATION,int,4,86400
+-RECORDTIME3BEGHOUR,int,4,0
+-RECORDTIME3BEGMINUTE,int,4,0
+-RECORDTIME3BEGSECOND,int,4,0
+-RECORDTIME3DURATION,int,4,86400
+-RECORDTIME4BEGHOUR,int,4,0
+-RECORDTIME4BEGMINUTE,int,4,0
+-RECORDTIME4BEGSECOND,int,4,0
+-RECORDTIME4DURATION,int,4,86400
+-RECORDTIME5BEGHOUR,int,4,0
+-RECORDTIME5BEGMINUTE,int,4,0
+-RECORDTIME5BEGSECOND,int,4,0
+-RECORDTIME5DURATION,int,4,86400
+-RECORDTIME6BEGHOUR,int,4,0
+-RECORDTIME6BEGMINUTE,int,4,0
+-RECORDTIME6BEGSECOND,int,4,0
+-RECORDTIME6DURATION,int,4,86400
+//RECORDSCHEDINTERVAL: schedule record interval,the unit is second.
+-RECORDSCHEDINTERVAL,int,4,1200
+//RECORDMDINTERVAL: schedule motion detection interval,the unit is second.
+-RECORDMDINTERVAL,int,4,10
+//RECORDSCHEDENABLE: schedule record enable or disable
+-RECORDSCHEDENABLE,int,4,1
+//RECORDMDENABLE: record motion detection enable or disable
+-RECORDMDENABLE,int,4,1
+//RECORDSCHEDCYCLE: schedule record cyclic replacing the old files or not
+-RECORDSCHEDCYCLE,int,4,1
+//RECORDFILEFORMAT: record file format,0:time-stamp(timebase) 1:serial number(countbase)
+-RECORDFILEFORMAT,int,4,0
+//PROTECTFILELENGTH: protect file length,the unit is second.
+-PROTECTFILELENGTH,int,4,10
+// RECORDTYPE: record file type. 0: avi, 1: mp4
+-RECORDTYPE,int,4,0
+===SPACE,N,N
+// RECORDUPBDSPACE: sched record percentage of SD card capacity. Unit is "%". Valid range from 0 to 100. 0: disable the SD reocrd flow
+-RECORDUPBDSPACE,int,4,75
+// PROTECTUPBDSPACE: protect(lock) file percentage of SD card capacity. Unit is "%". Valid range from 0 to 100. 0: disable the file protect(lock) flow
+-PROTECTUPBDSPACE,int,4,10
+// PICTUREUPBDSPACE: the snapshot percentage of SD card capacity. Unit is "%". Valid range from 0 to 100. 0: disable the device snapshot function
+-PICTUREUPBDSPACE,int,4,10
+// THUMBNAILUPBDSPACE: the thumbnail(icon) percentage of SD card capacity. Unit is "%". Valid range from 0 to 100. 0: disable the device thumbnail
+-THUMBNAILUPBDSPACE,int,4,5
+// TIMELAPSEUPBDSPACE: the timelapse record percentage of SD card capacity. Unit is "%". Valid range from 0 to 100. 0: disable the SD timelapse reocrd flow
+-TIMELAPSEUPBDSPACE,int,4,0
+===USB_Device,Y,N
+// class_mode: USB device class mode. 0: MSC, 1: UVC
+-class_mode,int,4,0
+// hotplug_mode: select the GPIOs which are used. 0: IC's GPIO, 1: external MCU's GPIO, 2: IC's PWM GPIO 
+-hotplug_mode,int,4,2
+// hotplug_gpio_num: IC's GPIO number or PWM pinmux GPIO number. If hotplug_mode==1, this argument can be ignored
+-hotplug_gpio_num,int,4,3
+// hotplug_gpio_trig_lev: GPIO trigger level for detection
+-hotplug_gpio_trig_lev,int,4,1
+===App_ISP,N,N
+// mirror: sensor mirror enable. 0: disable, 1: enable
+-mirror,int,4,1
+// flip: sensor flip enable. 0: disable, 1: enable
+-flip,int,4,1
+// wdr: wide dynamic range of ISP enable. 0: disable, 1: enable
+-wdr,int,4,1
+// gsensorsensitivity: the sensitivity of G-sensor. Valid range from 0 to 1999.
+-gsensorsensitivity,int,4,1000
+// osd: codec OSD enable. 0: disable, 1: enable
+-osd,int,4,0
+//preview_fps: Preview frame rate
+-preview_fps,int,4,20
+//preview_ext_pframe_num: pframe_sum_num for preview
+-preview_ext_pframe_num,int,4,3
+//preview_ext_qp_range: maxqp_range for preview
+-preview_ext_qp_range,int,4,2
+//preview_ext_qp_max: extend_max_qp for preview
+-preview_ext_qp_max,int,4,38
+//preview_ext_upper_pframe: upperpframesize for preview
+-preview_ext_upper_pframe,int,4,-1
+//preview_ext_upper_pframe_dup1: upperpframesize for preview of dup1
+-preview_ext_upper_pframe_dup1,int,4,-1
+//preview_qp_max: max QP for preview
+-preview_qp_max,int,4,34
+//preview_qp_min: min QP for preview
+-preview_qp_min,int,4,20
+//preview_width: Preview width,the unit is pixel
+-preview_width,int,4,1280
+//preview_height: Preview height,the unit is pixel
+-preview_height,int,4,720
+//preview_bps: Preview bit rate,the unit is bit per second.
+-preview_bps,unsigned int,4,3000000
+// preview_gop: the GOP of preview path. Usually the multiple of fps. 0: GOP=FPS
+-preview_gop,int,4,0
+//record_voice: Record file voice volumn level,,the unit is "%".
+-record_voice,int,4,60
+//record_fps: Record file frame rate,the unit is frame per second
+-record_fps,int,4,30
+//record_gop: the GOP of record path. Usually the multiple of fps. 0: GOP=FPS
+-record_gop,int,4,0
+//record_bps: Record file bit rate,the unit is bit per second
+-record_bps,unsigned int,4,10485760
+//record_ext_pframe_num: pframe_sum_num for recording
+-record_ext_pframe_num,int,4,3
+//record_ext_qp_range: maxqp_range for recording
+-record_ext_qp_range,int,4,2
+//record_ext_qp_max: extend_max_qp for recording
+-record_ext_qp_max,int,4,38
+//record_ext_upper_pframe: upperpframesize for recording
+-record_ext_upper_pframe,int,4,-1
+//record_qp_max: max QP for recording
+-record_qp_max,int,4,35
+//record_qp_min: min QP for recording
+-record_qp_min,int,4,20
+//record_width: Record file screen width,the unit is pixel
+-record_width,int,4,1920
+//record_height: Record file screen height,the unit is pixel
+-record_height,int,4,1080
+//powerfrequency: power frequency,the unit is HZ.The value in Mainland China should be 50HZ,in Taiwan should be 60HZ.
+-powerfrequency,int,4,50
+===TIMELAPSE,N,N
+//TIMELAPSEENABLE: time-lapse recording enable or disable
+-TIMELAPSEENABLE,int,4,1
+//TIMELAPSECYCLE: time-lapse recording cyclic replacing the old files or not
+-TIMELAPSECYCLE,int,4,1
+//TIMELAPSEINTERVAL: time-lapse recording interval,the unit is second.
+-TIMELAPSEINTERVAL,int,4,60
+//TIMELAPSEIFRAMEINTERVAL: time-lapse recording H.264 I-frame interval,the unit is second.
+-TIMELAPSEIFRAMEINTERVAL,int,4,2
+===MP_MODE,N,N
+//enable: mp mode bypass reboot switch.
+-enable,int,4,0

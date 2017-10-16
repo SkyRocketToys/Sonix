@@ -1,0 +1,27 @@
+/**
+
+\page MID_JSON json Middleware Library
+
+\section Scope
+JSON (JavaScript Object Notation) is a lightweight data-interchange format. \n
+It is easy for humans to read and write. \n
+It is easy for machines to parse and generate. \n
+It is based on a subset of the JavaScript Programming Language, \n
+Standard ECMA-262 3rd Edition - December 1999. \n
+JSON is a text format that is completely language independent but \n
+uses conventions that are familiar to programmers of \n
+the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. \n
+These properties make JSON an ideal data-interchange language. \n
+
+\section Support Specification
+Please refer to \n
+http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
+
+\section Documentation
+Please refer to \n
+http://json-c.github.io/json-c/json-c-0.12/doc/html/json__util_8h.html
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+
+*/

@@ -1,0 +1,24 @@
+/**
+
+\page FATFS fatfs Library
+
+\section Scope
+FatFs is a generic FAT file system module for small embedded systems.
+
+\section Support Specification
+1.Windows compatible FAT file system. \n
+2.Platform independent and easy to port. \n
+3.Very small footprint for code and work area. \n
+4.Various configuration options: Multiple volumes (physical drives and partitions). \n
+5.Multiple ANSI/OEM code pages including DBCS. \n
+6.Long file name support in ANSI/OEM or Unicode. \n
+7.RTOS support for multi-task operation. \n
+8.Multiple sector size support up to 4KB. \n
+
+\section Documentation
+Please refer to \n
+http://elm-chan.org/fsw/ff/00index_e.html \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

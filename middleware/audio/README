@@ -1,0 +1,18 @@
+/**
+
+\page MID_AUDIO Audio Middleware Library
+
+\section Scope
+Provide audio functions to control audio stream and get audio data.
+
+\section Support Specification
+Provide audio related function such as \n
+1.init,open,close \n
+2.read,write \n
+3.set or get parameters \n
+4.set or get sample rate & sample format \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+
+*/

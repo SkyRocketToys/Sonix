@@ -1,0 +1,126 @@
+####################################################
+#
+# USER / VENDOR Setting
+#
+####################################################
+
+menu "Project select "
+
+choice 
+	prompt "Projects"
+	default APP_IPCAM
+
+	config APP_IPCAM
+		bool "ipcam"
+
+	config APP_DASHCAM
+		bool "dashcam"
+
+		config APP_DRONE
+			bool "drone"
+			default y
+		depends on APP_DASHCAM
+
+			config APP_STREAMING
+				bool "streaming"
+				default n
+			depends on APP_DRONE
+
+		config UDP_FLOW
+			bool "UDP flow"
+			default n
+		depends on APP_DASHCAM
+
+		config EDCCA_FLOW
+			bool "EDCCA flow"
+			default n
+		depends on APP_DASHCAM
+
+		config DEV_CONSOLE
+			bool "Enable development console on TCP 2017"
+			default  n
+                depends on APP_DASHCAM
+
+		config DEV_CONSOLE_PAUSE
+			bool "Pause boot until start command is used on dev console"
+			default  n
+                depends on DEV_CONSOLE
+
+		config MAVLINK_WIFI
+			bool "MAVLink WiFi bridge to UART2"
+			default  n
+                depends on APP_DASHCAM
+
+		config USBH_STORAGE_SUPPORT
+			bool "usbh storage support"
+			default n
+		depends on APP_DASHCAM
+
+		config ENABLE_DEBUG_MODE
+			bool "enable debug mode"
+			default y
+		depends on APP_DASHCAM
+
+		config SKIP_INCOMPLETE_FILE
+			bool "Scan and remove incompleted record files in MP4 format"
+		depends on APP_DASHCAM
+
+	config APP_INTEGRATION
+	bool "integration"
+
+		config ENABLE_DEBUG_MODE
+			bool "enable debug mode"
+			default y
+		depends on APP_INTEGRATION
+
+	config APP_QRCODE
+		bool "qrcode"
+
+		config ENABLE_DEBUG_MODE
+			bool "enable debug mode"
+			default y
+		depends on APP_QRCODE
+
+	config APP_EMPTY
+		bool "empty"
+
+		config ENABLE_DEBUG_MODE
+			bool "enable debug mode"
+			default y
+		depends on APP_EMPTY
+
+	config APP_MPTOOL
+		bool "mptool"
+
+		config ENABLE_DEBUG_MODE
+			bool "enable debug mode"
+			default y
+		depends on APP_MPTOOL
+endchoice
+
+config IMAGE_SUBDIR
+		string
+		default "dashcam" if APP_DASHCAM
+		default "ipcam" if APP_IPCAM
+		default "mptool" if APP_MPTOOL
+		default "integration" if APP_INTEGRATION
+		default "qrcode" if APP_QRCODE
+		default "empty" if APP_EMPTY
+
+#config APP_IPCAM
+#	 bool "ipcam"
+#	 default y
+
+#config APP_DASHCAM
+#	 bool "dashcam"
+#	 default n
+
+#config APP_INTEGRATION
+#	 bool "integration"
+#	 default n
+
+#config APP_MPTOOL
+#	 bool "mptool"
+#	 default n
+endmenu
+

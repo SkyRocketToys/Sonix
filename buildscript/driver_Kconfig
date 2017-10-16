@@ -1,0 +1,656 @@
+####################################################
+##
+## SONiX Module Configurartion
+##
+#####################################################
+menu "Sonix Driver"
+config  MODULE_MAC_SUPPORT
+	bool "Mac Support"
+    	default y
+
+if MODULE_MAC_SUPPORT
+config MODULE_MAC_DEBUG
+	bool "Enable mac debug"
+	default y
+endif
+
+config  MODULE_VIDEO_CODEC_SUPPORT
+	bool "Video Codec Support"
+    	default y
+
+if MODULE_VIDEO_CODEC_SUPPORT
+config MODULE_DUMMY_ISP_SUPPORT
+	bool "Video isp dummy support"
+	default y
+
+config MODULE_VIDEO_CODEC_DEBUG
+	bool "Video codec debug"
+	default y
+endif
+
+config  MODULE_I2C_SUPPORT
+	bool "I2C Support"
+    	default y
+
+if MODULE_I2C_SUPPORT
+config MODULE_I2C_DEBUG
+	bool "Enable i2c debug"
+	default y
+endif
+
+config  MODULE_SENSOR_SUPPORT
+	bool "Sensor Support"
+    	default y
+
+if MODULE_SENSOR_SUPPORT
+config MODULE_SENSOR_DEBUG
+	bool "Enable sensor debug"
+	default y
+
+menu "Sensor driver"
+
+config MODULE_SENSOR_OV9715
+	bool "OV9715"
+	default y
+
+config MODULE_SENSOR_OV2715
+	bool "OV2715"
+	default y
+
+config MODULE_SENSOR_IMX225
+	bool "IMX225"
+	default y
+
+config MODULE_SENSOR_IMX322
+	bool "IMX322"
+	default y
+
+config MODULE_SENSOR_AR0330
+	bool "AR0330"
+	default y
+
+config MODULE_SENSOR_TW9912
+	bool "TW9912"
+	default n
+
+config MODULE_SENSOR_CS1211K
+	bool "CS1211K"
+	default n
+
+config MODULE_SENSOR_H42
+        bool "H42"
+        default n
+	
+config MODULE_SENSOR_H62
+        bool "H62"
+        default n
+
+config MODULE_SENSOR_GC1024
+	bool "GC1024"
+	default n
+
+config MODULE_SENSOR_OV9732
+        bool "OV9732"
+        default n
+if MODULE_SENSOR_OV9732
+        choice
+                prompt "Interface ="
+                default OV9732_MIPI
+
+                config OV9732_MIPI
+                        bool "MIPI"
+                config OV9732_PARALLEL
+                        bool "Parallel"
+        endchoice
+
+        config OV9732_MIPI_MODE
+        int
+        default 0 if OV9732_PARALLEL
+        default 1 if OV9732_MIPI
+endif
+
+config MODULE_SENSOR_SC2035
+	bool "SC2035"
+	default n
+	
+config MODULE_SENSOR_SC2135
+	bool "SC2135"
+	default n
+
+config MODULE_SENSOR_AR0237
+        bool "AR0237"
+        default n
+
+config MODULE_SENSOR_HM2130
+        bool "HM2130/HM2131"
+        default n
+if MODULE_SENSOR_HM2130
+	choice
+		prompt "Interface ="
+		default HM2130_MIPI
+
+		config HM2130_MIPI
+			bool "MIPI"
+		config HM2130_PARALLEL
+			bool "Parallel"
+	endchoice
+
+	config HM2130_MIPI_MODE
+	int
+	default 0 if HM2130_PARALLEL
+	default 1 if HM2130_MIPI
+endif
+
+config MODULE_SENSOR_OV2740
+        bool "OV2740 MIPI"
+        default n
+
+config MODULE_SENSOR_OV7725
+        bool "OV7725"
+        default n
+
+config MODULE_SENSOR_GC0308
+        bool "GC0308"
+        default n
+
+endmenu
+	
+endif
+
+config  MODULE_IQ_SUPPORT
+	bool "IQ Support"
+    	default y
+
+if MODULE_IQ_SUPPORT
+config MODULE_IQ_DEBUG
+	bool "Enable IQ debug"
+	default y
+endif
+
+config  MODULE_ISP_SUPPORT
+	bool "ISP Support"
+    	default y
+
+if MODULE_ISP_SUPPORT
+config MODULE_ISP_DEBUG
+	bool "Enable ISP debug"
+	default y
+endif
+
+config  MODULE_AUDIO_SUPPORT
+	bool "Audio Support"
+    	default y
+
+if MODULE_AUDIO_SUPPORT
+config MODULE_AUDIO_DEBUG
+	bool "Enable audio debug"
+	default y
+
+endif
+
+if MODULE_AUDIO_SUPPORT
+config MODULE_AUDIO_I2S
+	bool "Enable audio I2S interface"
+	default n
+
+endif
+
+config  MODULE_SF_SUPPORT
+	bool "SF Support"
+    	default y
+
+if MODULE_SF_SUPPORT
+config MODULE_SF_DEBUG
+	bool "Enable serial flash debug"
+	default y
+endif
+config  MODULE_SD_SUPPORT
+	bool "SD Support"
+    	default y
+
+if MODULE_SD_SUPPORT
+config MODULE_SD_DEBUG
+	bool "Enable sd card debug"
+	default y
+endif
+
+config  MODULE_SDIO_SUPPORT
+	bool "SDIO Support"
+    	default y
+
+if MODULE_SDIO_SUPPORT
+config MODULE_SDIO_DEBUG
+	bool "Enable sdio debug"
+	default y
+endif
+
+config  MODULE_GPIO_SUPPORT
+        bool "GPIO Support"
+        default y
+
+if MODULE_GPIO_SUPPORT
+config MODULE_GPIO_DEBUG
+	bool "Enable gpio debug"
+	default y
+endif
+
+config  MODULE_PWM_SUPPORT
+        bool "PWM Support"
+        default y
+
+if MODULE_PWM_SUPPORT
+config MODULE_PWM_DEBUG
+	bool "Enable pwm debug"
+	default y
+endif
+
+config  MODULE_RTC_SUPPORT
+        bool "RTC Support"
+        default y
+
+if MODULE_RTC_SUPPORT
+config MODULE_RTC_DEBUG
+	bool "Enable rtc debug"
+	default y
+endif
+
+config  MODULE_SPI_SUPPORT
+        bool "SPI Support"
+        default y
+
+if MODULE_SPI_SUPPORT
+config MODULE_SPI_DEBUG
+	bool "Enable spi debug"
+	default y
+endif
+
+config  MODULE_TIMER_SUPPORT
+        bool "TIMER Support"
+        default y
+
+config  MODULE_WATCHDOG_SUPPORT
+        bool "Watchdog Support"
+        default y
+
+config  MODULE_AHBDMA_SUPPORT
+        bool "AHB DMA Support"
+        default y
+
+config MODULE_USB_HOST_SUPPORT
+       bool "USBH Support"
+       default y
+       
+if MODULE_USB_HOST_SUPPORT
+menu "USB Host Driver"
+
+choice
+	bool "USBH Platform Selection"
+	default PLATFORM_SN98660
+config PLATFORM_SN98660
+	bool "PLATFORM 98660"
+config PLATFORM_SN58510
+	bool "PLATFORM 58510"
+config PLATFORM_SN7300
+	bool "PLATFORM 7300"	
+config PLATFORM_XILINX_ZYNQ_7000
+	bool "PLATFORM ZYNQ 7000"	
+endchoice
+
+choice
+	bool "SDK Enviroment Selection"
+	default SN_GCC_SDK
+config SN_GCC_SDK
+	bool "Sonix GCC SDK"
+config SN_KEIL_SDK
+	bool "Sonix KEIL SDK"
+config XILINX_SDK
+	bool "Xilinx SDK"	
+endchoice
+	
+menuconfig ENABLE_CLASS_DRIVER	
+	bool "Enable Class Driver"
+	default y
+
+	if ENABLE_CLASS_DRIVER
+		config MODULE_USB_MSC_CLASS
+			bool "Enable MSC class driver"
+			default y
+			
+			if MODULE_USB_MSC_CLASS
+				menuconfig MODULE_USB_MSC_CLASS_CONFIGURE
+				bool "MSC Class Driver Configure"
+				default y
+	
+				if MODULE_USB_MSC_CLASS_CONFIGURE
+					config MODULE_USBH_MSC_RESET_PARAM
+					int "set error-counter times to do MSC Reset (1-255)"
+					range 1 255
+					default 5
+		
+					config MODULE_USBH_USBD_RESET_PARAM
+					int "set error-counter times to do USB Layer Reset (1-255)"
+					range 1 255
+					default 10
+				endif		
+			endif	
+				
+		config MODULE_USB_UVC_CLASS
+			bool "Enable UVC class driver"
+			default y
+
+		config MODULE_USB_HUB_CLASS
+			bool "Enable HUB class driver"
+			default y	
+	
+		config MODULE_USB_WIFI_CLASS
+			bool "Enable WIFI class driver"
+			default y		
+			
+		config MODULE_USB_HID_CLASS
+			bool "Enable HID class driver"
+			default y				
+	endif
+
+menuconfig ENABLE_CLASS_DRIVER_DEBUG	
+	bool "Enable Class Driver Debug"
+	default n
+
+	if ENABLE_CLASS_DRIVER_DEBUG
+		config MODULE_USBH_DEBUG
+		bool "Enable USB Host Debug"
+		default n
+	
+		config MODULE_USB_MSC_DEBUG
+		bool "Enable USB MSC Class Debug"
+		depends on MODULE_USB_MSC_CLASS		
+		default n
+	
+		config MODULE_USB_UVC_DEBUG
+		bool "Enable USB UVC Class Debug"
+		depends on MODULE_USB_UVC_CLASS			
+		default n
+	
+		config MODULE_USB_HUB_DEBUG
+		bool "Enable USB HUB Class Debug"
+		depends on MODULE_USB_HUB_CLASS			
+		default n
+		
+		config MODULE_USB_HID_DEBUG
+		bool "Enable USB HID Class Debug"
+		depends on MODULE_USB_HID_CLASS			
+		default n		
+	endif
+	
+menuconfig MODULE_USB_TIME_OUT_CFG
+bool "USB transfer timeout configuration"
+	default y
+	
+	if MODULE_USB_TIME_OUT_CFG
+		menuconfig MODULE_USBH_CX
+		bool "USBH CX Timeout"		
+		default y	
+		if MODULE_USBH_CX			
+			config MODULE_USBH_CX_TIMEOUT
+			int "CX timeout value (100-1000) ms"
+			range 100 1000
+			default 500	
+		endif		
+	endif 
+	
+	if MODULE_USB_TIME_OUT_CFG	
+		menuconfig MODULE_USBH_BULK			
+		bool "USBH BULK Setting"	
+		default y	
+		if MODULE_USBH_BULK				
+			config MODULE_USBH_WIFI_BK_OUT_TIMEOUT
+			int "WIFI bulk out timeout value (100-5000) ms"
+			range 100 5000
+			default 1000
+		
+			config MODULE_USBH_WIFI_BK_IN_TIMEOUT
+			int "WIFI bulk in timeout value (100-10000000) ms"
+			range 100 10000000
+			default 10000000		
+			
+			config MODULE_USBH_MSC_BK_OUT_TIMEOUT
+			int "MSC bulk out timeout value (10 - 10000) ms"
+			range 10 10000
+			default 5000
+		
+			config MODULE_USBH_MSC_BK_IN_TIMEOUT
+			int "MSC bulk in timeout value (10 - 10000) ms"
+			range 10 10000
+			default 5000		
+		endif		
+	endif
+	
+	if MODULE_USB_TIME_OUT_CFG	
+		menuconfig MODULE_USBH_INT			
+		bool "USBH INT Setting"						
+		default y	
+		if MODULE_USBH_INT			
+			config MODULE_USBH_INT_IN_TIMEOUT
+			int "MSC interrupt timeout value (100-10000000) ms"
+			range 100 10000000
+			default 10000000				
+		endif				
+	endif		
+	
+menuconfig USB_HOST_DRIVER_OPTION	
+	bool "USB HOST Driver Option"
+	default y
+		
+	if USB_HOST_DRIVER_OPTION		
+		config FS_RECOVERY_PATCH
+		bool "Enable USB Host Full Speed_Recovery Patch"
+		default y	
+
+		config MSC_RW_COMPARE
+  		bool "MSC R/W Data Pattern compare Enable"
+		depends on MODULE_USB_MSC_CLASS  		
+		default y
+		
+		config MODULE_USB_HOST_CLASS_SUPPORT
+       		bool "USBH Class Support"
+		depends on MODULE_USB_HOST_SUPPORT
+       		default y		
+       		
+		config SNX_ISO_ACCELERATOR
+		bool "Enable Sonix UVC ISO Accelerator"
+		depends on PLATFORM_SN58510		
+		default y	       		
+
+		config CONFIG_DUAL_HOST
+		bool "Enable Sonix_dual host "
+		depends on PLATFORM_SN58510		
+		default y		
+	endif
+	
+	
+
+endmenu
+endif
+
+config MODULE_USB_DEVICE_SUPPORT
+	bool "USBD Support"
+	default y
+
+if MODULE_USB_DEVICE_SUPPORT
+
+config MODULE_USB_DEVICE_DEBUG
+	bool "Enable usb device debug"
+	default y
+
+menu "USB Device Driver"
+
+choice
+	bool "USBD Default Class Selection"
+	default MODULE_USB_DEVICE_MODE_MSC
+
+config MODULE_USB_DEVICE_MODE_MSC
+	bool "USBD MSC class"
+	help
+	  "USB device msc class"
+
+config MODULE_USB_DEVICE_MODE_UVC
+	bool "USBD UVC class"
+	help
+	  "USB device uvc class"
+
+config MODULE_USB_DEVICE_MODE_HID
+	bool "USBD HID class"
+	help
+	  "USB device hid class"
+endchoice
+
+choice
+	bool "USBD Default Storage-Media Selection"
+	default MODULE_USB_DEVICE_MSC_SD
+
+config MODULE_USB_DEVICE_MSC_SD
+	bool "SDCard"
+	help
+	  "USB device msc sdcard"
+
+config MODULE_USB_DEVICE_MSC_SF
+	bool "SPI-Flash"
+	help
+	  "USB device msc serial-flash, reference settings in flash-layout"
+endchoice
+
+config VALUE_USB_DEVICE_MODE
+	int
+	default 0 if MODULE_USB_DEVICE_MODE_MSC
+	default 1 if MODULE_USB_DEVICE_MODE_UVC 
+	default 2 if MODULE_USB_DEVICE_MODE_HID 
+	
+choice
+	bool "USBD Hotplug Detect Source"
+	default MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO if SYSTEM_PLATFORM_SN98660 \
+												|| SYSTEM_PLATFORM_SN98293
+	default MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO if SYSTEM_PLATFORM_SN98670 \
+												|| SYSTEM_PLATFORM_SN98671 \
+												|| SYSTEM_PLATFORM_SN98672
+
+config MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO
+	bool "USBD_HPD_SRC_ASIC_GPIO"
+	help
+	  "USB device hotplug detect source is ASIC GPIO"
+	
+config MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO
+	bool "USBD_HPD_SRC_ASIC_PWMIO"
+	help
+	  "USB device hotplug detect source is ASIC PWM IO"
+
+config MODULE_USB_DEVICE_HPD_SRC_EXT_MCU
+	bool "USBD_HPD_SRC_EXT_MCU"
+	help
+	  "USB device hotplug detect source is external MCU"
+endchoice
+
+config VALUE_USB_DEVICE_HPD_SRC
+	int
+	default 0 if MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO
+	default 1 if MODULE_USB_DEVICE_HPD_SRC_EXT_MCU
+	default 2 if MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO
+
+config MODULE_USB_DEVICE_ASIC_IO_NUM
+	int "USBD HPD IO number usage (0-7)"
+	range 0 7
+	default 6 if MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO
+	default 3 if MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO
+	help
+	   "USB Device HPD need a GPIO number for ASIC IO mode"
+	depends on MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO \
+				|| MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO
+
+config MODULE_USB_DEVICE_PLUGIN_TRIG_LEV
+	int "USB Device plug-in trigger level"
+	range 0 1
+	default 1
+	help
+	   "Select USB Device plug-in detect level.
+	   0: Trigger low
+	   1: Trigger high"
+	depends on MODULE_USB_DEVICE_HPD_SRC_ASIC_GPIO \
+				|| MODULE_USB_DEVICE_HPD_SRC_ASIC_PWMIO
+
+choice
+	bool "USBD VBUS Power Source"
+
+config MODULE_USB_DEVICE_BUSPOWER
+	bool "USBD_BUS_POWER"
+	help
+	  "USB device power source from host bus power"
+	
+config MODULE_USB_DEVICE_SELFPOWER
+	bool "USBD_SELF_POWER"
+	help
+	  "USB device power source from self"
+endchoice
+
+config MODULE_USB_DEVICE_VBUS_DRAW
+	int "USBD Maximum VBUS Power usage (2-500 mA)"
+	range 2 500
+	default 500
+	help
+	   "Some devices need to draw power from USB when they are
+	   configured, perhaps to operate circuitry or to recharge
+	   batteries.  This is in addition to any local power supply,
+	   such as an AC adapter or batteries.
+
+	   Enter the maximum power your device draws through USB, in
+	   milliAmperes.  The permitted range of values is 2 - 500 mA;
+	   0 mA would be legal, but can make some hosts misbehave.
+
+	   This value will be used except for system-specific drivers
+	   that have more specific information."
+
+config MODULE_USB_DEVICE_UVC_PAYLOAD_SIZE
+	int "USB Device UVC Maximum Payload Transfer Size N Bytes"
+	range 6144 2074189
+	default 12300
+	help
+	  "Allowed customers adjust different payload transfer size N."
+
+endmenu
+
+endif
+
+config MODULE_WIFI_SUPPORT
+       bool "WIFI Support"
+       default y
+choice
+	bool "Wifi Mode Selection"
+	depends on MODULE_WIFI_SUPPORT=y
+
+config WIFI_MODE_AP
+	bool "Wifi AP mode"
+	help
+	  "Wifi AP mode support"
+
+config WIFI_MODE_STA
+	bool "Wifi STA mode"
+	help
+	  "Wifi station mode support"
+
+
+
+endchoice
+
+if MODULE_WIFI_SUPPORT
+config MODULE_WIFI_DEBUG
+	bool "Enable wifi debug"
+	default y
+
+config WIFI_PACKET_MIRROR
+	bool "Enable wifi packet mirror"
+	default n
+	depends on MODULE_MAC_SUPPORT
+	help
+	  "Duplicate wifi packets and trnasmit to ethernet for debugging."
+endif
+
+endmenu
+
+

@@ -1,0 +1,10 @@
+# dummy makefile for driver directories without source
+
+all:
+	echo "Not building in $(PWD)"
+
+clean:
+	echo "Not cleaning in $(PWD)"
+
+install:
+	echo "Not installing in $(PWD)"

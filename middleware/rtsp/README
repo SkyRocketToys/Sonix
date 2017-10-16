@@ -1,0 +1,19 @@
+/**
+
+\page RTSP RTSP Library
+
+\section Scope
+Provide the real-time video/audio streaming protocol between mobile phone and multimedia device. \n
+
+\section Support Specification
+Provide the following functions: \n
+1.init/destroy RTSP server \n
+2.add/delete RTSP stream \n
+3.send RTSP data \n
+4.set max RTSP connection number \n
+5.force I-frame \n
+6.close RTSP stream by ip address or port number \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

@@ -1,0 +1,18 @@
+/**
+
+\page RECORD Record Library
+
+\section Scope
+Provide video and audio recording ability and save the video and audio data to an avi or mp4 file.
+
+\section Support Specification
+Provide the following functions: \n
+1.init,uninit \n
+2.start,stop \n
+3.pre-record set/get time \n
+4.set file path and file name prefix \n
+5.get current or last file name \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

@@ -1,0 +1,15 @@
+/**
+
+\page TONE_DETECTION Tone Detection Library
+
+\section Scope
+Easy setup device to connect wireless AP by audio tone
+
+\section Support Specification
+1. Support AES-128 encryption
+2. Maximum trasnfer data length 120 bytes
+3. Support retry and re-transmission
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

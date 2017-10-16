@@ -1,0 +1,1 @@
+/home/tridge/project/UAV/Sonix/WPA2/firmware/snx_sdk/buildscript/Makefile.dummy

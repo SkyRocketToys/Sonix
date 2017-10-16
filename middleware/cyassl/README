@@ -1,0 +1,21 @@
+/**
+
+\page MID_CYASSL cyassl Middleware Library
+
+\section Scope
+The wolfSSL embedded SSL library (formerly CyaSSL) is a small, fast, portable implementation of TLS/SSL for embedded devices to the cloud. 
+
+\section Support Specification
+1.supports TLS 1.2 and DTLS 1.2, \n
+2.up to 20 times smaller than OpenSSL. \n
+3.support an OpenSSL compatibility layer. \n
+4.support OCSP and CRL . \n
+
+\section Documentation
+Please refer to \n
+https://www.wolfssl.com/wolfSSL/Docs.html
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+
+*/

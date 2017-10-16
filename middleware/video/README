@@ -1,0 +1,30 @@
+/**
+
+\page MID_VIDEO Video Middleware Library
+
+\section Scope
+Provide ISP(Image Signal Processing) and H.264/MJPEG video codec related functions. \n
+
+\section Support Specification
+About ISP : \n
+1.IQ Tuning functions \n
+2.Motion Detection functions \n  
+3.ISP OSD functions \n  
+4.Sensor Common functions \n  
+5.Mirror & Flip functions \n  
+6.AE & AWB functions \n  
+7.ISP DRC functions \n  
+8.ISP Private Mask functions \n  
+9.ISP Filter functions \n 
+
+About H.264/MJPEG video codec : \n
+1.init,uninit \n
+2.read video stream data \n
+3.transfer YUV420line to YUV420 or YUV422 \n
+4.set/get frame rate,bit rate,resolution,scaling up or down,GOP value,QP value \n
+5.video rate control \n
+6.video data stamp \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/

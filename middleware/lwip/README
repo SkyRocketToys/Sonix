@@ -1,0 +1,30 @@
+/**
+
+\page LWIP Light Weight IP Library
+
+\section Scope
+lwIP is a small independent implementation of the TCP/IP protocol suite \n
+that has been developed by Adam Dunkels at the Computer and Networks Architectures (CNA) lab \n
+at the Swedish Institute of Computer Science (SICS).\n
+The focus of the lwIP TCP/IP implementation is to reduce resource usage while still having a full scale TCP. \n
+This making lwIP suitable for use in embedded systems \n
+with tens of kilobytes of free RAM and room for around 40 kilobytes of code ROM.\n
+
+\section Support Specification
+1.IP (Internet Protocol) including packet forwarding over multiple network interfaces \n
+2.ICMP (Internet Control Message Protocol) for network maintenance and debugging \n
+3.IGMP (Internet Group Management Protocol) for multicast traffic management \n
+4.UDP (User Datagram Protocol) including experimental UDP-lite extensions \n
+5.TCP (Transmission Control Protocol) with congestion control, RTT estimation and fast recovery/fast retransmit \n
+6.raw/native API for enhanced performance \n
+7.Optional Berkeley-like socket API \n
+8.DNS (Domain names resolver) \n
+9.SNMP (Simple Network Management Protocol) \n
+10.DHCP (Dynamic Host Configuration Protocol) \n
+11.AUTOIP (for IPv4, conform with RFC 3927) \n
+12.PPP (Point-to-Point Protocol) \n
+13.ARP (Address Resolution Protocol) for Ethernet \n
+
+\copyright 2015 Copyright Sonix Technology Co., Ltd., All Rights Reserved
+
+*/
