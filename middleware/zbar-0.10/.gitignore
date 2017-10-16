@@ -1,7 +1,0 @@
-target/
-*.o
-*.lo
-*.log
-.deps/
-*.pc
-.dirstamp
