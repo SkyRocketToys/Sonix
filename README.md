@@ -18,3 +18,7 @@ To build the firmware follow these steps
 
 That will create a file image/dashcam/FIRMWARE_660R.bin which you can
 upload to the SkyViper using the web interface.
+
+Note that you will need the i386 lib library installed if you are on a
+64 bit Linux varient. That usually means you need the libc6:i386
+package installed.
