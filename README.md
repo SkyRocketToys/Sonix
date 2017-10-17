@@ -1,4 +1,4 @@
-Ftirmware for video board on skyviper
+Firmware for video board on skyviper
 ====================================
 
 This is the firmware source for the ArduPilot based SkyViper GPS copter. It is based on FreeRTOS
