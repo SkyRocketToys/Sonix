@@ -12,6 +12,7 @@ void mavlink_set_debug(uint8_t debug_level);
 int mavlink_set_flight_response(int index, int value);
 void mavlink_set_sitl(bool enable);
 void mavlink_fc_write(const uint8_t *buf, uint32_t len);
+void mavlink_rc_write(const uint8_t *buf, uint32_t len);
 int mavlink_fc_send(mavlink_message_t *msg);
 bool toggle_recording(void);
 bool take_snapshot(void);

@@ -196,6 +196,16 @@ void mavlink_fc_write(const uint8_t *buf, uint32_t len)
 }
 
 /*
+  write bytes to the RC controller, which is flight board when SITL is active
+ */
+void mavlink_rc_write(const uint8_t *buf, uint32_t len)
+{
+    if (sitl_sock != -1) {
+        uart2_write(buf, len);
+    }
+}
+
+/*
   process a UDP packet
  */
 static void process_udp_packet(uint8_t *buf, ssize_t len)
@@ -313,6 +323,10 @@ static void send_set_flight_mode(enum control_mode_t mode)
 static void send_named_int(const char *name, int32_t value)
 {
     mavlink_msg_named_value_int_send(MAVLINK_COMM_FC, get_sys_seconds_boot()*1000, name, value);
+    if (sitl_sock != -1) {
+        // also send to real FC so TX can get the info
+        mavlink_msg_named_value_int_send(MAVLINK_COMM_RC, get_sys_seconds_boot()*1000, name, value);
+    }
 }
 
 /*
@@ -1120,6 +1134,43 @@ failed:
 }
 
 /*
+  handle RC_CHANNELS from UART while in SITL, so we can use real TX
+ */
+static void handle_rc_input(mavlink_message_t *msg)
+{
+    switch (msg->msgid) {
+    case MAVLINK_MSG_ID_RC_CHANNELS: {
+	mavlink_rc_channels_t m;
+        mavlink_msg_rc_channels_decode(msg, &m);
+        //console_printf("chancount=%u\n", m.chancount);
+        // we need to send override as system ID 255
+        uint8_t saved_id = mavlink_system.sysid;
+        mavlink_system.sysid = 255;
+        mavlink_msg_rc_channels_override_send(MAVLINK_COMM_FC,
+                                              MAVLINK_TARGET_SYSTEM_ID,
+                                              0,
+                                              m.chan1_raw,
+                                              m.chan2_raw,
+                                              m.chan3_raw,
+                                              m.chan4_raw,
+                                              m.chan5_raw,
+                                              m.chan6_raw,
+                                              m.chan7_raw,
+                                              m.chan8_raw);
+        mavlink_system.sysid = saved_id;        
+        break;
+    }
+    case MAVLINK_MSG_ID_NAMED_VALUE_INT:
+    case MAVLINK_MSG_ID_NAMED_VALUE_FLOAT:
+        _mavlink_resend_uart(MAVLINK_COMM_FC, msg);
+        mavlink_handle_msg(msg);
+        break;
+    default:
+        break;
+    }
+}
+
+/*
    thread main for mavlink processing
 */
 static void mavlink_main(void *pvParameters, int udp_sock)
@@ -1199,24 +1250,31 @@ static void mavlink_main(void *pvParameters, int udp_sock)
             }
         }
 
-        if (!mavlink_sitl_input || sitl_sock == -1) {
-            // check for MAVLink bytes from uart2
-            uint8_t b;
+        uint8_t uart_comm_channel = MAVLINK_COMM_FC;
+        if (mavlink_sitl_input && sitl_sock != -1) {
+            // when SITL is active we parse the UART to FC, but only for RC_CHANNELS
+            uart_comm_channel = MAVLINK_COMM_RC;
+        }
+        // check for MAVLink bytes from uart2
+        uint8_t b;
+            
+        while (xQueueReceive(isr_queue, &b, 0)) {
             mavlink_message_t msg;
             mavlink_status_t status;
             uint8_t count = 0;
-            
-            while (xQueueReceive(isr_queue, &b, 0)) {
-                if (mavlink_parse_char(MAVLINK_COMM_FC, b, &msg, &status)) {
+            if (mavlink_parse_char(uart_comm_channel, b, &msg, &status)) {
+                if (uart_comm_channel == MAVLINK_COMM_RC) {
+                    handle_rc_input(&msg);
+                } else {
                     // possibly handle packet locally:
                     if (!mavlink_handle_msg(&msg)) {
                         // forward to WiFi connection as a udp packet:
                         send_mavlink_wifi(udp_sock, &msg);
                     }
-                    if (count++ == 10) {
-                        // ensure we don't starve the queue
-                        break;
-                    }
+                }
+                if (count++ == 10) {
+                    // ensure we don't starve the queue
+                    break;
                 }
             }
         }
