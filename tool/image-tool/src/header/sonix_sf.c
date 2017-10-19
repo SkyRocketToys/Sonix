@@ -28,6 +28,8 @@
 
 static struct serial_flash *serial_flash_current = NULL;
 
+#define VERBOSE 0
+
 #if 0
 int CRC16_R[16];
 u32 CRC_CORRECT;
@@ -2500,7 +2502,9 @@ static int serial_flash_sector_erase(struct serial_flash *sf, u32 offset, size_t
 		return -EINVAL;
 	}
 
+#if VERBOSE
 	serial_printf("Sector Erase:");
+#endif
 
 	for(; offset < top_addr; offset += sf->sector_size) {
 		retval = sf->sector_erase(sf->sf_inst, offset);
@@ -2509,10 +2513,14 @@ static int serial_flash_sector_erase(struct serial_flash *sf, u32 offset, size_t
 				sf->name);
 			return -EFAULT;
 		}
+#if VERBOSE
 		serial_printf(".");
+#endif
 	}
 
+#if VERBOSE
 	serial_printf("\n");
+#endif
 
 	return 0;
 }
@@ -2557,7 +2565,9 @@ static int serial_flash_block_erase(struct serial_flash *sf, u32 offset, size_t 
 				sf->name);
 			return -EFAULT;
 		}
+#if VERBOSE
 		serial_printf(".");
+#endif
 	}
 
 	serial_printf("\n");
@@ -2600,7 +2610,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 		return -EINVAL;
 	}
 
+#if VERBOSE
 	serial_printf ("write:");
+#endif
 	/* align to a page */
 	page_offset = offset & (sf->page_size - 1);
 	if (page_offset) {
@@ -2616,13 +2628,17 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 		addr += page_len;
 		len -= page_len;
 		//serial_printf ("write cpu in the begin len = 0x%x, offset = 0x%x, addr = 0x%x, size=0x%x\n", len, offset, (int)addr, len);
+#if VERBOSE
 		serial_printf (".");
+#endif
 	}
 
 	
 	/* write page */
 	mblks = len/sf->page_size;
+#if VERBOSE
 	serial_printf ("@@ the mblks = %d\n", mblks);
+#endif
 	if (mblks > 0) {
 		retval = sf->mdma_write(sf->sf_inst, offset, addr, sf->page_size,mblks);
 		if(retval) {
@@ -2635,7 +2651,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 	offset += (sf->page_size*mblks);
 	addr += (sf->page_size*mblks);
 	len -= (sf->page_size*mblks);
+#if VERBOSE
 	serial_printf ("*");
+#endif
 	if (len) {
 	//	serial_printf ("write cpu in the end len = 0x%x, offset = 0x%x, addr = 0x%x, size=0x%x\n", len, offset, (int)addr, len);
 		retval = sf->cpu_write(sf->sf_inst, offset, addr, len);
@@ -2644,10 +2662,14 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 				sf->name);
 			return -EFAULT;
 		}
+#if VERBOSE
 		serial_printf (".");
+#endif
 	}
 	
+#if VERBOSE
 	serial_printf("\nSerial Flash Write: done\n");
+#endif
 
 	return 0;
 }
@@ -2680,7 +2702,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 		return -EINVAL;
 	}
 
+#if VERBOSE
 	serial_printf ("write:");
+#endif
 	/* align to a page */
 	page_offset = offset & (sf->page_size - 1);
 	if (page_offset) {
@@ -2696,7 +2720,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 		addr += page_len;
 		len -= page_len;
 		//serial_printf ("write cpu in the begin len = 0x%x, offset = 0x%x, addr = 0x%x, size=0x%x\n", len, offset, (int)addr, len);
+#if VERBOSE
 		serial_printf (".");
+#endif
 	}
 
 	
@@ -2711,7 +2737,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 		offset += sf->page_size;
 		addr += sf->page_size;
 		len -= sf->page_size;
+#if VERBOSE
 		serial_printf (".");
+#endif
 	}
 
 	if (len) {
@@ -2722,7 +2750,9 @@ static int serial_flash_write(struct serial_flash *sf, u32 offset,
 				sf->name);
 			return -EFAULT;
 		}
+#if VERBOSE
 		serial_printf (".");
+#endif
 	}
 	
 	serial_printf("\nSerial Flash Write: done\n");
@@ -3455,8 +3485,10 @@ static int ms_serial_flash_erase(u32 offset, u32 len)
 {
 	
 	u32 top_addr, bytes, erase_len;
-	
+
+#if VERBOSE > 0
 	serial_printf ("serial flash erase offset = 0x%x len = 0x%x\n", offset, len);
+#endif
 	if(0 == serial_flash_current->block_size || 0 == serial_flash_current->sector_size) {
 		serial_printf("serial flash %s: block/sector size error\n", 
 			serial_flash_current->name);
@@ -3492,15 +3524,19 @@ static int ms_serial_flash_erase(u32 offset, u32 len)
 			return -EFAULT; 
 	}
 
+#if VERBOSE > 0
 	serial_printf ("Serial Flash Erase: done\n");
+#endif
 	return 0;
 }
 
 
 static int ms_serial_flash_write(u32 offset, uchar *addr, u32 len)
 {	
+#if VERBOSE > 0
 	serial_printf("Write: offset 0x%08x, buf = 0x%08x , len 0x%08x\n",
 		offset, addr, len);
+#endif
 
 	return serial_flash_write(serial_flash_current,
 		offset, addr, len);
