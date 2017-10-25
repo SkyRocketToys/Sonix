@@ -799,7 +799,7 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         } else {
             uart_data.rf_strength = 0;
         }
-        if (mavlink_sitl_input) {
+        if (mavlink_sitl_input && sitl_sock != -1) {
             // always have RC input with SITL
             if (uart_data.rf_strength < 20) {
                 uart_data.rf_strength = 20;
