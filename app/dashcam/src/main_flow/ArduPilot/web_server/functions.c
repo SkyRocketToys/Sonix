@@ -1,5 +1,5 @@
 /*
-  server side functions
+  server side functions for web server.
  */
 
 #include "includes.h"
@@ -1133,23 +1133,13 @@ static void set_isp_offset(struct template_state *tmpl, const char *name, const 
 
 void functions_init(struct template_state *tmpl)
 {
+#ifdef SYSTEM_FREERTOS
     tmpl->put(tmpl, "uptime", "", uptime);
     tmpl->put(tmpl, "mem_free", "", mem_free);
-    tmpl->put(tmpl, "upload_progress", "", upload_progress);
-    tmpl->put(tmpl, "upload_message", "", upload_message);
-    tmpl->put(tmpl, "mavlink_message", "", mavlink_message);
-    tmpl->put(tmpl, "mavlink_message_list", "", mavlink_message_list);
-    tmpl->put(tmpl, "mavlink_message_send", "", mavlink_message_send);
     tmpl->put(tmpl, "snapshot", "", snapshot);
     tmpl->put(tmpl, "mjpgvideo", "", mjpg_video);
     tmpl->put(tmpl, "take_picture", "", take_picture);
-    tmpl->put(tmpl, "toggle_video", "", toggle_video);
-    tmpl->put(tmpl, "process_c_calls", "", process_c_calls);
-    tmpl->put(tmpl, "reboot_companion", "", reboot_companion);
-    tmpl->put(tmpl, "factory_reset", "", factory_reset);
-    tmpl->put(tmpl, "format_storage", "", format_storage);
     tmpl->put(tmpl, "get_ssid_info", "", get_ssid_info);
-    tmpl->put(tmpl, "get_ssid", "", get_ssid);
     tmpl->put(tmpl, "set_ssid", "", set_ssid);
     tmpl->put(tmpl, "sonix_version", "", sonix_version);
     tmpl->put(tmpl, "file_upload", "", file_upload);
@@ -1158,10 +1148,7 @@ void functions_init(struct template_state *tmpl)
     tmpl->put(tmpl, "file_rename", "", file_rename);
     tmpl->put(tmpl, "file_listdir", "", file_listdir);
     tmpl->put(tmpl, "disk_info", "", disk_info);
-    tmpl->put(tmpl, "process_content", "", process_content);
     tmpl->put(tmpl, "set_time_utc", "", set_time_utc);
-    tmpl->put(tmpl, "get_param", "", get_param);
-    tmpl->put(tmpl, "get_param_list", "", get_param_list);
     tmpl->put(tmpl, "fc_mavlink_count", "", fc_mavlink_count);
     tmpl->put(tmpl, "fc_mavlink_baudrate", "", fc_mavlink_baudrate);
     tmpl->put(tmpl, "mga_status", "", mga_status);
@@ -1169,6 +1156,7 @@ void functions_init(struct template_state *tmpl)
     tmpl->put(tmpl, "nvram_pack_list", "", nvram_pack_list);
     tmpl->put(tmpl, "nvram_pack_values", "", nvram_pack_values);
     tmpl->put(tmpl, "nvram_set_value", "", nvram_set_value);
+    tmpl->put(tmpl, "get_ssid", "", get_ssid);
     tmpl->put(tmpl, "stm32_id", "", stm32_id);
     tmpl->put(tmpl, "play_tx_tune", "", play_tx_tune);
     tmpl->put(tmpl, "get_serial_number", "", get_serial_number);
@@ -1176,4 +1164,18 @@ void functions_init(struct template_state *tmpl)
     tmpl->put(tmpl, "get_ambient_light", "", get_ambient_light);
     tmpl->put(tmpl, "get_isp_offset", "", get_isp_offset);
     tmpl->put(tmpl, "set_isp_offset", "", set_isp_offset);
+#endif // SYSTEM_FREERTOS
+    tmpl->put(tmpl, "format_storage", "", format_storage);
+    tmpl->put(tmpl, "factory_reset", "", factory_reset);
+    tmpl->put(tmpl, "reboot_companion", "", reboot_companion);
+    tmpl->put(tmpl, "toggle_video", "", toggle_video);
+    tmpl->put(tmpl, "upload_progress", "", upload_progress);
+    tmpl->put(tmpl, "upload_message", "", upload_message);
+    tmpl->put(tmpl, "mavlink_message", "", mavlink_message);
+    tmpl->put(tmpl, "mavlink_message_list", "", mavlink_message_list);
+    tmpl->put(tmpl, "mavlink_message_send", "", mavlink_message_send);
+    tmpl->put(tmpl, "process_c_calls", "", process_c_calls);
+    tmpl->put(tmpl, "process_content", "", process_content);
+    tmpl->put(tmpl, "get_param", "", get_param);
+    tmpl->put(tmpl, "get_param_list", "", get_param_list);
 }
