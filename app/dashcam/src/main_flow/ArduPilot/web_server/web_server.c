@@ -116,8 +116,64 @@ void sock_printf(struct sock_buf *sock, const char *fmt, ...)
 void connection_destroy(struct connection_state *c)
 {
     talloc_free(c);
+#ifdef SYSTEM_FREERTOS
     vTaskDelete(NULL);
+#else
+    pthread_exit(0);
+#endif
 }
+
+
+#ifndef SYSTEM_FREERTOS
+/*
+  write some data to the flight controller
+ */
+void mavlink_fc_write(const uint8_t *buf, size_t size)
+{
+    if (serial_port_fd != -1) {
+        write(serial_port_fd, buf, size);
+    }
+    if (fc_udp_in_fd != -1) {
+        if (fc_addrlen != 0) {
+            sendto(fc_udp_in_fd, buf, size, 0, (struct sockaddr*)&fc_addr, fc_addrlen);
+        }
+    }
+}
+
+/*
+  send a mavlink message to flight controller
+ */
+void mavlink_fc_send(mavlink_message_t *msg)
+{
+    if (serial_port_fd != -1) {
+        _mavlink_resend_uart(MAVLINK_COMM_FC, msg);
+    }
+    if (fc_udp_in_fd != -1) {
+        uint8_t buf[600];
+        uint16_t len = mavlink_msg_to_send_buffer(buf, msg);
+        mavlink_fc_write(buf, len);
+    }
+}
+
+/*
+  send a mavlink msg over WiFi
+ */
+static void mavlink_broadcast(int fd, mavlink_message_t *msg)
+{
+    uint8_t buf[300];
+    uint16_t len = mavlink_msg_to_send_buffer(buf, msg);
+    if (len > 0) {
+        struct sockaddr_in addr;
+        memset(&addr, 0x0, sizeof(addr));
+
+        addr.sin_family = AF_INET;
+        addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+        addr.sin_port = htons(14550);
+        
+        sendto(fd, buf, len, 0, (struct sockaddr*)&addr, sizeof(addr));
+    }
+}
+#endif
 
 /*
   process input on a connection
