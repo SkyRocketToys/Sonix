@@ -568,7 +568,6 @@ static void download_filesystem(struct cgi_state *cgi, const char *fs_path)
                 break;
             }
         }
-        f_sync(&fh);
         f_close(&fh);
     } else {
         cgi->http_error(cgi, "404 Bad File", "", "file not found");
