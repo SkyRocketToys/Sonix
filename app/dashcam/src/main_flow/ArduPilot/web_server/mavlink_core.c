@@ -3,7 +3,7 @@
   providing the core mavlink functions used by other modules
 */
 #include "mavlink_core.h"
-#include "mavlink_wifi.h"
+#include "web_server.h"
 
 mavlink_system_t mavlink_system = {MAVLINK_SYSTEM_ID,MAVLINK_COMPONENT_ID_REMOTE_LOG};
 

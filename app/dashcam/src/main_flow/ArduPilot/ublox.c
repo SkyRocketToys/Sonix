@@ -11,7 +11,7 @@
 
 #include "dev_console.h"
 #include "mavlink_wifi.h"
-#include "mavlink_core.h"
+#include "web_server/mavlink_core.h"
 #include "talloc.h"
 #include "web_server/web_server.h"
 #include "util/print_vprintf.h"

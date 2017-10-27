@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mavlink_core.h"
+#include "web_server/mavlink_core.h"
 
 #define REMOTE_LOG_BASEDIR "/DATAFLASH"
 

@@ -25,7 +25,7 @@
 #include "mavlink_remote_log.h"
 #include "bootloader_client.h"
 #include "tx_upload.h"
-#include "mavlink_core.h"
+#include "web_server/mavlink_core.h"
 #include "telemetry_format.h"
 #include "talloc.h"
 #include "record/rec_schedule.h"

@@ -6,7 +6,7 @@
 #include "template.h"
 #include "functions.h"
 #include "mavlink_json.h"
-#include "../mavlink_core.h"
+#include "mavlink_core.h"
 #include "../mavlink_wifi.h"
 #include "video_main.h"
 #include <libmid_fwupgrade/fwupgrade.h>

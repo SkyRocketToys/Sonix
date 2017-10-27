@@ -1,4 +1,4 @@
-#include "../mavlink_core.h"
+#include "mavlink_core.h"
 
 /*
   print a JSON string for a message to the given socket

@@ -1,4 +1,4 @@
-#include "mavlink_core.h"
+#include "web_server/mavlink_core.h"
 
 void tx_fw_upload_task_process(void *pvParameters);
 void tx_upload_periodic(void);

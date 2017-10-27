@@ -209,7 +209,7 @@ ARDUPILOT_FILES += dev_console.o
 endif
 
 ifdef CONFIG_MAVLINK_WIFI
-ARDUPILOT_FILES += mavlink_core.o
+ARDUPILOT_FILES += web_server/mavlink_core.o
 ARDUPILOT_FILES += mavlink_wifi.o
 ARDUPILOT_FILES += mavlink_remote_log.o
 ARDUPILOT_FILES += bootloader_client.o

@@ -6,7 +6,7 @@
 #include "includes.h"
 #include "web_server.h"
 #include "../mavlink_wifi.h"
-#include "../mavlink_core.h"
+#include "mavlink_core.h"
 #include "mavlink_json.h"
 
 static void print_one_field(struct sock_buf *sock, const mavlink_message_t *msg, const mavlink_field_info_t *f, int idx)

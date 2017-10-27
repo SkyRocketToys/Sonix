@@ -37,4 +37,6 @@ int32_t sock_write(struct sock_buf *sock, const char *s, size_t size);
 void sock_printf(struct sock_buf *sock, const char *fmt, ...) FMT_PRINTF(2,3);
 void web_server_set_debug(int debug);
 void web_debug(int level, const char *fmt, ...);
+void mavlink_fc_write(const uint8_t *buf, size_t len);
+void mavlink_rc_write(const uint8_t *buf, uint32_t len);
 
