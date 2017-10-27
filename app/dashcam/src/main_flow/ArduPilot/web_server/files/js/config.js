@@ -10,7 +10,7 @@ var mga_data_url = "http://firmware.sky-viper.com/data/OFFLINE.UBX";
 */
 try {
     var hosta = window.location.hostname.split('.')
-    if ((hosta[0] == 192 && hosta[1] == 168) || hosta[0] == 172 || hosta[0] == 10 ||
+    if ((hosta[0] == 192 && hosta[1] == 168) || hosta[0] == 172 || hosta[0] == 10 || hosta[0] == 127 ||
         window.location.hostname == "tridgell.net") {
         drone_url = '';
     }
