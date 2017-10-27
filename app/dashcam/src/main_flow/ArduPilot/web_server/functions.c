@@ -7,6 +7,9 @@
 #include "functions.h"
 #include "mavlink_json.h"
 #include "mavlink_core.h"
+#include "cgi.h"
+
+#ifdef SYSTEM_FREERTOS
 #include "../mavlink_wifi.h"
 #include "video_main.h"
 #include <libmid_fwupgrade/fwupgrade.h>
@@ -14,7 +17,6 @@
 #include <wifi/wifi_api.h>
 #include "../tx_upload.h"
 #include "../ublox.h"
-#include "cgi.h"
 #include "files/version.h"
 #include <uart/uart.h>
 #include <libmid_isp/snx_mid_isp.h>
@@ -51,6 +53,7 @@ static void mem_free(struct template_state *tmpl, const char *name, const char *
     int mem_type = argc>0?atoi(argv[0]):1;
     sock_printf(tmpl->sock, "%u", xPortGetFreeHeapSize(mem_type));
 }
+#endif
 
 /*
   get upload progress
@@ -113,6 +116,7 @@ static void mavlink_message_list(struct template_state *tmpl, const char *name, 
     mavlink_message_list_json(tmpl->sock);
 }
 
+#ifdef SYSTEM_FREERTOS
 // a queue between camera callback and snapshot() function
 static QueueHandle_t picture_queue;
 
@@ -249,6 +253,7 @@ static void take_picture(struct template_state *tmpl, const char *name, const ch
     set_takepic_num(1);
     mf_set_snapshot(1);
 }
+#endif // SYSTEM_FREERTOS
 
 /*
   process C calls from commandN variables
@@ -339,9 +344,11 @@ static void factory_reset(struct template_state *tmpl, const char *name, const c
     console_printf("resetting to factory defaults\n");
     sock_printf(tmpl->sock, "resetting to factory defaults");
     mavlink_param_set("SYSID_SW_MREV", 0);
+#ifdef SYSTEM_FREERTOS
     snx_nvram_reset_to_default(NVRAM_RTD_ALL, NULL, NULL);    
     snx_nvram_init();
     snx_nvram_bootup_upgrade();
+#endif
 }
 
 /*
@@ -349,14 +356,17 @@ static void factory_reset(struct template_state *tmpl, const char *name, const c
  */
 static void format_storage(struct template_state *tmpl, const char *name, const char *value, int argc, char **argv)
 {
+#ifdef SYSTEM_FREERTOS
     if (f_mkfs("0:", 1, 0) == FR_OK) {
         sock_printf(tmpl->sock, "Format success");
     } else {
         sock_printf(tmpl->sock, "Format failed");
     }
+#endif
 }
 
 
+#ifdef SYSTEM_FREERTOS
 /*
   validate auth settings for wifi
   return error-string on error. Return NULL if OK
@@ -765,6 +775,7 @@ static void set_time_utc(struct template_state *tmpl, const char *name, const ch
     }
     ublox_set_time(get_sys_seconds_utc());
 }
+#endif // SYSTEM_FREERTOS
 
 
 /*
@@ -798,7 +809,7 @@ static void get_param_list(struct template_state *tmpl, const char *name, const 
     sock_printf(tmpl->sock, "]");
 }
 
-
+#if SYSTEM_FREERTOS
 /*
   get ublox MGA status
  */
@@ -1130,6 +1141,7 @@ static void set_isp_offset(struct template_state *tmpl, const char *name, const 
         }
     }
 }
+#endif // SYSTEM_FREERTOS
 
 void functions_init(struct template_state *tmpl)
 {
