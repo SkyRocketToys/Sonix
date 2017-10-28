@@ -10,7 +10,6 @@
 #define MAVLINK_USE_MESSAGE_INFO
 #include "includes.h"
 #include "web_server.h"
-#include "../mavlink_wifi.h"
 #include "mavlink_core.h"
 #include "mavlink_json.h"
 
