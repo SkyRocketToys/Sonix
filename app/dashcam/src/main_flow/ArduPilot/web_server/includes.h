@@ -1,5 +1,6 @@
 #pragma once
 
+#ifdef SYSTEM_FREERTOS
 #include <FreeRTOS.h>
 #include <bsp.h>
 #include <task.h>
@@ -17,6 +18,10 @@
 #include "../talloc.h"
 #include "../dev_console.h"
 #include "../util/print_vprintf.h"
+#else
+#include "linux/includes.h"
+#include "mavlink_core.h"
+#endif
 
 #include "cgi.h"
 #include "template.h"
