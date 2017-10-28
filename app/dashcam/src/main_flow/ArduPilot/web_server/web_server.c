@@ -8,7 +8,21 @@
 #include "web_server.h"
 #include "includes.h"
 #include "web_files.h"
+#ifdef SYSTEM_FREERTOS
 #include <libmid_nvram/snx_mid_nvram.h>
+#else
+#include <termios.h>
+#endif
+
+#ifndef SYSTEM_FREERTOS
+static pthread_mutex_t lock;
+static int serial_port_fd = -1;
+static int fc_udp_in_fd = -1;
+
+struct sockaddr_in fc_addr;
+socklen_t fc_addrlen;
+
+#endif
 
 static int num_sockets_open;
 static int debug_level;
@@ -36,6 +50,26 @@ void web_debug(int level, const char *fmt, ...)
     va_end(ap);
 }
 
+#ifdef SYSTEM_FREERTOS
+static void lock_state(void)
+{
+}
+
+static void unlock_state(void)
+{
+}
+#else
+static void lock_state(void)
+{
+    pthread_mutex_lock(&lock);
+}
+
+static void unlock_state(void)
+{
+    pthread_mutex_unlock(&lock);
+}
+#endif
+
 /*
   destroy socket buffer, writing any pending data
  */
@@ -61,8 +95,12 @@ static int sock_buf_destroy(struct sock_buf *sock)
             write(sock->fd, sock->buf, size);
         }
     }
+
+    lock_state();
     web_debug(3,"closing fd %d num_sockets_open=%d\n", sock->fd, num_sockets_open);
     num_sockets_open--;
+    unlock_state();
+    
     close(sock->fd);
     return 0;
 }
