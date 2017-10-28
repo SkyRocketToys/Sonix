@@ -16,6 +16,10 @@ static int debug_level;
 // public web-site that will be allowed. Can be edited with NVRAM editor
 static const char *public_origin = "fly.sky-viper.com";
 
+#ifndef bool
+#define bool int
+#endif
+
 void web_server_set_debug(int level)
 {
     debug_level = level;
