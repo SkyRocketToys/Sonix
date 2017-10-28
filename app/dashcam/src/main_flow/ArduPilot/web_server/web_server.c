@@ -269,6 +269,7 @@ static bool check_origin(const char *origin)
         return true;
     }
     char *allowed_origin;
+#ifdef SYSTEM_FREERTOS
     unsigned origin_length = 0;
     if (snx_nvram_get_data_len("SkyViper", "AllowedOrigin", &origin_length) != NVRAM_SUCCESS) {
         return false;
@@ -281,6 +282,9 @@ static bool check_origin(const char *origin)
         talloc_free(allowed_origin);
         return false;
     }
+#else
+    allowed_origin = talloc_zero_size(NULL, 1);
+#endif
     // check for wildcard allowed origin
     if (strcmp(allowed_origin, "*") == 0) {
         talloc_free(allowed_origin);
@@ -312,11 +316,13 @@ static bool check_origin(const char *origin)
  */
 static void setup_origin(const char *origin)
 {
+#ifdef SYSTEM_FREERTOS
     unsigned origin_length = 0;
     if (snx_nvram_get_data_len("SkyViper", "AllowedOrigin", &origin_length) != NVRAM_SUCCESS ||
         origin_length == 0) {
         snx_nvram_string_set("SkyViper", "AllowedOrigin", __DECONST(char *,origin));
     }
+#endif
 }
 
 /*
