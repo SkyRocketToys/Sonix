@@ -276,6 +276,7 @@ static void setup_origin(const char *origin)
 /*
   task for web_server
 */
+#ifdef SYSTEM_FREERTOS
 static void web_server_connection_process(void *pvParameters)
 {
     struct connection_state *c = pvParameters;
@@ -289,6 +290,36 @@ static void web_server_connection_process(void *pvParameters)
 
     connection_process(c);
 }
+#else
+static void *web_server_connection_process(void *arg)
+{
+    int fd = (intptr_t)arg;
+    // new talloc tree per thread
+    struct connection_state *c = talloc_zero(NULL, struct connection_state);
+    c->sock = talloc_zero(c, struct sock_buf);
+    c->sock->fd = fd;
+
+    lock_state();
+
+    num_sockets_open++;
+    
+    web_debug(4,"Opened connection %d num_sockets_open=%d\n", fd, num_sockets_open);
+
+    unlock_state();
+    
+    talloc_set_destructor(c->sock, sock_buf_destroy);
+    c->cgi = cgi_init(c, c->sock);
+    if (!c->cgi) {
+        connection_destroy(c);
+        return NULL;
+    }
+
+    c->cgi->check_origin = check_origin;
+
+    connection_process(c);
+    return NULL;
+}
+#endif
 
 /*
   task for web_server
