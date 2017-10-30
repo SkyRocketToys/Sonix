@@ -46,6 +46,7 @@ static int sitl_listen_sock = -1;
 static int sitl_sock = -1;
 static char stm32_id[40];
 static bool rc_ok;
+static bool vehicle_armed;
 
 #define QUEUE_SIZE 50*1024
 
@@ -709,7 +710,6 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
 
 	mavlink_heartbeat_t m;
 	mavlink_msg_heartbeat_decode(msg, &m);
-        static bool last_armed;
         bool armed = m.base_mode & MAV_MODE_FLAG_SAFETY_ARMED;
         if (m.autopilot == MAV_AUTOPILOT_ARDUPILOTMEGA) {
             switch (m.custom_mode) {
@@ -732,11 +732,11 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
             }
         }
 
-        if (!armed && last_armed && schedrec_state() == 1) {
+        if (!armed && vehicle_armed && schedrec_state() == 1) {
             console_printf("disarmed: cycling video file\n");
             rec_sched_next_file();
         }
-        last_armed = armed;
+        vehicle_armed = armed;
         break;
     }
 
@@ -1611,4 +1611,18 @@ gps_fix_type_t get_gps_fix_type(void)
 const char *mavlink_get_stm32_id(void)
 {
     return stm32_id;
+}
+
+/*
+  get the vehicle armed state
+ */
+bool get_vehicle_armed(void)
+{
+    uint32_t now = get_time_boot_ms();
+    // if we have not heard from the flight controller for 20s then
+    // assume disarmed
+    if (vehicle_armed && now - last_heartbeat_ms < 20000) {
+        return true;
+    }
+    return false;
 }

@@ -62,3 +62,6 @@ const char *mavlink_get_stm32_id(void);
 
 // access disable of sd save from app
 extern int disable_sd_save;
+
+// get vehicle armed state
+bool get_vehicle_armed(void);
