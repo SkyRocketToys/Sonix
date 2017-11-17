@@ -957,7 +957,7 @@ function combined_accel_cal_callback(result) {
                                           combined_mag_callback, 5000);
         }, 2000);
     } else {
-        if (cfg_vars["SSID"] != null) {
+        if (config_vars["SSID"] != null) {
             append_message_color("combined_message", "red", "ERR Missing mag values in WIFI.TXT");            
             return;
         }
