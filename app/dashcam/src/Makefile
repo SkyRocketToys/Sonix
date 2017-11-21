@@ -298,7 +298,7 @@ $(OBJ_DIR)/init.o:$(PWD)/init.c
 	$(CC) -c $(CFLAGS) $< -o $@
 #$(OBJ_DIR)/printlog.o:$(PWD)/printlog.c
 #	$(CC) -c $(CFLAGS) $< -o $@	
-$(OBJ_DIR)/main_flow.o:$(PWD)/main_flow/main_flow.c
+$(OBJ_DIR)/main_flow.o:$(PWD)/main_flow/main_flow.c $(APWEB_SRC)/files/embedded.c
 	$(CC) -c $(CFLAGS) $< -o $@
 $(OBJ_DIR)/video_main.o:$(PWD)/main_flow/video/video_main.c
 	$(CC) -c $(CFLAGS) $< -o $@
