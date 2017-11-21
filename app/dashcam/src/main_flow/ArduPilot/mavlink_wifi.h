@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include "web_server/mavlink_core.h"
+#include <mavlink_core.h>
 #include "ublox.h"
 
 void mavlink_wifi_socket_create(void);

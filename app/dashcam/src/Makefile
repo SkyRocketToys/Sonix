@@ -201,8 +201,10 @@ ifdef CONFIG_UDP_FLOW
 OBJ_FILES += udp_cmd.o
 endif
 
-ARDUPILOT_OBJ_DIR=$(OBJ_DIR)/ArduPilot
 APWEB_SRC=$(PWD)/../../../modules/APWeb
+CFLAGS += -I$(APWEB_SRC)
+
+ARDUPILOT_OBJ_DIR=$(OBJ_DIR)/ArduPilot
 OBJ_DIRS += $(ARDUPILOT_OBJ_DIR) $(ARDUPILOT_OBJ_DIR)/web_server $(ARDUPILOT_OBJ_DIR)/web_server/files $(ARDUPILOT_OBJ_DIR)/util
 
 ifdef CONFIG_DEV_CONSOLE
@@ -328,11 +330,11 @@ $(OBJ_DIR)/udp_cmd.o:$(PWD)/main_flow/daemon/udp_cmd.c
 endif
 ifdef CONFIG_DEV_CONSOLE
 $(ARDUPILOT_OBJ_DIR)/dev_console.o:$(PWD)/main_flow/ArduPilot/dev_console.c
-	$(CC) -c $(CFLAGS) $(ARDUPILOT_CFLAGS) $< -o $@	
+	$(CC) -c $(CFLAGS) $(ARDUPILOT_CFLAGS) $< -o $@	-I$(PWD)/main_flow/ArduPilot
 endif	
 ifdef CONFIG_MAVLINK_WIFI
 $(ARDUPILOT_OBJ_DIR)/%.o:$(PWD)/main_flow/ArduPilot/%.c
-	$(CC) -c $(CFLAGS) $(ARDUPILOT_CFLAGS) $< -o $@	
+	$(CC) -c $(CFLAGS) $(ARDUPILOT_CFLAGS) $< -o $@ -I$(PWD)/main_flow/ArduPilot
 $(APWEB_SRC)/files/embedded.c: $(APWEB_SRC)/files/*.* $(APWEB_SRC)/files/*/*.*
 	make -C $(APWEB_SRC)/files
 $(ARDUPILOT_OBJ_DIR)/web_server/web_files.o:$(APWEB_SRC)/files/embedded.c

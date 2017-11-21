@@ -32,7 +32,7 @@
 #include "tx_upload.h"
 #include "mavlink_remote_log.h"
 #include "dev_console_json.h"
-#include "web_server/web_server.h"
+#include <web_server.h>
 #include "bootloader_client.h"
 #include "ublox.h"
 

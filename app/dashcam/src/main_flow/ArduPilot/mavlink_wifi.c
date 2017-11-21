@@ -25,11 +25,11 @@
 #include "mavlink_remote_log.h"
 #include "bootloader_client.h"
 #include "tx_upload.h"
-#include "web_server/mavlink_core.h"
+#include <mavlink_core.h>
 #include "telemetry_format.h"
 #include "talloc.h"
 #include "record/rec_schedule.h"
-#include "web_server/web_server.h"
+#include <web_server.h>
 #include <libmid_nvram/snx_mid_nvram.h>
 #include "util/print_vprintf.h"
 #include "video_main.h"
