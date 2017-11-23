@@ -3,4 +3,4 @@
 	url = git://github.com/ArduPilot/mavlink.git
 [submodule "modules/APWeb"]
 	path = modules/APWeb
-	url = http://github.com/ardupilot/APWeb
+	url = http://github.com/SkyRocketToys/APWeb
