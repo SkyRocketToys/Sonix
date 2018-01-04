@@ -3,6 +3,8 @@
 
 #include <i2c/i2c.h>
 
+#define CONFIG_H62_MIPI_MODE 1 //
+
 #define SENSOR_ID			0x1000		/*!< ctrl id for sensor id */
 #define SENSOR_DMY_PX 			0x1001		/*!< ctrl id for sensor dummy pixel */
 #define SENSOR_DMY_LN 			0x1002		/*!< ctrl id for sensor dummy line */
