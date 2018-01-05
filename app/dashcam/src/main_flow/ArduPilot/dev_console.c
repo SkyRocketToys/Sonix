@@ -794,6 +794,8 @@ static void dev_console_periodic(void)
         return;
     }
 
+#if 0
+    // disabled for H62 support
     console_printf("Setting video mode %d\n", video_mode);
     
     switch (video_mode) {
@@ -808,6 +810,7 @@ static void dev_console_periodic(void)
         ov9732_set_video(OV9732_VIDEO_SLOW);
         break;
     }
+#endif
 
     last_mode = video_mode;
 }
