@@ -179,10 +179,10 @@ void _init(void)
 
 	i2c_init();
 	{
-		// Pull high GPIO1 for Sensor
+		// Pull low GPIO1 for H62 Sensor
 		info.pinumber = 1;
 		info.mode = 1;
-		info.value = 1;
+		info.value = 0;
 		snx_gpio_open();
 		snx_gpio_write(info);
 		snx_gpio_close();
