@@ -121,6 +121,45 @@ static serialflash_int_t sf_init_struct[] = {
 	},
 };
 
+static bool tried_isp_reinit;
+
+/*
+  set a GPIO pin
+ */
+static void set_gpio(unsigned pin, unsigned value)
+{
+    gpio_pin_info info;
+    info.pinumber = pin;
+    info.mode = 1;
+    info.value = value;
+    snx_gpio_open();
+    snx_gpio_write(info);
+    snx_gpio_close();
+}
+
+/*
+  this hook is used to detect isp initialisation failure 
+ */
+void isp_print_msg_hook(const char *fmt)
+{
+    const char *match_str = "[isp] sensor load module failed";
+    if (strncmp(fmt, match_str, strlen(match_str)) != 0) {
+        return;
+    }
+    /*
+      the OV9732 sensors needs GPIO1 high, the H62 needs it low. We
+      use this hook to allow us to detect sensor failure and change
+      GPIO1. This allows for a single firmware that supports both
+      sensors.
+     */
+    if (!tried_isp_reinit) {
+        tried_isp_reinit = true;
+        print_msg("trying GPIO1=0\n");
+        set_gpio(1, 0);
+        snx_isp_init();
+    }
+}
+
  /*
   * Performs initialization of all supported hardware.
   * All peripherals are stopped, their interrupt triggering is disabled, etc.
@@ -131,7 +170,6 @@ static serialflash_int_t sf_init_struct[] = {
  */
 void _init(void)
 {
-	gpio_pin_info info;
 	unsigned char drv;
 	
 	/* get run in normal or rescue info */
@@ -178,21 +216,16 @@ void _init(void)
 #endif
 
 	i2c_init();
-	{
-		// Pull low GPIO1 for H62 Sensor
-		info.pinumber = 1;
-		info.mode = 1;
-		info.value = 0;
-		snx_gpio_open();
-		snx_gpio_write(info);
-		snx_gpio_close();
-	}
+
+        print_msg("trying GPIO1=1\n");
+        set_gpio(1, 1);
+        
 	if(snx_isp_init() != pdPASS){
 #ifndef CONFIG_APP_DRONE
-		mcu_set_err_flag(ERR_SENSOR_ISP);
+            mcu_set_err_flag(ERR_SENSOR_ISP);
 #endif
-	}
-
+        }
+       
 	audio_dri_init();
 	audio_init();
 	
@@ -232,12 +265,7 @@ void _init(void)
 #if (CONFIG_SYSTEM_PLATFORM_SN98670 == 1) || (CONFIG_SYSTEM_PLATFORM_SN98671 == 1) || (CONFIG_SYSTEM_PLATFORM_SN98672 == 1)
 #ifndef CONFIG_USBH_STORAGE_SUPPORT
 		// Turn on GPIO0 WiFi power
-		info.pinumber = 0;
-		info.mode = 1;
-		info.value = 1;
-		snx_gpio_open();
-		snx_gpio_write(info);
-		snx_gpio_close();
+            set_gpio(0, 1);
 #endif
 #endif
 	}

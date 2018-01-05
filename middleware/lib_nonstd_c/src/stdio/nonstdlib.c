@@ -684,6 +684,8 @@ out:
 	return new_msg;
 }
 
+extern void isp_print_msg_hook(const char *);
+
 void print_msg(const char *fmt, ...)
 {
 	va_list args;
@@ -692,6 +694,14 @@ void print_msg(const char *fmt, ...)
 	char *pPrintBuf = NULL;
 
 	va_start(args, fmt);
+
+        /*
+          this is a workaround for the lack of any other way to detect
+          isp initialisation failure
+         */
+        if (strncmp(fmt, "[isp]", 5) == 0) {
+            isp_print_msg_hook(fmt);
+        }
 
 	/* For this to work, printbuffer must be larger than
 	 * anything we ever want to print.
