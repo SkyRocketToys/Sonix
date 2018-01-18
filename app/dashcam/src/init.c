@@ -137,6 +137,8 @@ static void set_gpio(unsigned pin, unsigned value)
     snx_gpio_close();
 }
 
+const char *sensor_driver_name = "ov9732";
+
 /*
   this hook is used to detect isp initialisation failure 
  */
@@ -155,6 +157,7 @@ void isp_print_msg_hook(const char *fmt)
     if (!tried_isp_reinit) {
         tried_isp_reinit = true;
         print_msg("trying GPIO1=0\n");
+        sensor_driver_name = "h62";
         set_gpio(1, 0);
         snx_isp_init();
     }
