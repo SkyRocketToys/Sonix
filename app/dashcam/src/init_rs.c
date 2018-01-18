@@ -233,3 +233,11 @@ void _init(void)
 	}
 	return;
 }
+
+/*
+  this hook is used to detect isp initialisation failure 
+ */
+void isp_print_msg_hook(const char *fmt)
+{
+    // nothing to do on rescue system
+}
