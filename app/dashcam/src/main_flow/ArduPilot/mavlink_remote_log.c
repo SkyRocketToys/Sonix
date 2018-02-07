@@ -151,7 +151,7 @@ static const int log_fh_is_open()
 static void send_ack(const uint32_t seqno)
 {
     mavlink_msg_remote_log_block_status_send(MAVLINK_COMM_FC,
-					     MAVLINK_TARGET_SYSTEM_ID,
+					     mavlink_target_sysid(),
 					     MAV_COMP_ID_LOG,
 					     seqno,
 					     1);
@@ -191,8 +191,8 @@ static void attempt_start()
  */
 void mavlink_handle_remote_log_data_block(mavlink_remote_log_data_block_t *msg)
 {
-    if (msg->target_system != MAVLINK_SYSTEM_ID ||
-	msg->target_component != MAVLINK_COMPONENT_ID_REMOTE_LOG) {
+    if (msg->target_system != mavlink_system.sysid ||
+	msg->target_component != mavlink_system.compid) {
 	/* This shouldn't ever happen. */
 	return;
     }

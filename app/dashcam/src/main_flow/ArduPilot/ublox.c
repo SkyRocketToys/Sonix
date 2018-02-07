@@ -809,12 +809,12 @@ static int mavlink_inject(const uint8_t *data, uint16_t len)
     if (msg == NULL) {
         return -1;
     }
-    mavlink_msg_gps_inject_data_pack_chan(MAVLINK_SYSTEM_ID,
-                                          1, // source component id
+    mavlink_msg_gps_inject_data_pack_chan(mavlink_system.sysid,
+                                          mavlink_system.compid,
                                           MAVLINK_COMM_FC,
                                           msg,
-                                          MAVLINK_TARGET_SYSTEM_ID,
-                                          0,
+                                          mavlink_target_sysid(),
+                                          MAV_COMP_ID_ALL,
                                           len,
                                           data);
     return mavlink_fc_send(msg);

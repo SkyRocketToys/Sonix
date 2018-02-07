@@ -135,6 +135,21 @@ struct mavlink_command_ack {
 
 static struct mavlink_command_ack *command_acks;
 
+mavlink_system_t mavlink_system = {
+sysid: 67,
+compid: 72
+};
+mavlink_system_t mavlink_target_system = {
+sysid: 1,
+compid: MAV_COMP_ID_ALL
+};
+
+// implementation of methods required for APWeb:
+uint8_t mavlink_target_sysid(void)
+{
+    return mavlink_target_system.sysid;
+}
+
 /*
   telemetry data sent over wifi to app is big-endian. ABI on Sonix is
   little-endian, so we need to swap bytes
@@ -278,8 +293,8 @@ enum control_mode_t {
 static void send_stream_rates_request(uint8_t rate)
 {
     mavlink_msg_request_data_stream_send(MAVLINK_COMM_FC,
-                                         MAVLINK_TARGET_SYSTEM_ID,
-                                         0,
+                                         mavlink_target_sysid(),
+                                         MAV_COMP_ID_AUTOPILOT1,
                                          MAV_DATA_STREAM_ALL,
                                          rate, 1);
 }
@@ -291,8 +306,8 @@ static void send_command_long(unsigned command,
                               float p1, float p2, float p3, float p4, float p5, float p6, float p7)
 {
     mavlink_msg_command_long_send(MAVLINK_COMM_FC,
-                                  MAVLINK_TARGET_SYSTEM_ID,
-                                  0,
+                                  mavlink_target_sysid(),
+                                  MAV_COMP_ID_AUTOPILOT1,
                                   command,
                                   0,
                                   p1, p2, p3, p4, p5, p6, p7);
@@ -308,12 +323,12 @@ static void send_get_home_request(void)
 }
 
 /*
-  ask for home position
+  set flight mode
  */
 static void send_set_flight_mode(enum control_mode_t mode)
 {
     mavlink_msg_set_mode_send(MAVLINK_COMM_FC,
-                              MAVLINK_TARGET_SYSTEM_ID,
+                              mavlink_target_sysid(),
                               MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
                               mode);
 }
@@ -378,8 +393,8 @@ static void mavlink_periodic(void)
         console_printf("requesting parameters param_count=%u param_expected_count=%u\n",
                        param_count, param_expected_count);
         mavlink_msg_param_request_list_send(MAVLINK_COMM_FC,
-                                            MAVLINK_TARGET_SYSTEM_ID,
-                                            0);
+                                            mavlink_target_sysid(),
+                                            MAV_COMP_ID_AUTOPILOT1);
     }
 
     static uint32_t last_wifi_chan_ms;
@@ -1147,8 +1162,8 @@ static void handle_rc_input(mavlink_message_t *msg)
         uint8_t saved_id = mavlink_system.sysid;
         mavlink_system.sysid = 255;
         mavlink_msg_rc_channels_override_send(MAVLINK_COMM_FC,
-                                              MAVLINK_TARGET_SYSTEM_ID,
-                                              0,
+                                              mavlink_target_sysid(),
+                                              MAV_COMP_ID_AUTOPILOT1,
                                               m.chan1_raw,
                                               m.chan2_raw,
                                               m.chan3_raw,
@@ -1567,7 +1582,12 @@ int mavlink_set_flight_response(int index, int value)
 void mavlink_param_set(const char *name, float value)
 {
     console_printf("Setting parameter %s to %f\n", name, value);
-    mavlink_msg_param_set_send(MAVLINK_COMM_FC, MAVLINK_TARGET_SYSTEM_ID, 0, name, value, 0);
+    mavlink_msg_param_set_send(MAVLINK_COMM_FC,
+                               mavlink_target_sysid(),
+                               MAV_COMP_ID_AUTOPILOT1,
+                               name,
+                               value,
+                               0);
 }
 
 /*
