@@ -630,10 +630,15 @@ void mavlink_message_list_json(struct sock_buf *sock)
 /*
  * handle an (as yet undecoded) mavlink message
  */
+static bool mavlink_target_id_has_been_set = false;
 static bool mavlink_handle_msg(const mavlink_message_t *msg)
 {
     if (debug_level > 2 && msg->msgid != MAVLINK_MSG_ID_REMOTE_LOG_DATA_BLOCK) {
         console_printf("mavlink msg %u\n", msg->msgid);
+    }
+    if (msg->sysid != mavlink_target_system.sysid) {
+        // not from the system I'm listening to
+        return false;
     }
 
     mavlink_save_packet(msg);
@@ -1103,6 +1108,7 @@ static void mavlink_check_baudrate(void)
     if (now - last_check > 3) {
         last_check = now;
         if (now - last_heartbeat_ms > 3000) {
+            mavlink_target_id_has_been_set = false;
             current_baudrate = (current_baudrate+1) % NUM_BAUDRATES;
             uart2_set_baudrate(telem_baudrates[current_baudrate]);
             if (debug_level > 0) {
@@ -1282,6 +1288,13 @@ static void mavlink_main(void *pvParameters, int udp_sock)
                     handle_rc_input(&msg);
                 } else {
                     // possibly handle packet locally:
+                    if (!mavlink_target_id_has_been_set) {
+                        // the first system ID we see on serial is
+                        // assumed to be the vehicle we should be
+                        // listening to
+                        mavlink_target_system.sysid = msg.sysid;
+                        mavlink_target_id_has_been_set = true;
+                    }
                     if (!mavlink_handle_msg(&msg)) {
                         // forward to WiFi connection as a udp packet:
                         send_mavlink_wifi(udp_sock, &msg);
@@ -1357,6 +1370,7 @@ void mavlink_show_stats(void)
                    swap_int16(attitude_data.throttle), swap_int16(uart_data.altitude),
                    uart_data.telemetry_power, uart_data.takeoff_state,
                    uart_data.rf_strength);
+    console_printf("mavlink target id: %u\n", mavlink_target_system.sysid);
     console_printf("fakedata: %u  mavsitl: %s\n", dummy_data, sitl_sock!=-1?"true":"false");
 }
 
