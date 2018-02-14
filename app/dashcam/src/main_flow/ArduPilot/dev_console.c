@@ -583,10 +583,10 @@ static void setup_wifi_station(const char *ssid, const char *password)
 {
     xWifiStackEvent_t xTestEvent;
 
-    print_msg_queue("Setting up for WiFi station SSID='%s' PASS='%s'\n",
-                    ssid, password);
-    console_printf("Setting up for WiFi station SSID='%s' PASS='%s'\n",
-                   ssid, password);
+    const char *printpass = password ? password : "(No password)";
+    const char *fmt = "Setting up for WiFi station SSID='%s' PASS='%s'\n";
+    print_msg_queue(fmt, ssid, printpass);
+    console_printf(fmt, ssid, printpass);
 
     WiFi_Task_UnInit();
     dhcps_deinit();
@@ -608,7 +608,11 @@ static void setup_wifi_station(const char *ssid, const char *password)
 static void cmd_wifi_station(unsigned argc, const char *argv[])
 {
     if (argc < 3) {
-        console_printf("Usage: wifistation SSID PASSWORD\n");
+        console_printf("Usage: wifistation SSID [PASSWORD]\n");
+        return;
+    }
+    if (argc < 4) {
+        setup_wifi_station(argv[1], NULL);
         return;
     }
     setup_wifi_station(argv[1], argv[2]);
@@ -988,8 +992,7 @@ static void check_wifi_txt(void)
         WiFi_QueryAndSet(SET_HW_CHANNEL, (unsigned char *)&channel, &length);
     }
 
-    if (get_config_var("STATION_SSID") &&
-        get_config_var("STATION_PASS")) {
+    if (get_config_var("STATION_SSID")) {
         setup_wifi_station(get_config_var("STATION_SSID"),
                            get_config_var("STATION_PASS"));
     }
