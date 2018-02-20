@@ -1428,7 +1428,7 @@ void upgrade_fc_firmware(const unsigned char *fw, unsigned fwlen, unsigned fw_of
         pic_disableInterrupt(UART2_IRQ_NUM);
 
         // try a range of baudrates
-        uint32_t baudrates[] = { 625000, 416000, 312000, 250000, 208000, 115200 };
+        uint32_t baudrates[] = { 625000, 115200 };
         uint8_t nbaud = sizeof(baudrates) / sizeof(baudrates[0]);
         for (i=0; i<10; i++) {
             uint32_t rate = baudrates[i % nbaud];
@@ -1541,7 +1541,7 @@ end:
     vTaskDelete(NULL);
 }
 
-const uint32_t initial_bauds[] = { 115200, 625000, 416000, 312000, 250000, 208000 };
+const uint32_t initial_bauds[] = { 115200, 625000 };
 
 int autobaud_bootloader()
 {
