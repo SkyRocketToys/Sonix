@@ -801,9 +801,18 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
     case MAVLINK_MSG_ID_STATUSTEXT: {
 	mavlink_statustext_t m;
 	mavlink_msg_statustext_decode(msg, &m);
+        // get serial number from HAL_PX4 builds
         if (strncmp(m.text, "PX4v3 ", 6) == 0) {
             strncpy(stm32_id, m.text+6, sizeof(stm32_id)-1);
             stm32_id[sizeof(stm32_id)-1] = 0;
+        }
+        // get serial number from ChibiOS builds
+        if (strncmp(m.text, "SRT-", 4) == 0) {
+            const char *p = strchr(m.text, ' ');
+            if (p) {
+                strncpy(stm32_id, p+1, sizeof(stm32_id)-1);
+                stm32_id[sizeof(stm32_id)-1] = 0;
+            }
         }
         // sync log on any STATUSTEXT. This helps ensure we get
         // critical messages
