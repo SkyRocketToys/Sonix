@@ -131,8 +131,16 @@ static int log_fh_open()
  */
 static void log_fh_close()
 {
+    unsigned int file_size = (unsigned)f_size(&log_fh);
     f_close(&log_fh);
     log_fh.fs = 0; // OS doesn't do this if it fails to close...
+
+    // remove any very small log files.  This can happen when we
+    // timeout after receiving a critical message
+    if (file_size < 42000) {
+        console_printf("rl: small log (%u bytes).  Removing.\n", (unsigned)file_size);
+        f_unlink(log_filepath);
+    }
 }
 
 /*
@@ -280,7 +288,7 @@ void mavlink_remote_log_periodic()
         if (log_fh_is_open()) {
             const uint32_t now = get_time_boot_ms();
             const uint32_t delta = now - last_message_received_ms;
-            if (now - last_message_received_ms > 10000) {
+            if (delta > 10000) {
                 console_printf("rl: no messages received in %u seconds; closing output\n", (unsigned)(delta/1000));
                 log_fh_close();
             }
