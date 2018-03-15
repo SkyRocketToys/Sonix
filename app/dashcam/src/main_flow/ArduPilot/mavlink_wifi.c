@@ -48,6 +48,16 @@ static char stm32_id[40];
 static bool rc_ok;
 static bool vehicle_armed;
 
+/*
+  stored images from optical flow sensor for viewing in web UI
+ */
+static struct {
+    uint8_t image[35*35];
+    uint8_t next_image[35*35];
+    uint8_t seq;
+    bool valid;
+} flow_image;
+
 #define QUEUE_SIZE 50*1024
 
 // don't record for less than 1s, to prevent corrupted files
@@ -516,12 +526,71 @@ void mavlink_param_list_json(struct sock_buf *sock, const char *prefix, bool *fi
 }
 
 /*
+  start a new flow image
+ */
+static void flow_image_save_start(const mavlink_message_t *msg)
+{
+    mavlink_data_transmission_handshake_t pkt;
+    mavlink_msg_data_transmission_handshake_decode(msg, &pkt);
+    flow_image.seq = 0;
+}
+
+/*
+  save data from a flow image
+ */
+static void flow_image_save_add(const mavlink_message_t *msg)
+{
+    mavlink_encapsulated_data_t pkt;
+    uint32_t ofs = flow_image.seq * 253;
+    if (ofs >= sizeof(flow_image.next_image)) {
+        return;
+    }
+    uint32_t size = sizeof(flow_image.next_image) - ofs;
+    if (size > 253) {
+        size = 253;
+    }
+    mavlink_msg_encapsulated_data_decode(msg, &pkt);
+    if (pkt.seqnr != flow_image.seq) {
+        // bad data order
+        return;
+    }
+    memcpy(&flow_image.next_image[ofs], pkt.data, size);
+    flow_image.seq++;
+    if (flow_image.seq * 253 >= sizeof(flow_image.next_image)) {
+        // copy to published image
+        memcpy(flow_image.image, flow_image.next_image, sizeof(flow_image.image));
+        flow_image.valid = true;
+        console_printf("Got flow image\n");
+    }
+}
+
+/*
+  get a flow data image
+ */
+bool get_flow_image(uint8_t **image, uint16_t *width, uint16_t *height)
+{
+    if (!flow_image.valid) {
+        return false;
+    }
+    *width = 35;
+    *height = 35;
+    *image = &flow_image.image[0];
+    return true;
+}
+
+/*
   save last instance of each packet type
  */
 static void mavlink_save_packet(const mavlink_message_t *msg)
 {
     if (msg->msgid == MAVLINK_MSG_ID_PARAM_VALUE) {
         param_save_packet(msg);
+    }
+    if (msg->msgid == MAVLINK_MSG_ID_DATA_TRANSMISSION_HANDSHAKE) {
+        flow_image_save_start(msg);
+    }
+    if (msg->msgid == MAVLINK_MSG_ID_ENCAPSULATED_DATA) {
+        flow_image_save_add(msg);
     }
     struct mavlink_packet *p;
     for (p=mavlink_packets; p; p=p->next) {

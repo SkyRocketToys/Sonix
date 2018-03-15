@@ -63,3 +63,7 @@ extern int disable_sd_save;
 
 // get vehicle armed state
 bool get_vehicle_armed(void);
+
+// get an optical flow image
+bool get_flow_image(uint8_t **image, uint16_t *width, uint16_t *height);
+
