@@ -1915,9 +1915,9 @@ void ardupilot_nvram_setup(void)
     char var[100];
     if (snx_nvram_string_get("WIFI_DEV", "AP_SSID_PREFIX", var) != NVRAM_SUCCESS) {
         print_msg_queue("Setting ArduPilot WiFi defaults\n");
-        snx_nvram_string_set("WIFI_DEV", "AP_SSID_PREFIX", "SKYVIPERGPS_");
+        snx_nvram_string_set("WIFI_DEV", "AP_SSID_PREFIX", "SKYVIPER_");
         snx_nvram_integer_set("WIFI_DEV", "AP_AUTH_MODE", AUTH_WPA2);
-        snx_nvram_string_set("WIFI_DEV", "AP_KEY_INFO", "vipergps");
+        snx_nvram_string_set("WIFI_DEV", "AP_KEY_INFO", "skyviper");
         snx_nvram_integer_set("WIFI_DEV", "AP_CHANNEL_INFO", 9);
     } else {
         print_msg_queue("AP_SSID_PREFIX is '%s'\n", var);
@@ -2044,11 +2044,11 @@ void wifi_reset(void)
 {
     console_printf("Reset WiFi settings\n");
     const unsigned char * mac = wlan_get_get_mac_addr();
-    char *ssid = talloc_asprintf(NULL, "SKYVIPERGPS_%02X%02X%02X", mac[3], mac[4], mac[5]);
+    char *ssid = talloc_asprintf(NULL, "SKYVIPER_%02X%02X%02X", mac[3], mac[4], mac[5]);
 
     snx_nvram_string_set("WIFI_DEV", "AP_SSID_INFO", ssid);
     snx_nvram_integer_set("WIFI_DEV", "AP_AUTH_MODE", AUTH_WPA2);
-    snx_nvram_string_set("WIFI_DEV", "AP_KEY_INFO", "vipergps");
+    snx_nvram_string_set("WIFI_DEV", "AP_KEY_INFO", "skyviper");
     snx_nvram_integer_set("WIFI_DEV", "AP_CHANNEL_INFO", 9);
 
     talloc_free(ssid);

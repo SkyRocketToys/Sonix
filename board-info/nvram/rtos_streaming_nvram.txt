@@ -17,9 +17,9 @@
 //AP_AUTH_MODE: Set AP mode authentication mode. 0:open mode; 1:WEP mode; 2: WPA mode; 3:WPA2 mode
 -AP_AUTH_MODE,int,4,3
 //KEY_INFO: Set AP mode password
--AP_KEY_INFO,char,8,vipergps
+-AP_KEY_INFO,char,8,skyviper
 //AP_SSID_PREFIX: Customerize SSID string to be added with MAC address
--AP_SSID_PREFIX,char,12,SKYVIPERGPS_
+-AP_SSID_PREFIX,char,9,SKYVIPER_
 //AP_MAC_NUM: Customerize MAC address byte count to be added with AP_SSID_PREFIX string (0-6)
 -AP_MAC_NUM,int,4,3
 //===============================For Device Mode
