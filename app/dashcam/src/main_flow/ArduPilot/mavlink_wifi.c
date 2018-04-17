@@ -501,7 +501,7 @@ void mavlink_param_list_json(struct sock_buf *sock, const char *prefix, bool *fi
         struct param_packet *p0 = param_packets[c];
         struct param_packet *p;
         for (p=p0; p; p=p->next) {
-            if (strncmp(p->name, prefix, plen) != 0) {
+            if (strcmp(prefix,"*") && strncmp(p->name, prefix, plen) != 0) {
                 continue;
             }
             char *vstr = print_printf(sock, "%f ", p->value);
