@@ -137,7 +137,7 @@ static void log_fh_close()
 
     // remove any very small log files.  This can happen when we
     // timeout after receiving a critical message
-    if (file_size < 42000) {
+    if (file_size < 64000) {
         console_printf("rl: small log (%u bytes).  Removing.\n", (unsigned)file_size);
         f_unlink(log_filepath);
     }
