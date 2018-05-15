@@ -48,6 +48,7 @@ static char stm32_id[40];
 static bool rc_ok;
 static bool vehicle_armed;
 static uint16_t voltage_mv;
+static int voltage_min_mv = 3250;
 
 /*
   stored images from optical flow sensor for viewing in web UI
@@ -63,9 +64,6 @@ static struct {
 
 // don't record for less than 1s, to prevent corrupted files
 #define MIN_RECORDING_MS   1000
-
-// don't record at less than 3.0V
-#define MIN_RECORDING_VOLTAGE 3000
 
 // timestamp when recording started
 static uint32_t recording_start_ms;
@@ -428,6 +426,9 @@ static void mavlink_periodic(void)
     }
 
     mavlink_remote_log_sync(false);
+
+    // get camera shutdown voltage
+    snx_nvram_integer_get("SkyViper", __DECONST(char *, "voltage_min"), &voltage_min_mv);
 }
 
 extern const char *mavlink_message_name(const mavlink_message_t *msg);
@@ -784,7 +785,7 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         voltage_mv = m.voltage_battery;
         uart_data.telemetry_power = m.voltage_battery/100; // in 0.1V units
         rc_ok = (m.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_RC_RECEIVER) != 0;
-        if (voltage_mv < MIN_RECORDING_VOLTAGE && uart_data.is_recording_video) {
+        if (voltage_min_mv > 0 && voltage_mv < voltage_min_mv && uart_data.is_recording_video) {
             // stop recording at low voltage to prevent microSD corruption
             console_printf("Stop recording low voltage %.2f\n", voltage_mv*0.001);
             toggle_recording();
@@ -1608,7 +1609,7 @@ enum FlightCommand {
  */
 bool toggle_recording(void)
 {
-    if (!uart_data.is_recording_video && voltage_mv && voltage_mv < MIN_RECORDING_VOLTAGE) {
+    if (!uart_data.is_recording_video && voltage_mv && voltage_min_mv > 0 && voltage_mv < voltage_min_mv) {
         console_printf("Camera voltage too low %.2f\n", voltage_mv*0.001);
         return false;
     }
@@ -1638,7 +1639,7 @@ bool toggle_recording(void)
  */
 bool take_snapshot(void)
 {
-    if (voltage_mv && voltage_mv < MIN_RECORDING_VOLTAGE) {
+    if (voltage_mv && voltage_min_mv > 0 && voltage_mv < voltage_min_mv) {
         console_printf("Camera voltage too low %.2f\n", voltage_mv*0.001);
         return false;
     }

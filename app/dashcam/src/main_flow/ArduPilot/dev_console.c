@@ -794,6 +794,15 @@ static void dev_console_periodic(void)
         snx_nvram_integer_set("SkyViper", __DECONST(char *, video_enable), video_mode);
     }
 
+    // setup low voltage for video
+    const char *voltage_min_s = "voltage_min";
+    int voltage_min;
+    ret = snx_nvram_integer_get("SkyViper", __DECONST(char *, voltage_min_s), &voltage_min);
+    if (ret != NVRAM_SUCCESS) {
+        voltage_min = 3250;
+        snx_nvram_integer_set("SkyViper", __DECONST(char *, voltage_min_s), voltage_min);
+    }
+    
     if (last_mode == video_mode) {
         return;
     }
