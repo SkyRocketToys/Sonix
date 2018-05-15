@@ -47,6 +47,7 @@ static int sitl_sock = -1;
 static char stm32_id[40];
 static bool rc_ok;
 static bool vehicle_armed;
+static uint16_t voltage_mv;
 
 /*
   stored images from optical flow sensor for viewing in web UI
@@ -62,6 +63,9 @@ static struct {
 
 // don't record for less than 1s, to prevent corrupted files
 #define MIN_RECORDING_MS   1000
+
+// don't record at less than 3.0V
+#define MIN_RECORDING_VOLTAGE 3000
 
 // timestamp when recording started
 static uint32_t recording_start_ms;
@@ -777,8 +781,14 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
     case MAVLINK_MSG_ID_SYS_STATUS: {
 	mavlink_sys_status_t m;
 	mavlink_msg_sys_status_decode(msg, &m);
+        voltage_mv = m.voltage_battery;
         uart_data.telemetry_power = m.voltage_battery/100; // in 0.1V units
         rc_ok = (m.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_RC_RECEIVER) != 0;
+        if (voltage_mv < MIN_RECORDING_VOLTAGE && uart_data.is_recording_video) {
+            // stop recording at low voltage to prevent microSD corruption
+            console_printf("Stop recording low voltage %.2f\n", voltage_mv*0.001);
+            toggle_recording();
+        }
         break;
     }
     case MAVLINK_MSG_ID_SYSTEM_TIME: {
@@ -1598,6 +1608,10 @@ enum FlightCommand {
  */
 bool toggle_recording(void)
 {
+    if (!uart_data.is_recording_video && voltage_mv && voltage_mv < MIN_RECORDING_VOLTAGE) {
+        console_printf("Camera voltage too low %.2f\n", voltage_mv*0.001);
+        return false;
+    }
     uart_data.is_recording_video = !uart_data.is_recording_video;
     if (!uart_data.is_recording_video) {
         if (get_time_boot_ms() - recording_start_ms > MIN_RECORDING_MS) {
@@ -1624,6 +1638,11 @@ bool toggle_recording(void)
  */
 bool take_snapshot(void)
 {
+    if (voltage_mv && voltage_mv < MIN_RECORDING_VOLTAGE) {
+        console_printf("Camera voltage too low %.2f\n", voltage_mv*0.001);
+        return false;
+    }
+
     int ret;
     
     int sdstate = get_sd_status();
