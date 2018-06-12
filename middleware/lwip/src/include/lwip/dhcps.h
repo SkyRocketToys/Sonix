@@ -61,7 +61,7 @@
 
 /* Enable dhcp option */
 #define CONFIG_DHCP_OPTION_DNS_SERVER	1
-#define CONFIG_DHCP_OPTION_ROUTER		1
+#define CONFIG_DHCP_OPTION_ROUTER	0
 #define CONFIG_DHCP_OPTION_DOMAIN_NAME	1
 
 struct dhcps_config{
