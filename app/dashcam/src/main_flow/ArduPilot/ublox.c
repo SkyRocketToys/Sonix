@@ -1125,16 +1125,16 @@ void ublox_assist_task_process(void *pvParameters)
             continue;
         }
 
-        if (get_sys_seconds_utc() < UBLOX_MIN_DATE &&
-            mga_pos_estimate.utc_time > UBLOX_MIN_DATE) {
-            console_printf("setting time to %u\n", mga_pos_estimate.utc_time);
-            set_date_utc(mga_pos_estimate.utc_time);
-        }
-
         // save GPS lock every 30 seconds when we have lock
         static uint32_t last_gps_pos_save_s;
         if (get_gps_fix_type() >= 3 &&
             now - last_gps_pos_save_s > 30) {
+            if (!last_gps_pos_save_s && 
+        	mga_pos_estimate.utc_time > UBLOX_MIN_DATE) {
+              console_printf("setting time to %u\n", mga_pos_estimate.utc_time);
+              set_date_utc(mga_pos_estimate.utc_time);
+            }
+
             get_fc_gps_lat_lon(&mga_pos_estimate);
             save_gps_pos(&mga_pos_estimate);
             pos_source = POS_SOURCE_GPS;
