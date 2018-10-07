@@ -808,6 +808,15 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         break;
     }
         
+    case MAVLINK_MSG_ID_CAMERA_FEEDBACK: {
+      // Piggyback on GCS message to trigger camera from ardupilot mission
+      if (!disable_sd_save) {
+	take_snapshot();
+      }
+      send_named_int("VNOTIFY", 1);
+        break;
+    }
+        
     default:
 	break;
     }
