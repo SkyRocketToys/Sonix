@@ -1,6 +1,7 @@
 [submodule "modules/mavlink"]
 	path = modules/mavlink
-	url = git://github.com/ArduPilot/mavlink.git
+	url = https://github.com/ArduPilot/mavlink
 [submodule "modules/APWeb"]
 	path = modules/APWeb
-	url = http://github.com/SkyRocketToys/APWeb
+	url = https://github.com/ArduPilot/APWeb
+	branch = skyviper
