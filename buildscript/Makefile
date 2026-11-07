@@ -595,9 +595,9 @@ FORCE:
 # information in a variable so we can use it in if_changed and friends.
 .PHONY: $(PHONY)
 
-# generate mavlink headers
+# generate mavlink headers, using the mavgen from the mavlink submodule
 mavlink:
-	mavgen.py --lang C -o include/generated/mavlink --wire-protocol=2.0 ../modules/mavlink/message_definitions/v1.0/ardupilotmega.xml
+	../modules/mavlink/pymavlink/tools/mavgen.py --lang C -o include/generated/mavlink --wire-protocol=2.0 ../modules/mavlink/message_definitions/v1.0/ardupilotmega.xml
 
 iwlist:
 	sudo iwlist wlan0 scanning|grep -i essid
@@ -605,10 +605,6 @@ iwlist:
 upload:
 	echo "Uploading firmware to 192.168.99.1:2018"
 	cat ../image/dashcam/FIRMWARE_660R.bin | nc 192.168.99.1 2018
-
-# generate mavlink headers
-mavlink:
-	mavgen.py --lang C -o include/generated/mavlink --wire-protocol=2.0 ../modules/mavlink/message_definitions/v1.0/ardupilotmega.xml
 
 Makefile.version-clean:
 	rm $(subst -clean,.old,$@)

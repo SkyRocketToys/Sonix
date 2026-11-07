@@ -89,9 +89,6 @@ static uint32_t last_autopilot_version_ms;
   understand MAV_CMD_REQUEST_MESSAGE.  We send both and stop sending
   whichever one the flight controller rejects.
  */
-#ifndef MAV_CMD_REQUEST_MESSAGE
-#define MAV_CMD_REQUEST_MESSAGE 512
-#endif
 static bool request_message_unsupported;
 static bool request_message_accepted;
 static bool request_capabilities_unsupported;
@@ -1194,7 +1191,9 @@ static void handle_rc_input(mavlink_message_t *msg)
                                               m.chan5_raw,
                                               m.chan6_raw,
                                               m.chan7_raw,
-                                              m.chan8_raw);
+                                              m.chan8_raw,
+                                              // channels 9 to 18: 0 means ignore
+                                              0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         mavlink_system.sysid = saved_id;        
         break;
     }

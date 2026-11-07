@@ -231,7 +231,7 @@ ARDUPILOT_FILES += web_server/mavlink_json.o
 ARDUPILOT_FILES += ublox.o
 endif
 
-ARDUPILOT_CFLAGS = -fdiagnostics-show-option -Werror -DSYSTEM_FREERTOS=1
+ARDUPILOT_CFLAGS = -fdiagnostics-show-option -Werror -DSYSTEM_FREERTOS=1 -std=gnu99 -fgnu89-inline
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(OBJ_FILES))
 OBJS += $(addprefix $(ARDUPILOT_OBJ_DIR)/, $(ARDUPILOT_FILES))
