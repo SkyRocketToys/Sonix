@@ -82,6 +82,20 @@ static uint32_t last_heartbeat_ms;
 static uint32_t last_attitude_ms;
 static uint32_t last_autopilot_version_ms;
 
+/*
+  AUTOPILOT_VERSION can be requested two ways.  Old flight controller
+  firmware (e.g. ArduPilot 3.x) only understands
+  MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES; ArduPilot 4.8 and later only
+  understand MAV_CMD_REQUEST_MESSAGE.  We send both and stop sending
+  whichever one the flight controller rejects.
+ */
+#ifndef MAV_CMD_REQUEST_MESSAGE
+#define MAV_CMD_REQUEST_MESSAGE 512
+#endif
+static bool request_message_unsupported;
+static bool request_message_accepted;
+static bool request_capabilities_unsupported;
+
 gps_fix_type_t gps_fix_type;
 long long fc_unix_time; // flight controller's concept of the time
 
@@ -394,8 +408,14 @@ static void mavlink_periodic(void)
     if (now - last_capabilities_ms > 3000 &&
         (last_autopilot_version_ms == 0 || (now - last_capabilities_ms) > 30000)) {
         last_capabilities_ms = now;
-        send_command_long(MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES,
-                          1, 0, 0, 0, 0, 0, 0);
+        if (!request_message_unsupported) {
+            send_command_long(MAV_CMD_REQUEST_MESSAGE,
+                              MAVLINK_MSG_ID_AUTOPILOT_VERSION, 0, 0, 0, 0, 0, 0);
+        }
+        if (!request_capabilities_unsupported && !request_message_accepted) {
+            send_command_long(MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES,
+                              1, 0, 0, 0, 0, 0, 0);
+        }
     }
 
     mavlink_remote_log_sync(false);
@@ -705,6 +725,12 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         if (last_heartbeat_ms == 0 ||
             now - last_heartbeat_ms > 10000) {
             console_printf("heartbeat ok\n");
+            // the flight controller may have been reflashed while we
+            // weren't hearing from it; re-probe how to get its version
+            request_message_unsupported = false;
+            request_message_accepted = false;
+            request_capabilities_unsupported = false;
+            last_autopilot_version_ms = 0;
         }
         last_heartbeat_ms = now;
 
@@ -752,6 +778,18 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
 	mavlink_command_ack_t m;
 	mavlink_msg_command_ack_decode(msg, &m);
         command_ack_save(&m);
+        // whether a command is supported is a property of the flight
+        // controller firmware, so it doesn't matter who sent it
+        if (m.command == MAV_CMD_REQUEST_MESSAGE) {
+            if (m.result == MAV_RESULT_ACCEPTED) {
+                request_message_accepted = true;
+            } else if (m.result == MAV_RESULT_UNSUPPORTED) {
+                request_message_unsupported = true;
+            }
+        } else if (m.command == MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES &&
+                   m.result == MAV_RESULT_UNSUPPORTED) {
+            request_capabilities_unsupported = true;
+        }
         break;
     }
 
