@@ -84,7 +84,7 @@ static struct mga_position gps_pos;
 
 static uint32_t last_heartbeat_ms;
 static uint8_t fc_sysid; // from the flight controller's HEARTBEAT; 0 until we hear one
-static uint32_t last_attitude_ms;
+static uint32_t last_sys_status_ms;
 static uint32_t last_autopilot_version_ms;
 
 /*
@@ -226,6 +226,7 @@ void mavlink_rc_write(const uint8_t *buf, uint32_t len)
   process a UDP packet
  */
 static bool camera_udp_input(const uint8_t *buf, ssize_t len);
+static void message_intervals_gcs_msg(const mavlink_message_t *msg, bool from_web);
 
 static void process_udp_packet(uint8_t *buf, ssize_t len)
 {
@@ -1036,6 +1037,7 @@ static bool camera_udp_input(const uint8_t *buf, ssize_t len)
             continue;
         }
         if (!camera_is_target(&msg)) {
+            message_intervals_gcs_msg(&msg, false);
             for_others = true;
             continue;
         }
@@ -1092,6 +1094,324 @@ static void camera_periodic(void)
 }
 
 /*
+  Message rates we ask the flight controller for on our link, over
+  the stream rates.  A REQUEST_DATA_STREAM (ours, or a GCS's passing
+  through from WiFi) resets the interval of each message in the
+  streams it names, which for MAV_DATA_STREAM_ALL includes both of
+  these, unless the link's MAVn_OPTIONS NOSTREAMOVERRIDE bit is set,
+  which older ArduPilots don't have; so they are sent again after
+  each one, and whenever the flight controller restarts, since
+  intervals don't survive a reboot.
+  A message a GCS sets itself with SET_MESSAGE_INTERVAL is left to it
+  until the flight controller restarts, and we give up if the flight
+  controller doesn't support SET_MESSAGE_INTERVAL.
+ */
+static const struct {
+    uint32_t msgid;
+    int32_t interval_us;
+    uint8_t stream;             // the MAV_DATA_STREAM it is in on ArduPilot
+} fc_message_intervals[] = {
+    // a fresh attitude for every video frame's telemetry
+    { MAVLINK_MSG_ID_ATTITUDE, 20000, MAV_DATA_STREAM_EXTRA1 },
+    // position and velocity for the video telemetry
+    { MAVLINK_MSG_ID_GLOBAL_POSITION_INT, 100000, MAV_DATA_STREAM_POSITION },
+};
+#define FC_MESSAGE_INTERVAL_COUNT (sizeof(fc_message_intervals)/sizeof(fc_message_intervals[0]))
+static bool msg_interval_pending[FC_MESSAGE_INTERVAL_COUNT];  // to be sent (again)
+static bool msg_interval_gcs[FC_MESSAGE_INTERVAL_COUNT];      // set by a GCS: leave it alone
+static bool msg_interval_refused[FC_MESSAGE_INTERVAL_COUNT];  // the FC said no
+static bool msg_interval_unsupported;   // the FC can't do SET_MESSAGE_INTERVAL
+/*
+  One request at a time: COMMAND_ACK doesn't say which message it is
+  for, so an ack is only taken for the request outstanding, and after
+  one sent more than once is acked, further acks are waited out
+  before the next is sent.
+ */
+static int8_t msg_interval_current = -1;  // the one awaiting its ack
+static bool msg_interval_current_reset;   // reset again since it was sent
+static uint8_t msg_interval_tries;
+static uint32_t msg_interval_sent_ms;
+static bool msg_interval_quiet;           // waiting out late acks...
+static uint32_t msg_interval_quiet_ms;    // ...since then
+// how many of each have arrived since msg_interval_check_ms
+static uint16_t msg_interval_seen[FC_MESSAGE_INTERVAL_COUNT];
+static uint32_t msg_interval_check_ms;
+static uint32_t msg_interval_resent_ms;
+static uint32_t msg_interval_fc_heartbeat_ms;  // the FC's own, not another component's
+static uint32_t msg_interval_gcs_cmd_ms;       // a GCS's SET_MESSAGE_INTERVAL passed through
+static uint32_t msg_interval_web_cmd_ms;       // a web client's, which goes out as us
+static bool msg_interval_sys_status_gcs;       // a GCS set SYS_STATUS's interval
+
+// mark ours for sending again: those in a stream, or all of them
+static void message_intervals_resend(uint8_t stream)
+{
+    unsigned i;
+    for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+        if (stream == MAV_DATA_STREAM_ALL || fc_message_intervals[i].stream == stream) {
+            msg_interval_pending[i] = true;
+            if ((int)i == msg_interval_current) {
+                // reset after (or as) we sent it, so send it once more
+                msg_interval_current_reset = true;
+            }
+        }
+    }
+}
+
+// wait a second for late acks before sending the next request
+static void message_intervals_quiet(uint32_t now)
+{
+    msg_interval_quiet = true;
+    msg_interval_quiet_ms = now;
+}
+
+// start counting arrivals afresh
+static void message_intervals_check_reset(uint32_t now)
+{
+    memset(msg_interval_seen, 0, sizeof(msg_interval_seen));
+    msg_interval_check_ms = now;
+}
+
+// a message from the flight controller
+static void message_intervals_count(uint32_t msgid)
+{
+    unsigned i;
+    for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+        if (fc_message_intervals[i].msgid == msgid && msg_interval_seen[i] < UINT16_MAX) {
+            msg_interval_seen[i]++;
+        }
+    }
+}
+
+/*
+  check our messages are arriving at about the rates we asked for.
+  An acked interval can still be lost unseen: ArduPilot sets every
+  interval from its stream rates the first time it sends, which can
+  come after it has acked us at boot.
+ */
+static void message_intervals_check(uint32_t now)
+{
+    const uint32_t window_ms = now - msg_interval_check_ms;
+    if (window_ms < 2000) {
+        return;
+    }
+    bool slow = false;
+    unsigned i;
+    for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+        const uint32_t expected = window_ms * 1000U / (uint32_t)fc_message_intervals[i].interval_us;
+        if (!msg_interval_gcs[i] && !msg_interval_refused[i] &&
+            msg_interval_seen[i] * 2U < expected) {
+            slow = true;
+        }
+    }
+    message_intervals_check_reset(now);
+    if (slow && now - msg_interval_resent_ms > 5000) {
+        console_printf("message intervals not kept; sending them again\n");
+        msg_interval_resent_ms = now;
+        message_intervals_resend(MAV_DATA_STREAM_ALL);
+    }
+}
+
+// the flight controller restarted: it has forgotten every interval,
+// including any a GCS set, and may be different firmware
+static void message_intervals_restart(void)
+{
+    memset(msg_interval_gcs, 0, sizeof(msg_interval_gcs));
+    memset(msg_interval_refused, 0, sizeof(msg_interval_refused));
+    msg_interval_sys_status_gcs = false;
+    msg_interval_unsupported = false;
+    // an ack for what we sent before won't come now
+    msg_interval_current = -1;
+    msg_interval_current_reset = false;
+    message_intervals_resend(MAV_DATA_STREAM_ALL);
+}
+
+/*
+  look at what a GCS on WiFi, or a web client, sends the flight
+  controller, for anything that resets or takes over our message
+  intervals
+ */
+static void message_intervals_gcs_msg(const mavlink_message_t *msg, bool from_web)
+{
+    uint8_t target_system, target_component;
+    uint32_t msgid;
+    switch (msg->msgid) {
+    case MAVLINK_MSG_ID_REQUEST_DATA_STREAM: {
+        mavlink_request_data_stream_t m;
+        mavlink_msg_request_data_stream_decode(msg, &m);
+        // ArduPilot ignores start_stop values other than 0 and 1
+        if ((m.target_system == fc_sysid || m.target_system == 0) && m.start_stop <= 1) {
+            message_intervals_resend(m.req_stream_id);
+        }
+        return;
+    }
+    case MAVLINK_MSG_ID_COMMAND_LONG: {
+        mavlink_command_long_t m;
+        mavlink_msg_command_long_decode(msg, &m);
+        if (m.command != MAV_CMD_SET_MESSAGE_INTERVAL) {
+            return;
+        }
+        target_system = m.target_system;
+        target_component = m.target_component;
+        msgid = (uint32_t)m.param1;
+        break;
+    }
+    case MAVLINK_MSG_ID_COMMAND_INT: {
+        mavlink_command_int_t m;
+        mavlink_msg_command_int_decode(msg, &m);
+        if (m.command != MAV_CMD_SET_MESSAGE_INTERVAL) {
+            return;
+        }
+        target_system = m.target_system;
+        target_component = m.target_component;
+        msgid = (uint32_t)m.param1;
+        break;
+    }
+    default:
+        return;
+    }
+    if ((target_system != fc_sysid && target_system != 0) ||
+        (target_component != MAV_COMP_ID_AUTOPILOT1 && target_component != 0)) {
+        return;
+    }
+    // ArduPilot before 4.2 (and MAVLink 1) acks it without a target,
+    // the same as it acks ours; and a web client's goes out as us, so
+    // later ArduPilots ack it to us
+    msg_interval_gcs_cmd_ms = get_time_boot_ms();
+    if (from_web) {
+        msg_interval_web_cmd_ms = msg_interval_gcs_cmd_ms;
+    }
+    if (msgid == MAVLINK_MSG_ID_SYS_STATUS) {
+        // it may have turned it off: no longer a sign the streams stopped
+        msg_interval_sys_status_gcs = true;
+    }
+    unsigned i;
+    for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+        if (fc_message_intervals[i].msgid == msgid && !msg_interval_gcs[i]) {
+            msg_interval_gcs[i] = true;
+            msg_interval_pending[i] = false;
+            console_printf("message interval for %u now set by a GCS\n", (unsigned)msgid);
+        }
+    }
+}
+
+static void message_intervals_send(uint8_t i, uint32_t now)
+{
+    send_command_long(MAV_CMD_SET_MESSAGE_INTERVAL,
+                      fc_message_intervals[i].msgid,
+                      fc_message_intervals[i].interval_us,
+                      0, 0, 0, 0, 0);
+    msg_interval_sent_ms = now;
+    msg_interval_tries++;
+}
+
+// send what needs sending, one at a time, each until it is acked
+static void message_intervals_update(uint32_t now)
+{
+    if (msg_interval_unsupported) {
+        return;
+    }
+    if (fc_sysid == 0 || now - msg_interval_fc_heartbeat_ms > 3000) {
+        return;
+    }
+    if (msg_interval_current >= 0) {
+        if (now - msg_interval_sent_ms < 1000) {
+            // waiting for its ack
+            return;
+        }
+        if (msg_interval_gcs[msg_interval_current]) {
+            // a GCS has set it since we sent ours: sending ours again
+            // would undo that
+            msg_interval_current = -1;
+            message_intervals_quiet(now);
+            message_intervals_check_reset(now);
+            return;
+        }
+        if (msg_interval_tries < 5) {
+            message_intervals_send(msg_interval_current, now);
+            return;
+        }
+        console_printf("message interval for %u not acked\n",
+                       (unsigned)fc_message_intervals[msg_interval_current].msgid);
+        // the rate check sends it again if it didn't take
+        msg_interval_pending[msg_interval_current] = false;
+        msg_interval_current = -1;
+        message_intervals_quiet(now);
+        message_intervals_check_reset(now);
+        return;
+    }
+    if (msg_interval_quiet) {
+        if (now - msg_interval_quiet_ms < 1000) {
+            // late acks for one we sent more than once may still come
+            return;
+        }
+        msg_interval_quiet = false;
+    }
+    unsigned i;
+    for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+        if (msg_interval_pending[i] && !msg_interval_gcs[i] && !msg_interval_refused[i]) {
+            msg_interval_current = i;
+            msg_interval_current_reset = false;
+            msg_interval_tries = 0;
+            message_intervals_send(i, now);
+            return;
+        }
+    }
+    message_intervals_check(now);
+}
+
+/*
+  can an ack be ours?  Only while we are waiting for one, and not if
+  someone else's SET_MESSAGE_INTERVAL in the last 2 seconds may be the
+  one being acked; our retry covers that.  ArduPilot before 4.2 (and
+  MAVLink 1) don't fill in COMMAND_ACK's target, so an ack without one
+  may be any GCS's; one targeted at us may be a web client's, which
+  goes out as us
+ */
+static bool message_intervals_take_ack(bool targeted)
+{
+    const uint32_t cmd_ms = targeted ? msg_interval_web_cmd_ms : msg_interval_gcs_cmd_ms;
+    return msg_interval_current >= 0 &&
+           (cmd_ms == 0 || get_time_boot_ms() - cmd_ms > 2000);
+}
+
+// a heartbeat from the flight controller itself
+static void message_intervals_fc_heartbeat(uint32_t now)
+{
+    if (msg_interval_fc_heartbeat_ms == 0 || now - msg_interval_fc_heartbeat_ms > 3000) {
+        // it may have restarted, which loses message intervals
+        message_intervals_restart();
+    }
+    msg_interval_fc_heartbeat_ms = now;
+}
+
+// an ack for one of our SET_MESSAGE_INTERVALs
+static void message_intervals_handle_ack(const mavlink_command_ack_t *m)
+{
+    if (msg_interval_current < 0) {
+        // a duplicate, or for one we gave up on
+        return;
+    }
+    const uint32_t now = get_time_boot_ms();
+    const uint8_t i = msg_interval_current;
+    if (m->result == MAV_RESULT_UNSUPPORTED) {
+        console_printf("SET_MESSAGE_INTERVAL unsupported; using stream rates\n");
+        msg_interval_unsupported = true;
+    } else if (m->result != MAV_RESULT_ACCEPTED) {
+        msg_interval_refused[i] = true;
+        msg_interval_pending[i] = false;
+        console_printf("message interval for %u refused (%u)\n",
+                       (unsigned)fc_message_intervals[i].msgid, (unsigned)m->result);
+    } else if (!msg_interval_current_reset) {
+        msg_interval_pending[i] = false;
+    }
+    if (msg_interval_tries > 1) {
+        message_intervals_quiet(now);
+    }
+    msg_interval_current = -1;
+    message_intervals_check_reset(now);
+}
+
+/*
   periodic mavlink tasks - run on each HEARTBEAT from fc
  */
 static void mavlink_periodic(void)
@@ -1103,15 +1423,24 @@ static void mavlink_periodic(void)
         return;
     }
     last_periodic_ms = now;
-    
-    if (now - last_send_stream_ms > 15000 &&
-        now - last_attitude_ms > 500) {
+
+    // ask for the streams when they stop: SYS_STATUS stands for them,
+    // since ATTITUDE has a message interval of its own, unless a GCS
+    // has set SYS_STATUS's interval itself.  The flight controller can
+    // lose a request made while it is still starting
+    if (!msg_interval_sys_status_gcs &&
+        now - last_send_stream_ms > 5000 &&
+        now - last_sys_status_ms > 2000) {
         send_stream_rates_request(4);
         last_send_stream_ms = now;
+        // which resets our message intervals
+        message_intervals_resend(MAV_DATA_STREAM_ALL);
         if (debug_level > 0) {
             console_printf("sending stream request\n");
         }
     }
+
+    message_intervals_update(now);
 
     if (schedrec_state() == 1 || (disable_sd_save && uart_data.is_recording_video)) {
         // keep LEDs blinking when recording video
@@ -1389,6 +1718,9 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
     }
 
     mavlink_save_packet(msg);
+    if (msg->sysid == fc_sysid && msg->compid == MAV_COMP_ID_AUTOPILOT1) {
+        message_intervals_count(msg->msgid);
+    }
     mavlink_periodic();
 
     uint32_t now = get_time_boot_ms();
@@ -1424,7 +1756,6 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         break;
     }
     case MAVLINK_MSG_ID_ATTITUDE: {
-        last_attitude_ms = now;
 	mavlink_attitude_t m;
 	mavlink_msg_attitude_decode(msg, &m);
         attitude_data.roll = swap_int16(degrees(m.roll)*100);
@@ -1456,6 +1787,7 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
     case MAVLINK_MSG_ID_SYS_STATUS: {
 	mavlink_sys_status_t m;
 	mavlink_msg_sys_status_decode(msg, &m);
+        last_sys_status_ms = now;
         uart_data.telemetry_power = m.voltage_battery/100; // in 0.1V units
         rc_ok = (m.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_RC_RECEIVER) != 0;
         break;
@@ -1463,6 +1795,17 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
     case MAVLINK_MSG_ID_SYSTEM_TIME: {
 	mavlink_system_time_t m;
 	mavlink_msg_system_time_decode(msg, &m);
+        // the flight controller restarted (too quickly for the
+        // heartbeat to notice): its message intervals are gone.  Only
+        // its own SYSTEM_TIME tells us that
+        if (msg->sysid == fc_sysid && msg->compid == MAV_COMP_ID_AUTOPILOT1) {
+            static uint32_t last_fc_boot_ms;
+            if (m.time_boot_ms + 2000 < last_fc_boot_ms) {
+                console_printf("flight controller restarted\n");
+                message_intervals_restart();
+            }
+            last_fc_boot_ms = m.time_boot_ms;
+        }
         fc_unix_time = m.time_unix_usec/1000000; // microseconds->seconds
         gps_pos.utc_time = fc_unix_time;
         gps_pos.time_base = get_sys_seconds_boot();
@@ -1486,6 +1829,7 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
 	mavlink_msg_heartbeat_decode(msg, &m);
         if (msg->compid == MAV_COMP_ID_AUTOPILOT1 && m.autopilot != MAV_AUTOPILOT_INVALID) {
             fc_sysid = msg->sysid;
+            message_intervals_fc_heartbeat(now);
         }
         bool armed = m.base_mode & MAV_MODE_FLAG_SAFETY_ARMED;
         if (m.autopilot == MAV_AUTOPILOT_ARDUPILOTMEGA) {
@@ -1533,6 +1877,18 @@ static bool mavlink_handle_msg(const mavlink_message_t *msg)
         // firmware supports; ignore ACKs from other components
         if (msg->sysid != MAVLINK_TARGET_SYSTEM_ID ||
             msg->compid != MAV_COMP_ID_AUTOPILOT1) {
+            break;
+        }
+        // our own message intervals; a GCS's acks are its own business.
+        // Older ArduPilots' acks carry no target: see
+        // message_intervals_take_ack()
+        if (m.command == MAV_CMD_SET_MESSAGE_INTERVAL &&
+            ((m.target_system == mavlink_system.sysid &&
+              m.target_component == mavlink_system.compid &&
+              message_intervals_take_ack(true)) ||
+             (m.target_system == 0 && m.target_component == 0 &&
+              message_intervals_take_ack(false)))) {
+            message_intervals_handle_ack(&m);
             break;
         }
         // which GCS asked doesn't matter
@@ -2095,6 +2451,8 @@ static void mavlink_main(void *pvParameters, int udp_sock)
         if (last_heartbeat_ms != 0 && get_time_boot_ms() - last_heartbeat_ms < 2000) {
             mavlink_message_t *msg = NULL;
             if (xQueueReceive(mavlink_queue, &msg, 0)) {
+                // the web server's mavlink_message_send queues here too
+                message_intervals_gcs_msg(msg, true);
                 _mavlink_resend_uart(MAVLINK_COMM_FC, msg);
                 talloc_free(msg);
             }
@@ -2150,6 +2508,20 @@ void mavlink_show_stats(void)
                    uart_data.telemetry_power, uart_data.takeoff_state,
                    uart_data.rf_strength);
     console_printf("fakedata: %u  mavsitl: %s\n", dummy_data, sitl_sock!=-1?"true":"false");
+    {
+        unsigned i;
+        console_printf("message intervals:%s\n",
+                       msg_interval_unsupported ? " unsupported by the FC" : "");
+        for (i = 0; i < FC_MESSAGE_INTERVAL_COUNT; i++) {
+            console_printf("  %u every %d us: %s\n",
+                           (unsigned)fc_message_intervals[i].msgid,
+                           (int)fc_message_intervals[i].interval_us,
+                           msg_interval_gcs[i] ? "set by a GCS" :
+                           msg_interval_refused[i] ? "refused" :
+                           (int)i == msg_interval_current ? "sending" :
+                           msg_interval_pending[i] ? "to send" : "sent");
+        }
+    }
 }
 
 unsigned mavlink_fc_pkt_count(void)
