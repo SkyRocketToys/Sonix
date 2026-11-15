@@ -1836,7 +1836,8 @@ static void telem_main(void *pvParameters)
                 break;
             case TELEM_MODE_MAVLINK:
                 // and change to 625000
-                uart2_set_baudrate(625000);
+                current_baudrate = 0;
+                uart2_set_baudrate(telem_baudrates[current_baudrate]);
                 break;
             default:
                 break;
@@ -1873,22 +1874,30 @@ end:
 }
 
 /*
-  auto-baud on main port
+  auto-baud on main port.  Until we hear a heartbeat, try each rate in
+  turn, starting once the flight controller has had time to boot;
+  once we have heard one, only look again after a long silence, so a
+  flight controller restarting or a busy link doesn't make us leave
+  the right rate
  */
+#define AUTOBAUD_FIRST_MS 20000     // at the first rate before searching
+#define AUTOBAUD_LOST_MS 30000      // silence before searching again
+#define AUTOBAUD_TRY_MS 4000        // at each rate while searching
 static void mavlink_check_baudrate(void)
 {
-    static long long last_check;
-    long long now = get_sys_seconds_boot();
-    if (now - last_check > 3) {
-        last_check = now;
-        if (now - last_heartbeat_ms > 3000) {
-            current_baudrate = (current_baudrate+1) % NUM_BAUDRATES;
-            uart2_set_baudrate(telem_baudrates[current_baudrate]);
-            if (debug_level > 0) {
-                console_printf("trying baudrate %u\n", telem_baudrates[current_baudrate]);
-            }
-        }
+    static uint32_t last_change_ms;
+    const uint32_t now = get_time_boot_ms();
+    if (last_heartbeat_ms == 0 ? now < AUTOBAUD_FIRST_MS :
+        now - last_heartbeat_ms < AUTOBAUD_LOST_MS) {
+        return;
     }
+    if (last_change_ms != 0 && now - last_change_ms < AUTOBAUD_TRY_MS) {
+        return;
+    }
+    last_change_ms = now;
+    current_baudrate = (current_baudrate+1) % NUM_BAUDRATES;
+    uart2_set_baudrate(telem_baudrates[current_baudrate]);
+    console_printf("no heartbeat; trying baudrate %u\n", (unsigned)telem_baudrates[current_baudrate]);
 }
 
 
