@@ -283,6 +283,16 @@ static void cmd_mavsitl(unsigned argc, const char *argv[])
 }
 
 /*
+  send telemetry to known GCSes by unicast rather than broadcast
+ */
+static void cmd_mavunicast(unsigned argc, const char *argv[])
+{
+#if defined(CONFIG_MAVLINK_WIFI)
+    mavlink_set_unicast(atoi(argv[1]));
+#endif
+}
+
+/*
   show update
  */
 static void cmd_uptime(unsigned argc, const char *argv[])
@@ -668,6 +678,7 @@ static const struct {
     { "mavdebug", cmd_mavdebug, 1, "set mavlink debug level" },
     { "webdebug", cmd_webdebug, 1, "set web server debug level" },
     { "mavsitl", cmd_mavsitl, 1, "enable/disable mavlink input for simulation" },
+    { "mavunicast", cmd_mavunicast, 1, "send telemetry to GCSes by unicast (1) or broadcast (0)" },
     { "uptime", cmd_uptime, 0, "show uptime" },
     { "preview", cmd_preview, 1, "start/stop video preview" },
     { "record", cmd_record, 0, "start/stop video record" },

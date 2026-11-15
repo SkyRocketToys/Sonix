@@ -28,6 +28,7 @@
 #include <mavlink_core.h>
 #include "telemetry_format.h"
 #include "talloc.h"
+#include <lwip/netif.h>
 #include "record/rec_schedule.h"
 #include <web_server.h>
 #include <libmid_nvram/snx_mid_nvram.h>
@@ -73,6 +74,24 @@ static struct {
     unsigned sent_bytes;
     unsigned recv_bytes;
 } stats;
+
+/*
+  GCSes that have sent us MAVLink.  Telemetry goes to each of them by
+  unicast, which WiFi acknowledges and retries; broadcasts are sent
+  once and lost if they don't arrive, which cost 5-10% of messages.
+  HEARTBEAT is still broadcast, so a GCS that hasn't sent anything yet
+  can find us (and sent to any GCS on another port, which the broadcast
+  doesn't reach), and everything is broadcast while no GCS is known.
+ */
+#define WIFI_MAX_CLIENTS 4
+#define WIFI_CLIENT_TIMEOUT_MS 5000
+extern struct netif EMAC_if;  // lwIP's WiFi interface, for our own address
+static bool wifi_unicast = true;
+static struct wifi_client {
+    struct sockaddr_in addr;
+    uint32_t last_ms;
+    bool active;
+} wifi_clients[WIFI_MAX_CLIENTS];
 
 static struct telem_gps_data gps_data;
 static struct telem_gps_data home_data;
@@ -225,12 +244,13 @@ void mavlink_rc_write(const uint8_t *buf, uint32_t len)
 /*
   process a UDP packet
  */
-static bool camera_udp_input(const uint8_t *buf, ssize_t len);
+static bool camera_udp_input(const uint8_t *buf, ssize_t len, const struct sockaddr_in *from);
+static void wifi_client_seen(const struct sockaddr_in *from);
 static void message_intervals_gcs_msg(const mavlink_message_t *msg, bool from_web);
 
-static void process_udp_packet(uint8_t *buf, ssize_t len)
+static void process_udp_packet(uint8_t *buf, ssize_t len, const struct sockaddr_in *from)
 {
-    if (camera_udp_input(buf, len)) {
+    if (camera_udp_input(buf, len, from)) {
         return;
     }
     mavlink_fc_write(buf, len);
@@ -248,27 +268,92 @@ int uart2_readbyte(uint8_t *b, const ssize_t timeout)
 
 
 /*
+  note a GCS we've had a UDP packet from
+ */
+static void wifi_client_seen(const struct sockaddr_in *from)
+{
+    const uint32_t now_ms = get_time_boot_ms();
+    struct wifi_client *slot = NULL;
+    unsigned i;
+    for (i = 0; i < WIFI_MAX_CLIENTS; i++) {
+        struct wifi_client *c = &wifi_clients[i];
+        if (c->active && c->addr.sin_addr.s_addr == from->sin_addr.s_addr &&
+            c->addr.sin_port == from->sin_port) {
+            c->last_ms = now_ms;
+            return;
+        }
+    }
+    // a new one: not ourselves, should we hear our own broadcasts
+    if (from->sin_addr.s_addr == EMAC_if.ip_addr.addr) {
+        return;
+    }
+    // take a free or timed-out slot, or else the one heard from longest ago
+    for (i = 0; i < WIFI_MAX_CLIENTS; i++) {
+        struct wifi_client *c = &wifi_clients[i];
+        if (!c->active || now_ms - c->last_ms > WIFI_CLIENT_TIMEOUT_MS) {
+            slot = c;
+            break;
+        }
+        if (slot == NULL || now_ms - c->last_ms > now_ms - slot->last_ms) {
+            slot = c;
+        }
+    }
+    slot->addr = *from;
+    slot->last_ms = now_ms;
+    slot->active = true;
+    char ip[16];
+    console_printf("mavlink: GCS at %s:%u\n", inet_ntoa_r(from->sin_addr, ip, sizeof(ip)),
+                   ntohs(from->sin_port));
+}
+
+static void sendto_wifi(int fd, const uint8_t *buf, uint16_t len, const struct sockaddr_in *addr)
+{
+    sendto(fd, buf, len, 0, (const struct sockaddr*)addr, sizeof(*addr));
+}
+
+/*
   send a mavlink msg over WiFi
  */
 static void send_mavlink_wifi(int fd, mavlink_message_t *msg)
 {
     uint8_t buf[300];
     uint16_t len = mavlink_msg_to_send_buffer(buf, msg);
-    if (len > 0) {
+    if (len == 0) {
+        return;
+    }
+    // counted once per message, however many GCSes it goes to
+    stats.sent_pkts++;
+    stats.sent_bytes += len;
+    const bool heartbeat = msg->msgid == MAVLINK_MSG_ID_HEARTBEAT;
+    bool unicast_sent = false;
+    if (wifi_unicast) {
+        const uint32_t now_ms = get_time_boot_ms();
+        unsigned i;
+        for (i = 0; i < WIFI_MAX_CLIENTS; i++) {
+            struct wifi_client *c = &wifi_clients[i];
+            if (!c->active || now_ms - c->last_ms > WIFI_CLIENT_TIMEOUT_MS) {
+                continue;
+            }
+            if (heartbeat) {
+                // the broadcast reaches those on our port; the rest
+                // need their own copy
+                if (c->addr.sin_port != htons(MAVLINK_DEST_PORT)) {
+                    sendto_wifi(fd, buf, len, &c->addr);
+                }
+                continue;
+            }
+            sendto_wifi(fd, buf, len, &c->addr);
+            unicast_sent = true;
+        }
+    }
+    if (!unicast_sent) {
         struct sockaddr_in addr;
         memset(&addr, 0x0, sizeof(addr));
-
         addr.sin_family = AF_INET;
         addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
         addr.sin_port = htons(MAVLINK_DEST_PORT);
-        
-        //console_printf("sending pkt of len %u\n", len);
-        sendto(fd, buf, len, 0, (struct sockaddr*)&addr, sizeof(addr));
-
-        stats.sent_pkts++;
-        stats.sent_bytes += len;
+        sendto_wifi(fd, buf, len, &addr);
     }
-
 }
 
 // Auto Pilot Modes enumeration
@@ -1012,7 +1097,7 @@ static bool camera_is_target(const mavlink_message_t *msg)
     would act on them itself: ArduPilot handles a message for its own
     system ID with an unknown component as if it were addressed to it.
  */
-static bool camera_udp_input(const uint8_t *buf, ssize_t len)
+static bool camera_udp_input(const uint8_t *buf, ssize_t len, const struct sockaddr_in *from)
 {
     if (fc_sysid != 0) {
         if ((len >= 7 && buf[0] == MAVLINK_STX && buf[5] == fc_sysid && buf[6] == CAMERA_COMPONENT_ID) ||
@@ -1024,16 +1109,27 @@ static bool camera_udp_input(const uint8_t *buf, ssize_t len)
         }
     }
 
-    // our own parser state, so as not to need another MAVLink channel
+    // our own parser state, so as not to need another MAVLink channel.
+    // Each datagram is parsed afresh: one sender's partial frame
+    // mustn't swallow the start of another's
     static mavlink_message_t rxmsg;
     static mavlink_status_t rxstatus;
-    bool for_camera = false, for_others = false;
+    memset(&rxstatus, 0, sizeof(rxstatus));
+    bool for_camera = false, for_others = false, framed = false;
     ssize_t i;
     for (i = 0; i < len; i++) {
         mavlink_message_t msg;
         mavlink_status_t status;
-        if (mavlink_frame_char_buffer(&rxmsg, &rxstatus, buf[i], &msg, &status) != MAVLINK_FRAMING_OK ||
-            fc_sysid == 0) {
+        if (mavlink_frame_char_buffer(&rxmsg, &rxstatus, buf[i], &msg, &status) != MAVLINK_FRAMING_OK) {
+            continue;
+        }
+        if (!framed) {
+            // only a sender of MAVLink counts as a GCS, and it must be
+            // known before we answer it
+            framed = true;
+            wifi_client_seen(from);
+        }
+        if (fc_sysid == 0) {
             continue;
         }
         if (!camera_is_target(&msg)) {
@@ -2370,9 +2466,12 @@ static void mavlink_main(void *pvParameters, int udp_sock)
         if (res > 0 && FD_ISSET(udp_sock, &fds)) {
             // we have data pending
             uint8_t buf[300];
-            ssize_t nread = read(udp_sock, buf, sizeof(buf));
+            struct sockaddr_in from;
+            socklen_t fromlen = sizeof(from);
+            ssize_t nread = recvfrom(udp_sock, buf, sizeof(buf), 0,
+                                     (struct sockaddr *)&from, &fromlen);
             if (nread > 0) {
-                process_udp_packet(buf, nread);
+                process_udp_packet(buf, nread, &from);
             }
         }
 
@@ -2499,6 +2598,21 @@ void mavlink_show_stats(void)
     console_printf("Send: %u pkts %u bytes at %u\n", stats.sent_pkts, stats.sent_bytes,
                    uart2_get_baudrate());
     console_printf("Recv: %u pkts %u bytes\n", stats.recv_pkts, stats.recv_bytes);
+    {
+        const uint32_t now_ms = get_time_boot_ms();
+        unsigned i;
+        console_printf("unicast: %s\n", wifi_unicast ? "on" : "off");
+        for (i = 0; i < WIFI_MAX_CLIENTS; i++) {
+            const struct wifi_client *c = &wifi_clients[i];
+            if (c->active) {
+                char ip[16];
+                console_printf("  GCS %s:%u last heard %u ms ago%s\n",
+                               inet_ntoa_r(c->addr.sin_addr, ip, sizeof(ip)), ntohs(c->addr.sin_port),
+                               (unsigned)(now_ms - c->last_ms),
+                               now_ms - c->last_ms > WIFI_CLIENT_TIMEOUT_MS ? " (timed out)" : "");
+            }
+        }
+    }
     console_printf("gps: %s %s  home: %s %s  nsats: %u\n",
                    latlon_str(gps_data.latitude), latlon_str(gps_data.longitude),
                    latlon_str(home_data.latitude), latlon_str(home_data.longitude),
@@ -2635,6 +2749,12 @@ void telem_get_nav_data(uint8_t data[4])
 void mavlink_set_debug(uint8_t level)
 {
     debug_level = level;
+}
+
+void mavlink_set_unicast(bool enable)
+{
+    wifi_unicast = enable;
+    console_printf("mavlink: unicast to GCSes %s\n", enable ? "on" : "off");
 }
 
 void mavlink_set_sitl(bool enable)
