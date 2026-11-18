@@ -11,3 +11,4 @@ void cmd_rl_status(unsigned argc, const char *argv[]);
 void cmd_rl_disable(unsigned argc, const char *argv[]);
 void cmd_rl_enable(unsigned argc, const char *argv[]);
 void cmd_rl_help(unsigned argc, const char *argv[]);
+const char *mavlink_remote_log_current_file(void);

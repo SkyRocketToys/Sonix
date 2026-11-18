@@ -153,6 +153,14 @@ static const int log_fh_is_open()
 
 
 /*
+ * the log being written, or NULL if none is
+ */
+const char *mavlink_remote_log_current_file(void)
+{
+    return log_fh_is_open() ? log_filepath : NULL;
+}
+
+/*
  * send an acknowledgement to the server that we have received a block
  * acks are also used to start/stop logging sessions
  */

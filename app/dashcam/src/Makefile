@@ -215,6 +215,7 @@ ifdef CONFIG_MAVLINK_WIFI
 ARDUPILOT_FILES += web_server/mavlink_core.o
 ARDUPILOT_FILES += mavlink_wifi.o
 ARDUPILOT_FILES += mavlink_remote_log.o
+ARDUPILOT_FILES += mavlink_ftp.o
 ARDUPILOT_FILES += bootloader_client.o
 ARDUPILOT_FILES += dev_console_json.o
 ARDUPILOT_FILES += tx_upload.o
